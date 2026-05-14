@@ -1,0 +1,150 @@
+<section class="ec-section ec-bg-{{ section.settings.bg_style | default: 'lab-dark' }}" style="position:relative;overflow:hidden;padding:120px 0;">
+  <div class="ec-inside-bg" aria-hidden="true">
+    <div class="ec-grid-overlay"></div>
+    <div class="ec-mesh-glow ec-mesh-1"></div>
+    <div class="ec-mesh-glow ec-mesh-2"></div>
+  </div>
+
+  <div class="ec-container" style="position:relative;z-index:1;">
+    <div class="ec-amb-grid">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <div class="ec-eyebrow">{{ section.settings.eyebrow }}</div>
+        {% endif %}
+        <h2 class="ec-headline">{{ section.settings.title }}</h2>
+        <p class="ec-subtext" style="margin-top:16px;">{{ section.settings.subtitle }}</p>
+
+        <div class="ec-amb-perks">
+          {% for block in section.blocks %}
+            {% if block.type == "perk" %}
+              <div class="ec-amb-perk" {{ block.shopify_attributes }}>
+                <div class="ec-amb-perk-icon">{{ block.settings.icon }}</div>
+                <div>
+                  <h4>{{ block.settings.title }}</h4>
+                  <p>{{ block.settings.description }}</p>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="ec-amb-form-card">
+        <h3 style="font-family:var(--ec-font-display);font-size:32px;letter-spacing:0.5px;margin-bottom:8px;color:var(--ec-navy);">{{ section.settings.form_title }}</h3>
+        <p style="font-size:14px;color:var(--ec-text2);margin-bottom:24px;">{{ section.settings.form_subtitle }}</p>
+
+        {% form 'contact' %}
+          <div class="ec-amb-field">
+            <input type="text" name="contact[name]" placeholder="Your full name" required>
+          </div>
+          <div class="ec-amb-field">
+            <input type="email" name="contact[email]" placeholder="Email address" required>
+          </div>
+          <div class="ec-amb-field">
+            <input type="text" name="contact[social]" placeholder="Instagram / TikTok handle">
+          </div>
+          <div class="ec-amb-field">
+            <input type="text" name="contact[sport]" placeholder="Your sport or activity">
+          </div>
+          <div class="ec-amb-field">
+            <textarea name="contact[message]" placeholder="Why do you want to represent ElectroChew?" rows="4"></textarea>
+          </div>
+          <input type="hidden" name="contact[subject]" value="Ambassador Application">
+          <button type="submit" class="ec-btn ec-btn-navy ec-btn-full ec-btn-lg">Submit Application ⚡</button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.ec-amb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.ec-amb-perks { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 36px; }
+.ec-amb-perk {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex; gap: 12px; align-items: flex-start;
+  transition: all 0.25s var(--ec-ease);
+}
+.ec-bg-lab-light .ec-amb-perk { background: rgba(21,101,192,0.04); border-color: rgba(21,101,192,0.12); }
+.ec-amb-perk:hover { background: rgba(255,255,255,0.07); border-color: rgba(79,195,247,0.3); }
+.ec-amb-perk-icon { font-size: 22px; flex-shrink: 0; }
+.ec-amb-perk h4 { font-family: var(--ec-font-display); font-size: 17px; color: white; margin-bottom: 4px; letter-spacing: 0.5px; }
+.ec-bg-lab-light .ec-amb-perk h4 { color: var(--ec-navy); }
+.ec-amb-perk p { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+.ec-bg-lab-light .ec-amb-perk p { color: var(--ec-text2); }
+.ec-amb-form-card {
+  background: white;
+  border: 1px solid rgba(10,21,64,0.08);
+  border-radius: 24px;
+  padding: 36px;
+  box-shadow: 0 24px 64px rgba(10,21,64,0.10);
+}
+.ec-amb-field { margin-bottom: 12px; }
+.ec-amb-field input,
+.ec-amb-field textarea {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--ec-off-white);
+  border: 1.5px solid rgba(10,21,64,0.08);
+  border-radius: 10px;
+  color: var(--ec-navy);
+  font-family: var(--ec-font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.ec-amb-field input:focus,
+.ec-amb-field textarea:focus { border-color: var(--ec-electric); background: white; }
+.ec-amb-field textarea { resize: vertical; }
+@media(max-width: 900px) {
+  .ec-amb-grid { grid-template-columns: 1fr; }
+  .ec-amb-perks { grid-template-columns: 1fr; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Ambassador application",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join the Team" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Become an <span class=\"em\">Ambassador</span>" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "We're building this brand with people, not just for them. Authentic voices — not follower counts." },
+    { "type": "text", "id": "form_title", "label": "Form title", "default": "Apply Now" },
+    { "type": "text", "id": "form_subtitle", "label": "Form subtitle", "default": "We review every application personally and respond within 48 hours." },
+    { "type": "select", "id": "bg_style", "label": "Background style",
+      "options": [
+        { "value": "lab-light", "label": "Lab Light" },
+        { "value": "lab-dark", "label": "Lab Dark" }
+      ],
+      "default": "lab-dark"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "📦" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Free Product" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Regular shipments to fuel your lifestyle." }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Ambassador application",
+      "blocks": [
+        { "type": "perk", "settings": { "icon": "📦", "title": "Free Product", "description": "Regular shipments of ElectroChew." } },
+        { "type": "perk", "settings": { "icon": "💰", "title": "Commission", "description": "Earn on every sale through your code." } },
+        { "type": "perk", "settings": { "icon": "🎯", "title": "Exclusive Access", "description": "First look at new products and campaigns." } },
+        { "type": "perk", "settings": { "icon": "🌱", "title": "Grow Together", "description": "Build your brand alongside ours." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

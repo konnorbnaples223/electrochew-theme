@@ -1,0 +1,69 @@
+<section class="ec-section ec-section-navy" style="background:{{ section.settings.bg_color }};" id="section-{{ section.id }}">
+  <div class="ec-container">
+    <div class="ec-rev-header ec-anim" style="text-align:center;margin-bottom:72px;">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="ec-eyebrow ec-eyebrow-center">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+      <h2 class="ec-headline" style="text-align:center;color:white;">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="ec-rev-grid">
+      {% for block in section.blocks %}
+        <div class="ec-rev-card ec-anim ec-d{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="ec-rev-stars">★★★★★</div>
+          <p class="ec-rev-quote">{{ block.settings.quote }}</p>
+          <div class="ec-rev-author">
+            <div class="ec-rev-avatar">{{ block.settings.name | slice: 0 }}</div>
+            <div>
+              <div class="ec-rev-name">{{ block.settings.name }}</div>
+              <div class="ec-rev-role">{{ block.settings.role }}</div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.ec-rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.ec-rev-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:var(--ec-radius-xl);padding:40px 36px;display:flex;flex-direction:column;transition:all .25s var(--ec-ease);}
+.ec-rev-card:hover{background:rgba(255,255,255,.07);border-color:rgba(79,195,247,.2);transform:translateY(-4px);}
+.ec-rev-stars{color:#fbbf24;font-size:14px;letter-spacing:3px;margin-bottom:20px;}
+.ec-rev-quote{font-size:16px;font-style:italic;line-height:1.75;color:rgba(255,255,255,.82);flex:1;margin-bottom:28px;position:relative;padding-top:28px;}
+.ec-rev-quote::before{content:'\201C';position:absolute;top:-8px;left:-4px;font-family:var(--ec-font-display);font-size:80px;color:var(--ec-accent);opacity:.2;line-height:1;}
+.ec-rev-author{display:flex;align-items:center;gap:14px;}
+.ec-rev-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--ec-electric),var(--ec-navy));display:flex;align-items:center;justify-content:center;font-family:var(--ec-font-display);font-size:20px;color:white;flex-shrink:0;}
+.ec-rev-name{font-weight:600;font-size:14px;color:white;margin-bottom:2px;}
+.ec-rev-role{font-family:var(--ec-font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.35);}
+@media(max-width:1024px){.ec-rev-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto;}}
+</style>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "tag": "section",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Real Results"},
+    {"type":"text","id":"title","label":"Title","default":"What athletes<br>are <span class=\"em\">saying.</span>"},
+    {"type":"color","id":"bg_color","label":"Background","default":"#0a1540"}
+  ],
+  "blocks":[{
+    "type":"review","name":"Review",
+    "settings":[
+      {"type":"textarea","id":"quote","label":"Quote"},
+      {"type":"text","id":"name","label":"Name","default":"Alex M."},
+      {"type":"text","id":"role","label":"Role / Sport","default":"CrossFit Athlete"}
+    ]
+  }],
+  "max_blocks":6,
+  "presets":[{
+    "name":"Reviews",
+    "blocks":[
+      {"type":"review","settings":{"quote":"ElectroChew fits perfectly into my daily routine. I pop one before a long run and I feel the difference by mile two. Game changer for anyone serious about hydration.","name":"Alex M.","role":"CrossFit Athlete"}},
+      {"type":"review","settings":{"quote":"I used to lug a giant water bottle with electrolyte powder to every training session. Now I just throw a few pieces in my pocket. Simple, clean, and it actually works.","name":"Jordan R.","role":"Marathon Runner"}},
+      {"type":"review","settings":{"quote":"As a cyclist, convenience is everything. The fact that I can replenish electrolytes mid-ride without stopping is huge. Smooth taste, zero sugar — won't go back to liquid ever again.","name":"Chris L.","role":"Cyclist · 200mi/week"}}
+    ]
+  }]
+}
+{% endschema %}

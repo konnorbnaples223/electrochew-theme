@@ -1,0 +1,89 @@
+<section class="ec-section" id="section-{{ section.id }}">
+  <div class="ec-container">
+    <div class="ec-ben-header ec-anim">
+      <div class="ec-eyebrow ec-eyebrow-center">{{ section.settings.eyebrow }}</div>
+      <h2 class="ec-headline" style="text-align:center;">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ec-subtext" style="text-align:center;margin:16px auto 0;max-width:580px;">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ec-ben-grid">
+      {% for block in section.blocks %}
+        <div class="ec-ben-card ec-anim ec-d{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="ec-ben-num">0{{ forloop.index }}</div>
+          <div class="ec-ben-icon ec-ben-icon-{{ block.settings.icon_color }}">
+            {% if block.settings.icon == 'lightning' %}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            {% elsif block.settings.icon == 'check' %}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22C6.48 22 2 17.52 2 12S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10z"/><path d="M8 12l3 3 5-5"/></svg>
+            {% elsif block.settings.icon == 'pocket' %}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 3h16a1 1 0 0 1 1 1v7a8 8 0 0 1-8 8 8 8 0 0 1-8-8V4a1 1 0 0 1 1-1z"/><polyline points="8 10 12 14 16 10"/></svg>
+            {% else %}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            {% endif %}
+          </div>
+          <div class="ec-ben-title">{{ block.settings.title }}</div>
+          <p class="ec-ben-desc">{{ block.settings.description }}</p>
+          {%- if block.settings.science_tag != blank -%}
+            <div class="ec-ben-tag">
+              <svg width="7" height="7" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+              {{ block.settings.science_tag }}
+            </div>
+          {%- endif -%}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.ec-ben-header{max-width:680px;margin:0 auto 72px;text-align:center;}
+.ec-ben-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border:2px solid var(--ec-border2);border-radius:var(--ec-radius-xl);overflow:hidden;}
+.ec-ben-card{background:white;padding:52px 44px;position:relative;transition:background .25s var(--ec-ease);}
+.ec-ben-card:hover{background:var(--ec-off-white);}
+.ec-ben-card+.ec-ben-card{border-left:2px solid var(--ec-border2);}
+.ec-ben-num{font-family:var(--ec-font-display);font-size:80px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(21,101,192,.1);position:absolute;top:32px;right:32px;pointer-events:none;user-select:none;}
+.ec-ben-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
+.ec-ben-icon-electric{background:rgba(21,101,192,.08);color:var(--ec-electric);}
+.ec-ben-icon-teal{background:rgba(0,137,123,.08);color:var(--ec-success);}
+.ec-ben-icon-navy{background:rgba(26,35,126,.07);color:var(--ec-navy);}
+.ec-ben-title{font-family:var(--ec-font-display);font-size:30px;letter-spacing:1px;color:var(--ec-navy);margin-bottom:14px;text-transform:uppercase;line-height:1;}
+.ec-ben-desc{font-size:15px;line-height:1.72;color:var(--ec-text2);}
+.ec-ben-tag{margin-top:20px;display:inline-flex;align-items:center;gap:7px;font-family:var(--ec-font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ec-electric);}
+@media(max-width:1024px){.ec-ben-grid{grid-template-columns:1fr;}.ec-ben-card+.ec-ben-card{border-left:none;border-top:2px solid var(--ec-border2);}}
+@media(max-width:768px){.ec-ben-card{padding:36px 28px;}}
+</style>
+
+{% schema %}
+{
+  "name": "Benefits",
+  "tag": "section",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Why It Works"},
+    {"type":"text","id":"title","label":"Title","default":"Your body needs more<br><span class=\"em\">than water.</span>"},
+    {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Sweat strips you of three essential electrolytes. Most products replace them too slowly, too messily, or not at all. ElectroChew is different."}
+  ],
+  "blocks":[
+    {
+      "type":"benefit","name":"Benefit card",
+      "settings":[
+        {"type":"text","id":"title","label":"Title","default":"Faster Absorption"},
+        {"type":"textarea","id":"description","label":"Description","default":"Oral mucosa absorbs electrolytes directly into your bloodstream — bypassing digestion entirely. Works in 5–10 minutes, not 30–60 like drinks."},
+        {"type":"text","id":"science_tag","label":"Science tag","default":"Backed by oral pharmacokinetics"},
+        {"type":"select","id":"icon","label":"Icon","options":[{"value":"lightning","label":"Lightning bolt"},{"value":"check","label":"Checkmark"},{"value":"pocket","label":"Pocket"},{"value":"clock","label":"Clock"}],"default":"lightning"},
+        {"type":"select","id":"icon_color","label":"Icon color","options":[{"value":"electric","label":"Electric blue"},{"value":"teal","label":"Teal"},{"value":"navy","label":"Navy"}],"default":"electric"}
+      ]
+    }
+  ],
+  "max_blocks":3,
+  "presets":[{
+    "name":"Benefits",
+    "blocks":[
+      {"type":"benefit","settings":{"title":"Faster Absorption","description":"Oral mucosa absorbs electrolytes directly into your bloodstream — bypassing digestion entirely. Works in 5–10 minutes, not 30–60 like drinks.","science_tag":"Backed by oral pharmacokinetics","icon":"lightning","icon_color":"electric"}},
+      {"type":"benefit","settings":{"title":"Zero Junk","description":"No sugar. No aspartame. No artificial colors. No fillers. Three electrolytes in the ratios your body actually needs — nothing your body doesn't.","science_tag":"Clean label certified","icon":"check","icon_color":"teal"}},
+      {"type":"benefit","settings":{"title":"Always On You","description":"Goes where bottles can't. In your pocket, your bag, your gym kit. No mixing, no shaking, no spills. Hydrate mid-run, mid-meeting, mid-anything.","science_tag":"Performance without the prep","icon":"pocket","icon_color":"navy"}}
+    ]
+  }]
+}
+{% endschema %}

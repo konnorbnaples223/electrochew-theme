@@ -1,0 +1,305 @@
+{%- comment -%}Hero v3 — Email-first, immersive, cursor-reactive{%- endcomment -%}
+{%- assign sec_id = section.id -%}
+
+<section class="ec-hv3" id="ec-hv3-{{ sec_id }}">
+
+  <div class="ec-hv3-bg" id="ec-hv3-bg-{{ sec_id }}">
+    {%- if section.settings.bg_image != blank -%}
+      <img
+        src="{{ section.settings.bg_image | img_url: '2400x' }}"
+        srcset="{{ section.settings.bg_image | img_url: '1200x' }} 1200w, {{ section.settings.bg_image | img_url: '2400x' }} 2400w"
+        sizes="100vw"
+        alt="{{ section.settings.bg_alt | default: 'ElectroChew' }}"
+        class="ec-hv3-bg-img"
+        fetchpriority="high">
+    {%- else -%}
+      <img
+        src="{{ 'hero-bg.jpg' | asset_url }}"
+        alt="ElectroChew"
+        class="ec-hv3-bg-img"
+        fetchpriority="high">
+    {%- endif -%}
+    <div class="ec-hv3-overlay" aria-hidden="true"></div>
+    <div class="ec-hv3-grid-lines" aria-hidden="true"></div>
+  </div>
+
+  <div class="ec-hv3-float ec-hv3-k" data-hero-float="0.022" aria-hidden="true">
+    <span class="fvn">19</span><span class="fvs">K</span><span class="fvl">Potassium</span>
+  </div>
+  <div class="ec-hv3-float ec-hv3-mg" data-hero-float="0.016" aria-hidden="true">
+    <span class="fvn">12</span><span class="fvs">Mg</span><span class="fvl">Magnesium</span>
+  </div>
+  <div class="ec-hv3-float ec-hv3-ca" data-hero-float="0.02" aria-hidden="true">
+    <span class="fvn">20</span><span class="fvs">Ca</span><span class="fvl">Calcium</span>
+  </div>
+  <div class="ec-hv3-float ec-hv3-na" data-hero-float="0.013" aria-hidden="true">
+    <span class="fvn">11</span><span class="fvs">Na</span><span class="fvl">Sodium</span>
+  </div>
+
+  <div class="ec-hv3-inner ec-container">
+
+    <div class="ec-hv3-content">
+
+      <div class="ec-hv3-badge hv3-a hv3-a1">
+        <span class="ec-hv3-pulse" aria-hidden="true"></span>
+        {{ section.settings.badge_text | default: 'Electrolyte Chewing Gum · Now Available' }}
+      </div>
+
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="ec-hv3-eyebrow hv3-a hv3-a2">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+
+      <h1 class="ec-hv3-headline hv3-a hv3-a3">{{ section.settings.headline | default: 'Feel It<br><span class="em">Instantly.</span>' }}</h1>
+
+      {%- if section.settings.subhead != blank -%}
+        <p class="ec-hv3-sub hv3-a hv3-a4">{{ section.settings.subhead }}</p>
+      {%- endif -%}
+
+      <div class="ec-hv3-form-wrap hv3-a hv3-a5">
+        {% form 'customer', class: 'ec-hv3-form' %}
+          <input type="hidden" name="contact[tags]" value="{{ section.settings.signup_tag | default: 'early-access,homepage-hero,launch-list' }}">
+          <input type="hidden" name="contact[accepts_marketing]" value="true">
+
+          {%- if form.posted_successfully? -%}
+            <div class="ec-hv3-success" role="status">
+              <div class="ec-hv3-success-check" aria-hidden="true">✓</div>
+              <div>
+                <strong>{{ section.settings.success_title | default: "You're on the list." }}</strong>
+                <p>{{ section.settings.success_message | default: "We'll send you a heads-up the moment we launch. Thanks for being early." }}</p>
+              </div>
+            </div>
+          {%- else -%}
+            {%- if form.errors -%}
+              <div class="ec-hv3-error" role="alert">{{ form.errors | default_errors }}</div>
+            {%- endif -%}
+            <label for="ec-hv3-e-{{ sec_id }}" class="ec-sr-only">Email address</label>
+            <div class="ec-hv3-row" id="ec-hv3-row-{{ sec_id }}">
+              <input
+                type="email"
+                id="ec-hv3-e-{{ sec_id }}"
+                name="contact[email]"
+                placeholder="{{ section.settings.email_placeholder | default: 'yourname@email.com' }}"
+                required
+                autocomplete="email"
+                inputmode="email">
+              <button type="submit">
+                <span>{{ section.settings.button_label | default: 'Get Early Access' }}</span>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+            {%- if section.settings.fineprint != blank -%}
+              <p class="ec-hv3-fineprint">{{ section.settings.fineprint }}</p>
+            {%- endif -%}
+          {%- endif -%}
+        {% endform %}
+      </div>
+
+      <div class="ec-hv3-stats hv3-a hv3-a6">
+        {%- if section.settings.stat_1_num != blank -%}
+          <div class="ec-hv3-stat"><div class="ec-hv3-sn">{{ section.settings.stat_1_num }}</div><div class="ec-hv3-sl">{{ section.settings.stat_1_label }}</div></div>
+        {%- endif -%}
+        {%- if section.settings.stat_2_num != blank -%}
+          <div class="ec-hv3-stat"><div class="ec-hv3-sn">{{ section.settings.stat_2_num }}</div><div class="ec-hv3-sl">{{ section.settings.stat_2_label }}</div></div>
+        {%- endif -%}
+        {%- if section.settings.stat_3_num != blank -%}
+          <div class="ec-hv3-stat"><div class="ec-hv3-sn">{{ section.settings.stat_3_num }}</div><div class="ec-hv3-sl">{{ section.settings.stat_3_label }}</div></div>
+        {%- endif -%}
+        {%- if section.settings.stat_4_num != blank -%}
+          <div class="ec-hv3-stat"><div class="ec-hv3-sn">{{ section.settings.stat_4_num }}</div><div class="ec-hv3-sl">{{ section.settings.stat_4_label }}</div></div>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+    <div class="ec-hv3-visual hv3-a hv3-a2" id="ec-hv3-visual-{{ sec_id }}">
+      <div class="ec-hv3-glow" aria-hidden="true"></div>
+      <div class="ec-hv3-ring ec-hv3-r1" aria-hidden="true"></div>
+      <div class="ec-hv3-ring ec-hv3-r2" aria-hidden="true"></div>
+      <div class="ec-hv3-ring ec-hv3-r3" aria-hidden="true"></div>
+      <div class="ec-hv3-tilt" id="ec-hv3-tilt-{{ sec_id }}" data-tilt>
+        {%- if section.settings.product_image != blank -%}
+          <img class="ec-hv3-product" src="{{ section.settings.product_image | img_url: '700x' }}" alt="{{ section.settings.product_image_alt | default: 'ElectroChew Electrolyte Gum' }}">
+        {%- else -%}
+          <img class="ec-hv3-product" src="{{ 'product-front.jpg' | asset_url }}" alt="ElectroChew Electrolyte Gum">
+        {%- endif -%}
+      </div>
+    </div>
+
+  </div>
+
+  <a href="#section-after-hero" class="ec-hv3-scroll" aria-label="Scroll down">
+    <div class="ec-hv3-scroll-mouse">
+      <div class="ec-hv3-scroll-dot"></div>
+    </div>
+    <span class="ec-hv3-scroll-label">Scroll</span>
+  </a>
+
+</section>
+
+<style>
+/* ── Hero v3 wrapper ── */
+.ec-hv3{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;background:#050b1f;color:white;}
+
+/* ── Background ── */
+.ec-hv3-bg{position:absolute;inset:0;z-index:0;}
+.ec-hv3-bg-img{width:100%;height:100%;object-fit:cover;object-position:center 30%;opacity:.22;will-change:transform;transition:transform 0.1s linear;}
+.ec-hv3-overlay{position:absolute;inset:0;background:linear-gradient(108deg,rgba(5,11,31,.98) 0%,rgba(5,11,31,.88) 40%,rgba(10,18,50,.55) 70%,rgba(5,11,31,.3) 100%);}
+.ec-hv3-grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(79,195,247,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(79,195,247,.035) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 90% 80% at 60% 50%,black 0%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 90% 80% at 60% 50%,black 0%,transparent 70%);}
+
+/* ── Load-in animations ── */
+.hv3-a{opacity:0;animation:hv3FadeUp 0.9s cubic-bezier(0.22,1,0.36,1) forwards;}
+.hv3-a1{animation-delay:.08s;}
+.hv3-a2{animation-delay:.18s;}
+.hv3-a3{animation-delay:.28s;}
+.hv3-a4{animation-delay:.42s;}
+.hv3-a5{animation-delay:.58s;}
+.hv3-a6{animation-delay:.75s;}
+@keyframes hv3FadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── Inner grid ── */
+.ec-hv3-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:56px;min-height:100vh;padding-top:calc(var(--ec-header-h) + 20px);padding-bottom:60px;}
+
+/* ── Floating ingredient cards ── */
+.ec-hv3-float{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;width:68px;height:68px;border:1.5px solid rgba(79,195,247,.22);border-radius:9px;background:rgba(5,11,31,.7);backdrop-filter:blur(14px);z-index:3;will-change:transform;}
+.fvn{font-family:var(--ec-font-mono);font-size:9px;color:rgba(79,195,247,.55);line-height:1;margin-bottom:1px;}
+.fvs{font-family:var(--ec-font-display);font-size:24px;color:var(--ec-accent);line-height:1;}
+.fvl{font-family:var(--ec-font-mono);font-size:6.5px;color:rgba(255,255,255,.35);letter-spacing:.5px;text-transform:uppercase;margin-top:2px;}
+.ec-hv3-k{top:20%;right:36%;animation:hv3Fl 14s ease-in-out infinite;}
+.ec-hv3-mg{bottom:30%;right:28%;animation:hv3Fl 11s ease-in-out infinite;animation-delay:-4s;}
+.ec-hv3-ca{top:34%;right:20%;animation:hv3Fl 16s ease-in-out infinite;animation-delay:-8s;}
+.ec-hv3-na{bottom:22%;right:42%;animation:hv3Fl 12s ease-in-out infinite;animation-delay:-2s;}
+@keyframes hv3Fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+/* ── Content (left) ── */
+.ec-hv3-content{padding:20px 0;}
+
+/* Badge */
+.ec-hv3-badge{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;background:rgba(79,195,247,.09);border:1px solid rgba(79,195,247,.28);border-radius:999px;font-family:var(--ec-font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ec-accent);margin-bottom:28px;}
+.ec-hv3-pulse{width:6px;height:6px;border-radius:50%;background:var(--ec-accent);box-shadow:0 0 8px var(--ec-accent);animation:hv3Pulse 2s ease-in-out infinite;flex-shrink:0;}
+@keyframes hv3Pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+/* Eyebrow */
+.ec-hv3-eyebrow{font-family:var(--ec-font-mono);font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.ec-hv3-eyebrow::before{content:'';display:inline-block;width:28px;height:1.5px;background:var(--ec-accent);flex-shrink:0;}
+
+/* Headline */
+.ec-hv3-headline{font-family:var(--ec-font-display);font-size:clamp(68px,8.5vw,120px);line-height:.9;letter-spacing:1px;color:white;margin-bottom:24px;text-transform:uppercase;}
+.ec-hv3-headline .em{color:var(--ec-accent);}
+
+/* Subhead */
+.ec-hv3-sub{font-size:17.5px;line-height:1.65;color:rgba(255,255,255,.68);max-width:500px;margin-bottom:40px;}
+
+/* ── Email form ── */
+.ec-hv3-form{width:100%;}
+.ec-hv3-row{display:flex;align-items:stretch;border-radius:14px;overflow:hidden;border:1.5px solid rgba(79,195,247,.3);background:rgba(255,255,255,.04);backdrop-filter:blur(12px);transition:border-color .2s,box-shadow .2s;max-width:520px;}
+.ec-hv3-row:focus-within{border-color:rgba(79,195,247,.65);box-shadow:0 0 0 4px rgba(79,195,247,.1),0 8px 40px rgba(79,195,247,.15);}
+.ec-hv3-row input[type="email"]{flex:1;padding:17px 20px;background:transparent;border:none;color:white;font-size:16px;outline:none;font-family:var(--ec-font-body);min-width:0;}
+.ec-hv3-row input[type="email"]::placeholder{color:rgba(255,255,255,.35);}
+.ec-hv3-row button{display:inline-flex;align-items:center;gap:9px;padding:17px 28px;background:linear-gradient(135deg,#2196f3 0%,#1565c0 100%);color:white;border:none;font-family:var(--ec-font-mono);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:filter .18s,box-shadow .18s;flex-shrink:0;}
+.ec-hv3-row button:hover{filter:brightness(1.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);}
+.ec-hv3-row button:active{filter:brightness(.96);}
+.ec-hv3-fineprint{font-size:12px;color:rgba(255,255,255,.38);margin-top:11px;line-height:1.5;max-width:520px;}
+
+/* Success state */
+.ec-hv3-success{display:flex;align-items:center;gap:16px;padding:18px 22px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.35);border-radius:14px;max-width:520px;}
+.ec-hv3-success-check{width:42px;height:42px;border-radius:50%;background:#10b981;color:white;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0;}
+.ec-hv3-success strong{display:block;font-family:var(--ec-font-display);font-size:20px;letter-spacing:.5px;color:white;margin-bottom:3px;}
+.ec-hv3-success p{font-size:14px;color:rgba(255,255,255,.65);margin:0;line-height:1.4;}
+
+/* Error */
+.ec-hv3-error{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.35);color:#fca5a5;padding:12px 16px;border-radius:10px;margin-bottom:12px;font-size:13px;max-width:520px;}
+
+/* ── Stats row ── */
+.ec-hv3-stats{display:flex;align-items:center;margin-top:48px;padding-top:36px;border-top:1px solid rgba(255,255,255,.07);}
+.ec-hv3-stat{flex:1;text-align:center;padding:0 16px;border-right:1px solid rgba(255,255,255,.07);}
+.ec-hv3-stat:first-child{padding-left:0;text-align:left;}
+.ec-hv3-stat:last-child{border-right:none;}
+.ec-hv3-sn{font-family:var(--ec-font-display);font-size:34px;color:var(--ec-accent);line-height:1;margin-bottom:5px;}
+.ec-hv3-sl{font-family:var(--ec-font-mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,.38);line-height:1.3;}
+
+/* ── Visual (right) ── */
+.ec-hv3-visual{position:relative;display:flex;justify-content:center;align-items:center;min-height:540px;perspective:1000px;}
+.ec-hv3-glow{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(21,101,192,.32) 0%,rgba(79,195,247,.08) 50%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);filter:blur(30px);z-index:0;pointer-events:none;}
+.ec-hv3-ring{position:absolute;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:1;}
+.ec-hv3-r1{width:320px;height:320px;border:1px solid rgba(79,195,247,.18);animation:hv3Ring 4s ease-in-out infinite;}
+.ec-hv3-r2{width:430px;height:430px;border:1px solid rgba(79,195,247,.1);animation:hv3Ring 4s ease-in-out infinite;animation-delay:-1.3s;}
+.ec-hv3-r3{width:540px;height:540px;border:1px solid rgba(79,195,247,.05);animation:hv3Ring 4s ease-in-out infinite;animation-delay:-2.6s;}
+@keyframes hv3Ring{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)}50%{opacity:.4;transform:translate(-50%,-50%) scale(1.05)}}
+
+.ec-hv3-tilt{transform-style:preserve-3d;transition:transform 0.08s linear;will-change:transform;position:relative;z-index:2;}
+.ec-hv3-product{max-width:360px;width:100%;filter:drop-shadow(0 40px 80px rgba(0,0,0,.65));animation:hv3Float 7s ease-in-out infinite;}
+@keyframes hv3Float{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-22px) rotate(1.5deg)}}
+
+/* ── Scroll indicator ── */
+.ec-hv3-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;}
+.ec-hv3-scroll-mouse{width:24px;height:38px;border:1.5px solid rgba(255,255,255,.25);border-radius:12px;display:flex;justify-content:center;align-items:flex-start;padding-top:6px;}
+.ec-hv3-scroll-dot{width:4px;height:7px;background:rgba(255,255,255,.5);border-radius:2px;animation:hv3ScrollDot 1.8s ease-in-out infinite;}
+@keyframes hv3ScrollDot{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(10px);opacity:1}}
+.ec-hv3-scroll-label{font-family:var(--ec-font-mono);font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.25);}
+
+/* ── Screen-reader only ── */
+.ec-sr-only{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+/* ── Responsive ── */
+@media(max-width:1100px){
+  .ec-hv3-inner{grid-template-columns:1fr;text-align:center;min-height:auto;padding-top:calc(var(--ec-header-h) + 40px);padding-bottom:80px;gap:48px;}
+  .ec-hv3-float{display:none;}
+  .ec-hv3-content{order:2;}
+  .ec-hv3-visual{order:1;min-height:320px;}
+  .ec-hv3-eyebrow,.ec-hv3-sub,.ec-hv3-fineprint,.ec-hv3-error{max-width:560px;margin-left:auto;margin-right:auto;}
+  .ec-hv3-eyebrow{justify-content:center;}
+  .ec-hv3-row{margin:0 auto;}
+  .ec-hv3-stats{justify-content:center;flex-wrap:wrap;gap:16px;}
+  .ec-hv3-stat{border-right:none;min-width:110px;}
+  .ec-hv3-stat:first-child{text-align:center;}
+  .ec-hv3-success{max-width:480px;margin:0 auto;}
+}
+@media(max-width:600px){
+  .ec-hv3-headline{font-size:clamp(60px,15vw,90px);}
+  .ec-hv3-visual{min-height:240px;}
+  .ec-hv3-product{max-width:240px;}
+  .ec-hv3-r2,.ec-hv3-r3{display:none;}
+  .ec-hv3-r1{width:240px;height:240px;}
+  .ec-hv3-row{flex-direction:column;border-radius:12px;}
+  .ec-hv3-row input[type="email"]{padding:16px 18px;border-bottom:1px solid rgba(79,195,247,.2);}
+  .ec-hv3-row button{padding:15px 18px;justify-content:center;border-radius:0;}
+  .ec-hv3-scroll{display:none;}
+}
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {"type":"header","content":"Background"},
+    {"type":"image_picker","id":"bg_image","label":"Background image"},
+    {"type":"text","id":"bg_alt","label":"Image alt text","default":"ElectroChew Electrolyte Chewing Gum"},
+    {"type":"header","content":"Product image"},
+    {"type":"image_picker","id":"product_image","label":"Product image (right side)"},
+    {"type":"text","id":"product_image_alt","label":"Alt text","default":"ElectroChew Electrolyte Gum"},
+    {"type":"header","content":"Content"},
+    {"type":"text","id":"badge_text","label":"Badge text","default":"Electrolyte Chewing Gum · Now Available"},
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"The Smarter Way to Hydrate"},
+    {"type":"text","id":"headline","label":"Headline","default":"Feel It<br><span class=\"em\">Instantly.</span>"},
+    {"type":"textarea","id":"subhead","label":"Subhead","default":"Electrolytes absorbed directly through your cheek — not your gut. No bottle. No mixing. No waiting. Just chew, and perform."},
+    {"type":"header","content":"Email form"},
+    {"type":"text","id":"email_placeholder","label":"Input placeholder","default":"yourname@email.com"},
+    {"type":"text","id":"button_label","label":"Submit button text","default":"Get Early Access"},
+    {"type":"text","id":"fineprint","label":"Fine print below form","default":"No spam. Launch updates only. Unsubscribe anytime."},
+    {"type":"text","id":"signup_tag","label":"Customer tag(s)","info":"Comma-separated tags applied in Shopify.","default":"early-access,homepage-hero,launch-list"},
+    {"type":"header","content":"Success state"},
+    {"type":"text","id":"success_title","label":"Success title","default":"You're on the list."},
+    {"type":"textarea","id":"success_message","label":"Success message","default":"We'll send you a heads-up the moment we launch. Thanks for being early."},
+    {"type":"header","content":"Stats row"},
+    {"type":"text","id":"stat_1_num","label":"Stat 1 number","default":"5–10"},
+    {"type":"text","id":"stat_1_label","label":"Stat 1 label","default":"Minutes to absorb"},
+    {"type":"text","id":"stat_2_num","label":"Stat 2 number","default":"3"},
+    {"type":"text","id":"stat_2_label","label":"Stat 2 label","default":"Key electrolytes"},
+    {"type":"text","id":"stat_3_num","label":"Stat 3 number","default":"0g"},
+    {"type":"text","id":"stat_3_label","label":"Stat 3 label","default":"Sugar per piece"},
+    {"type":"text","id":"stat_4_num","label":"Stat 4 number","default":"100%"},
+    {"type":"text","id":"stat_4_label","label":"Stat 4 label","default":"Clean label formula"}
+  ],
+  "presets":[{"name":"Hero"}]
+}
+{% endschema %}

@@ -1,0 +1,117 @@
+<div style="padding:140px 0 80px;">
+  <div class="ec-container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;" class="product-page-grid">
+
+      <div style="position:sticky;top:100px;">
+        <div style="background:linear-gradient(160deg,var(--ec-off-white),var(--ec-light));border-radius:24px;overflow:hidden;border:1.5px solid rgba(10,21,64,0.06);min-height:420px;display:flex;align-items:center;justify-content:center;padding:40px;position:relative;">
+          <div style="position:absolute;right:-20px;bottom:-20px;font-family:var(--ec-font-display);font-size:160px;color:rgba(10,21,64,0.04);line-height:1;pointer-events:none;">EC</div>
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | img_url: '800x800' }}" alt="{{ product.title | escape }}" style="max-height:360px;object-fit:contain;filter:drop-shadow(0 16px 40px rgba(10,21,64,0.15));position:relative;z-index:1;">
+          {% else %}
+            <img src="{{ 'product-front.jpg' | asset_url }}" alt="{{ product.title | escape }}" style="max-height:360px;object-fit:contain;position:relative;z-index:1;">
+          {% endif %}
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+          <span style="color:#fbbf24;font-size:14px;letter-spacing:2px;">★★★★★</span>
+          <span style="font-size:13px;color:var(--ec-text3);">4.9 · 124 reviews</span>
+        </div>
+
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(21,101,192,0.08);border:1px solid rgba(21,101,192,0.2);border-radius:999px;padding:5px 12px;font-family:var(--ec-font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ec-electric);margin-bottom:14px;">
+          ⚡ Subscription Only
+        </div>
+
+        <h1 style="font-family:var(--ec-font-display);font-size:40px;line-height:0.95;letter-spacing:0.5px;color:var(--ec-navy);margin-bottom:14px;">{{ product.title }}</h1>
+
+        <div style="font-size:16px;color:var(--ec-text2);line-height:1.7;margin-bottom:28px;">
+          {{ product.description }}
+        </div>
+
+        {%- assign variant = product.selected_or_first_available_variant -%}
+        {%- assign selling_plan = product.selling_plan_groups.first.selling_plans.first -%}
+        {%- assign allocation = variant.selling_plan_allocations | where: "selling_plan_id", selling_plan.id | first -%}
+
+        <div style="margin-bottom:28px;">
+          <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
+            <div style="font-family:var(--ec-font-display);font-size:40px;color:var(--ec-navy);line-height:1;">
+              {%- if allocation -%}
+                {{ allocation.price | money }}
+              {%- else -%}
+                {{ product.price | money }}
+              {%- endif -%}
+              <span style="font-size:18px;">/mo</span>
+            </div>
+            {%- if allocation and allocation.compare_at_price > allocation.price -%}
+              <div style="font-family:var(--ec-font-display);font-size:24px;color:var(--ec-text3);text-decoration:line-through;line-height:1;">
+                {{ allocation.compare_at_price | money }}
+              </div>
+              <div style="background:var(--ec-success);color:white;padding:3px 10px;border-radius:999px;font-family:var(--ec-font-mono);font-size:11px;letter-spacing:1px;font-weight:600;">
+                SAVE 10%
+              </div>
+            {%- endif -%}
+          </div>
+          <div style="font-size:13px;color:var(--ec-text3);margin-top:6px;">Billed monthly · Free shipping · Cancel anytime</div>
+        </div>
+
+        <form action="/cart/add" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="{{ variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          {%- if selling_plan -%}
+            <input type="hidden" name="selling_plan" value="{{ selling_plan.id }}">
+          {%- endif -%}
+          <button type="submit" class="ec-btn ec-btn-navy ec-btn-lg ec-btn-full">
+            Subscribe ⚡
+          </button>
+        </form>
+
+        <div style="margin-top:20px;padding:20px;background:rgba(21,101,192,0.04);border:1px solid rgba(21,101,192,0.1);border-radius:14px;">
+          <div style="font-family:var(--ec-font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ec-electric);margin-bottom:14px;">What's included</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ec-text2);">
+              <div class="ec-sub-check">✓</div>Monthly delivery — never run out
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ec-text2);">
+              <div class="ec-sub-check">✓</div>Free shipping on every order
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ec-text2);">
+              <div class="ec-sub-check">✓</div>10% off every order
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ec-text2);">
+              <div class="ec-sub-check">✓</div>Pause or cancel anytime
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;padding-top:20px;border-top:1px solid rgba(10,21,64,0.06);">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ec-text3);">🔒 Secure checkout</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ec-text3);">🚚 Fast shipping</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ec-text3);">↩️ Easy returns</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ec-text3);">🇺🇸 Made in USA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ec-sub-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(21,101,192,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ec-electric);
+    font-size: 10px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  @media(max-width:1024px) { .product-page-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+{% schema %}
+{
+  "name": "Product main",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,298 @@
+{%- comment -%}Visual Feature — full-bleed or split image + text section{%- endcomment -%}
+{%- assign layout = section.settings.layout | default: 'split-left' -%}
+
+<section
+  class="ec-vf ec-vf-{{ layout }}"
+  id="section-{{ section.id }}"
+  {% if section.settings.min_height != blank %}style="--ec-vf-height:{{ section.settings.min_height }}px;"{% endif %}>
+
+  {%- comment -%} Media panel {%- endcomment -%}
+  <div class="ec-vf-media" {% if layout == 'full-bleed' %}data-parallax-panel{% endif %}>
+    {%- if section.settings.image != blank -%}
+      <img
+        class="ec-vf-img"
+        src="{{ section.settings.image | img_url: '2000x' }}"
+        srcset="{{ section.settings.image | img_url: '900x' }} 900w, {{ section.settings.image | img_url: '1400x' }} 1400w, {{ section.settings.image | img_url: '2000x' }} 2000w"
+        sizes="{% if layout == 'full-bleed' %}100vw{% else %}50vw{% endif %}"
+        alt="{{ section.settings.image_alt | default: 'ElectroChew' }}"
+        loading="lazy">
+    {%- else -%}
+      <div class="ec-vf-placeholder" aria-hidden="true">
+        <div class="ec-vf-ph-inner">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Add your photo or video here</span>
+        </div>
+      </div>
+    {%- endif -%}
+    {%- if layout == 'full-bleed' -%}
+      <div class="ec-vf-overlay-grad" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Text panel {%- endcomment -%}
+  <div class="ec-vf-text">
+    <div class="ec-vf-text-inner">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="ec-vf-eyebrow ec-anim">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="ec-vf-title ec-anim ec-d1">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="ec-vf-body ec-anim ec-d2">{{ section.settings.body }}</div>
+      {%- endif -%}
+      {%- if section.settings.cta_label != blank -%}
+        <div class="ec-vf-cta ec-anim ec-d3">
+          <a href="{{ section.settings.cta_url | default: '#' }}" class="ec-vf-btn">
+            {{ section.settings.cta_label }}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.stat_1_num != blank or section.settings.stat_2_num != blank -%}
+        <div class="ec-vf-stats ec-anim ec-d3">
+          {%- if section.settings.stat_1_num != blank -%}
+            <div class="ec-vf-stat">
+              <div class="ec-vf-stat-n">{{ section.settings.stat_1_num }}</div>
+              <div class="ec-vf-stat-l">{{ section.settings.stat_1_label }}</div>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.stat_2_num != blank -%}
+            <div class="ec-vf-stat">
+              <div class="ec-vf-stat-n">{{ section.settings.stat_2_num }}</div>
+              <div class="ec-vf-stat-l">{{ section.settings.stat_2_label }}</div>
+            </div>
+          {%- endif -%}
+          {%- if section.settings.stat_3_num != blank -%}
+            <div class="ec-vf-stat">
+              <div class="ec-vf-stat-n">{{ section.settings.stat_3_num }}</div>
+              <div class="ec-vf-stat-l">{{ section.settings.stat_3_label }}</div>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+</section>
+
+<style>
+/* ── Wrapper ── */
+.ec-vf{position:relative;display:flex;min-height:var(--ec-vf-height,600px);overflow:hidden;}
+.ec-vf-split-left{flex-direction:row;}
+.ec-vf-split-right{flex-direction:row-reverse;}
+.ec-vf-full-bleed{flex-direction:column;justify-content:flex-end;}
+
+/* ── Media panel ── */
+.ec-vf-media{position:relative;overflow:hidden;flex-shrink:0;}
+.ec-vf-split-left .ec-vf-media,.ec-vf-split-right .ec-vf-media{width:52%;min-height:100%;}
+.ec-vf-full-bleed .ec-vf-media{position:absolute;inset:0;width:100%;height:100%;}
+.ec-vf-img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 6s ease;display:block;}
+.ec-vf:hover .ec-vf-img{transform:scale(1.03);}
+
+/* Placeholder */
+.ec-vf-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#0d1a3a 0%,#1a2560 100%);display:flex;align-items:center;justify-content:center;}
+.ec-vf-ph-inner{display:flex;flex-direction:column;align-items:center;gap:12px;opacity:.45;}
+.ec-vf-ph-inner span{font-family:var(--ec-font-mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);}
+
+/* Overlay gradient for full-bleed */
+.ec-vf-overlay-grad{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,11,31,.94) 0%,rgba(5,11,31,.65) 45%,rgba(5,11,31,.1) 100%);}
+.ec-vf-full-bleed .ec-vf-overlay-grad{background:linear-gradient(180deg,rgba(5,11,31,0) 20%,rgba(5,11,31,.7) 60%,rgba(5,11,31,.97) 100%);}
+
+/* ── Text panel ── */
+.ec-vf-split-left .ec-vf-text,.ec-vf-split-right .ec-vf-text{flex:1;display:flex;align-items:center;background:{% if section.settings.text_dark %}#050b1f{% else %}white{% endif %};}
+.ec-vf-full-bleed .ec-vf-text{position:relative;z-index:2;padding:0;width:100%;}
+.ec-vf-text-inner{padding:72px 64px;max-width:540px;}
+.ec-vf-split-left .ec-vf-text-inner{padding-left:80px;}
+.ec-vf-split-right .ec-vf-text-inner{padding-right:80px;}
+.ec-vf-full-bleed .ec-vf-text-inner{padding:60px 40px 72px;max-width:600px;}
+
+/* Eyebrow */
+.ec-vf-eyebrow{font-family:var(--ec-font-mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.ec-vf-eyebrow::before{content:'';display:inline-block;width:24px;height:1.5px;flex-shrink:0;}
+
+/* Title */
+.ec-vf-title{font-family:var(--ec-font-display);font-size:clamp(42px,5.5vw,76px);line-height:.93;letter-spacing:.5px;text-transform:uppercase;margin-bottom:20px;}
+.ec-vf-title .em{color:var(--ec-accent);}
+
+/* Body */
+.ec-vf-body{font-size:16px;line-height:1.7;margin-bottom:32px;}
+.ec-vf-body p+p{margin-top:12px;}
+
+/* CTA button */
+.ec-vf-btn{display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:6px;font-family:var(--ec-font-mono);font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;transition:all .2s var(--ec-ease);}
+
+/* Stats */
+.ec-vf-stats{display:flex;gap:0;margin-top:36px;padding-top:28px;}
+.ec-vf-stat{flex:1;padding:0 20px;border-right:1px solid rgba(255,255,255,.1);}
+.ec-vf-stat:first-child{padding-left:0;}
+.ec-vf-stat:last-child{border-right:none;}
+.ec-vf-stat-n{font-family:var(--ec-font-display);font-size:40px;line-height:1;margin-bottom:5px;}
+.ec-vf-stat-l{font-family:var(--ec-font-mono);font-size:9px;letter-spacing:1.8px;text-transform:uppercase;line-height:1.3;}
+
+/* ── Light text theme (default for split) ── */
+.ec-vf-split-left .ec-vf-text,.ec-vf-split-right .ec-vf-text{background:{% if section.settings.text_dark %}#050b1f{% else %}white{% endif %};}
+
+/* dark text panel */
+.ec-vf-text-dark .ec-vf-text{background:#050b1f!important;}
+.ec-vf-text-dark .ec-vf-title,.ec-vf-text-dark .ec-vf-body{color:white;}
+.ec-vf-text-dark .ec-vf-eyebrow{color:var(--ec-accent);}
+.ec-vf-text-dark .ec-vf-eyebrow::before{background:var(--ec-accent);}
+.ec-vf-text-dark .ec-vf-stat-n{color:var(--ec-accent);}
+.ec-vf-text-dark .ec-vf-stat-l{color:rgba(255,255,255,.4);}
+.ec-vf-text-dark .ec-vf-body{color:rgba(255,255,255,.65);}
+.ec-vf-text-dark .ec-vf-btn{background:white;color:var(--ec-navy);border:2px solid white;}
+.ec-vf-text-dark .ec-vf-btn:hover{background:var(--ec-accent);border-color:var(--ec-accent);color:white;transform:translateY(-2px);box-shadow:0 10px 32px rgba(79,195,247,.3);}
+.ec-vf-text-dark .ec-vf-stats{border-top-color:rgba(255,255,255,.08);}
+
+/* light text panel */
+.ec-vf-text-light .ec-vf-text{background:white;}
+.ec-vf-text-light .ec-vf-title{color:var(--ec-navy);}
+.ec-vf-text-light .ec-vf-body{color:var(--ec-text2);}
+.ec-vf-text-light .ec-vf-eyebrow{color:var(--ec-electric);}
+.ec-vf-text-light .ec-vf-eyebrow::before{background:var(--ec-electric);}
+.ec-vf-text-light .ec-vf-stat-n{color:var(--ec-electric);}
+.ec-vf-text-light .ec-vf-stat-l{color:var(--ec-text3);}
+.ec-vf-text-light .ec-vf-btn{background:var(--ec-navy);color:white;border:2px solid var(--ec-navy);}
+.ec-vf-text-light .ec-vf-btn:hover{background:var(--ec-electric);border-color:var(--ec-electric);transform:translateY(-2px);box-shadow:0 10px 32px rgba(21,101,192,.25);}
+.ec-vf-text-light .ec-vf-stats{border-top-color:var(--ec-border2);}
+
+/* full-bleed always shows white text */
+.ec-vf-full-bleed .ec-vf-eyebrow{color:var(--ec-accent);}
+.ec-vf-full-bleed .ec-vf-eyebrow::before{background:var(--ec-accent);}
+.ec-vf-full-bleed .ec-vf-title{color:white;}
+.ec-vf-full-bleed .ec-vf-body{color:rgba(255,255,255,.7);}
+.ec-vf-full-bleed .ec-vf-stat-n{color:var(--ec-accent);}
+.ec-vf-full-bleed .ec-vf-stat-l{color:rgba(255,255,255,.45);}
+.ec-vf-full-bleed .ec-vf-stats{border-top-color:rgba(255,255,255,.08);}
+.ec-vf-full-bleed .ec-vf-btn{background:white;color:var(--ec-navy);border:2px solid white;}
+.ec-vf-full-bleed .ec-vf-btn:hover{background:transparent;color:white;transform:translateY(-2px);}
+
+/* ── Responsive ── */
+@media(max-width:960px){
+  .ec-vf-split-left,.ec-vf-split-right{flex-direction:column;}
+  .ec-vf-split-left .ec-vf-media,.ec-vf-split-right .ec-vf-media{width:100%;min-height:360px;height:360px;}
+  .ec-vf-text-inner,.ec-vf-split-left .ec-vf-text-inner,.ec-vf-split-right .ec-vf-text-inner{padding:52px 40px;}
+  .ec-vf-stats{flex-wrap:wrap;gap:16px;}
+  .ec-vf-stat{border-right:none;flex:none;min-width:120px;}
+}
+@media(max-width:640px){
+  .ec-vf{min-height:auto;}
+  .ec-vf-split-left .ec-vf-media,.ec-vf-split-right .ec-vf-media{min-height:280px;height:280px;}
+  .ec-vf-full-bleed{min-height:580px;}
+  .ec-vf-text-inner,.ec-vf-split-left .ec-vf-text-inner,.ec-vf-split-right .ec-vf-text-inner,.ec-vf-full-bleed .ec-vf-text-inner{padding:40px 20px;}
+}
+</style>
+
+{% schema %}
+{
+  "name": "Visual feature",
+  "tag": "section",
+  "class": "ec-vf-section {% if section.settings.text_color_scheme == 'dark' %}ec-vf-text-dark{% else %}ec-vf-text-light{% endif %}",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        {"value":"split-left","label":"Split — image left, text right"},
+        {"value":"split-right","label":"Split — image right, text left"},
+        {"value":"full-bleed","label":"Full bleed — image background"}
+      ],
+      "default": "split-left"
+    },
+    {
+      "type": "select",
+      "id": "text_color_scheme",
+      "label": "Text panel style",
+      "options": [
+        {"value":"dark","label":"Dark (navy background, white text)"},
+        {"value":"light","label":"Light (white background, dark text)"}
+      ],
+      "default": "dark"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height (px)",
+      "min": 400,
+      "max": 900,
+      "step": 50,
+      "default": 600
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Optional stats"
+    },
+    {"type":"text","id":"stat_1_num","label":"Stat 1 number"},
+    {"type":"text","id":"stat_1_label","label":"Stat 1 label"},
+    {"type":"text","id":"stat_2_num","label":"Stat 2 number"},
+    {"type":"text","id":"stat_2_label","label":"Stat 2 label"},
+    {"type":"text","id":"stat_3_num","label":"Stat 3 number"},
+    {"type":"text","id":"stat_3_label","label":"Stat 3 label"}
+  ],
+  "presets": [
+    {
+      "name": "Visual feature",
+      "category": "Visual",
+      "settings": {
+        "layout": "split-left",
+        "text_color_scheme": "dark",
+        "min_height": 600,
+        "eyebrow": "Built For Performance",
+        "title": "Go further.<br><span class=\"em\">Chew smarter.</span>",
+        "body": "<p>ElectroChew goes where bottles can't. In your pocket, your bag, your gym kit. No mixing, no shaking, no spills — just pure performance, on demand.</p>",
+        "cta_label": "Shop Now",
+        "cta_url": "/collections"
+      }
+    }
+  ]
+}
+{% endschema %}

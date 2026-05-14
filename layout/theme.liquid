@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0a1540">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {% if settings.favicon %}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
+  {% endif %}
+
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {{ content_for_header }}
+
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <style>
+    :root {
+      --ec-navy: {{ settings.color_navy | default: '#0a1540' }};
+      --ec-electric: {{ settings.color_electric | default: '#1565c0' }};
+      --ec-accent: {{ settings.color_accent | default: '#4fc3f7' }};
+    }
+  </style>
+</head>
+
+<body class="template-{{ template.name | handle }}">
+  <a class="ec-skip-link" href="#main-content" style="position:absolute;top:-40px;left:8px;background:var(--ec-electric);color:white;padding:8px 16px;border-radius:8px;z-index:1000;">Skip to content</a>
+
+  {% section 'topbar' %}
+
+  <main id="main-content" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'subscribebanner' %}
+  {% section 'sitefoot' %}
+
+  {{ 'theme.js' | asset_url | script_tag }}
+</body>
+</html>

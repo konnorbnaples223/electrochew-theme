@@ -1,0 +1,236 @@
+{%- comment -%}What's Inside — molecular ingredient breakdown visualization{%- endcomment -%}
+
+{%- assign has_items = section.blocks | where: "type", "has" -%}
+{%- assign out_items = section.blocks | where: "type", "out" -%}
+
+<section class="ec-wi" id="section-{{ section.id }}">
+
+  <div class="ec-wi-noise" aria-hidden="true"></div>
+  <div class="ec-wi-glow-bg" aria-hidden="true"></div>
+
+  <div class="ec-container">
+
+    <div class="ec-wi-header ec-anim">
+      <div class="ec-eyebrow ec-eyebrow-center ec-wi-eyebrow">{{ section.settings.eyebrow | default: 'What\'s Inside' }}</div>
+      <h2 class="ec-wi-title">{{ section.settings.title | default: 'The formula,<br><span class="em">decoded.</span>' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ec-wi-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ec-wi-showcase">
+
+      <svg class="ec-wi-lines" viewBox="0 0 900 700" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="ecLineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(79,195,247,0)" />
+            <stop offset="50%" stop-color="rgba(79,195,247,0.4)" />
+            <stop offset="100%" stop-color="rgba(79,195,247,0)" />
+          </linearGradient>
+        </defs>
+        <line class="ec-wi-line" x1="450" y1="350" x2="155" y2="155" stroke="url(#ecLineGrad)" stroke-width="1" />
+        <line class="ec-wi-line" x1="450" y1="350" x2="745" y2="155" stroke="url(#ecLineGrad)" stroke-width="1" />
+        <line class="ec-wi-line" x1="450" y1="350" x2="155" y2="545" stroke="url(#ecLineGrad)" stroke-width="1" />
+        <line class="ec-wi-line" x1="450" y1="350" x2="745" y2="545" stroke="url(#ecLineGrad)" stroke-width="1" />
+        <circle class="ec-wi-node" cx="450" cy="350" r="5" fill="rgba(79,195,247,0.6)" />
+        <circle class="ec-wi-node-pulse" cx="450" cy="350" r="12" fill="none" stroke="rgba(79,195,247,0.25)" stroke-width="1.5" />
+      </svg>
+
+      <div class="ec-wi-grid">
+
+        {%- for block in has_items -%}
+          {%- if forloop.index <= 4 -%}
+            <div class="ec-wi-card ec-wi-c{{ forloop.index }} ec-anim ec-d{{ forloop.index }}" {{ block.shopify_attributes }} data-element-card>
+              <div class="ec-wi-card-glow" aria-hidden="true"></div>
+              <div class="ec-wi-atomic">{{ forloop.index | times: 11 | plus: 8 }}</div>
+              <div class="ec-wi-symbol">{{ block.settings.symbol }}</div>
+              <div class="ec-wi-name">{{ block.settings.name }}</div>
+              <div class="ec-wi-desc">{{ block.settings.description }}</div>
+              <div class="ec-wi-benefit-line" aria-hidden="true"></div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        <div class="ec-wi-center-wrap ec-anim ec-d2">
+          <div class="ec-wi-center-glow" aria-hidden="true"></div>
+          <div class="ec-wi-center-ring ec-wi-cr1" aria-hidden="true"></div>
+          <div class="ec-wi-center-ring ec-wi-cr2" aria-hidden="true"></div>
+          {%- if section.settings.product_image != blank -%}
+            <img class="ec-wi-center-img" src="{{ section.settings.product_image | img_url: '500x' }}" alt="ElectroChew">
+          {%- else -%}
+            <img class="ec-wi-center-img" src="{{ 'product-front.jpg' | asset_url }}" alt="ElectroChew">
+          {%- endif -%}
+          <div class="ec-wi-center-label">ElectroChew<span>Formula</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    {%- if out_items.size > 0 -%}
+      <div class="ec-wi-free-from ec-anim">
+        <div class="ec-wi-ff-label">Free From</div>
+        <div class="ec-wi-ff-items">
+          {%- for block in out_items -%}
+            <div class="ec-wi-ff-item" {{ block.shopify_attributes }}>
+              <span class="ec-wi-ff-x" aria-hidden="true">✕</span>
+              <span class="ec-wi-ff-name">{{ block.settings.name }}</span>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+/* ── Section ── */
+.ec-wi{position:relative;background:#050b1f;padding:100px 0 80px;overflow:hidden;color:white;}
+.ec-wi-noise{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;z-index:0;}
+.ec-wi-glow-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(21,101,192,.18) 0%,transparent 70%);filter:blur(40px);pointer-events:none;z-index:0;}
+
+/* ── Header ── */
+.ec-wi-header{max-width:620px;margin:0 auto 72px;text-align:center;position:relative;z-index:1;}
+.ec-wi-eyebrow{color:var(--ec-accent)!important;}
+.ec-wi-title{font-family:var(--ec-font-display);font-size:clamp(52px,6vw,86px);line-height:.92;letter-spacing:1px;color:white;text-transform:uppercase;margin:18px 0 20px;}
+.ec-wi-title .em{color:var(--ec-accent);}
+.ec-wi-subtitle{font-size:16px;color:rgba(255,255,255,.55);line-height:1.65;max-width:520px;margin:0 auto;}
+
+/* ── Showcase container ── */
+.ec-wi-showcase{position:relative;max-width:960px;margin:0 auto;z-index:1;}
+.ec-wi-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+
+/* Animated SVG lines */
+.ec-wi-line{stroke-dasharray:400;stroke-dashoffset:400;transition:stroke-dashoffset 1.4s cubic-bezier(0.22,1,0.36,1);}
+.ec-wi.lines-visible .ec-wi-line{stroke-dashoffset:0;}
+.ec-wi-line:nth-child(2){transition-delay:.15s;}
+.ec-wi-line:nth-child(3){transition-delay:.3s;}
+.ec-wi-line:nth-child(4){transition-delay:.1s;}
+.ec-wi-node{animation:ecWiNode 3s ease-in-out infinite;}
+.ec-wi-node-pulse{animation:ecWiNodePulse 3s ease-in-out infinite;}
+@keyframes ecWiNode{0%,100%{r:5;opacity:1}50%{r:7;opacity:.7}}
+@keyframes ecWiNodePulse{0%,100%{r:12;opacity:.3}50%{r:20;opacity:0}}
+
+/* ── Grid layout ── */
+.ec-wi-grid{display:grid;grid-template-columns:1fr 1.3fr 1fr;grid-template-rows:1fr auto 1fr;gap:28px;align-items:center;}
+.ec-wi-c1{grid-column:1;grid-row:1;}
+.ec-wi-c2{grid-column:3;grid-row:1;}
+.ec-wi-c3{grid-column:1;grid-row:3;}
+.ec-wi-c4{grid-column:3;grid-row:3;}
+.ec-wi-center-wrap{grid-column:2;grid-row:1/4;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:24px 0;}
+
+/* ── Ingredient element cards ── */
+.ec-wi-card{position:relative;background:rgba(255,255,255,.03);border:1.5px solid rgba(79,195,247,.15);border-radius:16px;padding:22px 18px 18px;cursor:default;transition:border-color .3s,background .3s,transform .3s,box-shadow .3s;overflow:hidden;isolation:isolate;}
+.ec-wi-card:hover{border-color:rgba(79,195,247,.5);background:rgba(79,195,247,.06);transform:scale(1.03);box-shadow:0 0 40px rgba(79,195,247,.12),0 16px 40px rgba(0,0,0,.3);}
+.ec-wi-card-glow{position:absolute;inset:-50%;background:radial-gradient(circle,rgba(79,195,247,.12) 0%,transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none;}
+.ec-wi-card:hover .ec-wi-card-glow{opacity:1;}
+.ec-wi-atomic{font-family:var(--ec-font-mono);font-size:9px;color:rgba(79,195,247,.5);letter-spacing:1px;margin-bottom:6px;}
+.ec-wi-symbol{font-family:var(--ec-font-display);font-size:clamp(44px,5vw,64px);line-height:1;color:white;letter-spacing:-1px;margin-bottom:4px;transition:color .2s;}
+.ec-wi-card:hover .ec-wi-symbol{color:var(--ec-accent);}
+.ec-wi-name{font-family:var(--ec-font-mono);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:10px;}
+.ec-wi-desc{font-size:12.5px;color:rgba(255,255,255,.38);line-height:1.5;transition:color .3s;}
+.ec-wi-card:hover .ec-wi-desc{color:rgba(255,255,255,.65);}
+.ec-wi-benefit-line{position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(79,195,247,.4),transparent);transform:scaleX(0);transition:transform .3s;}
+.ec-wi-card:hover .ec-wi-benefit-line{transform:scaleX(1);}
+
+/* ── Center product ── */
+.ec-wi-center-wrap{z-index:2;}
+.ec-wi-center-glow{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(21,101,192,.35) 0%,transparent 70%);filter:blur(24px);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.ec-wi-center-ring{position:absolute;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);}
+.ec-wi-cr1{width:210px;height:210px;border:1px solid rgba(79,195,247,.15);animation:ecWiRing 5s ease-in-out infinite;}
+.ec-wi-cr2{width:270px;height:270px;border:1px solid rgba(79,195,247,.07);animation:ecWiRing 5s ease-in-out infinite;animation-delay:-2.5s;}
+@keyframes ecWiRing{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.7}50%{transform:translate(-50%,-50%) scale(1.06);opacity:.3}}
+.ec-wi-center-img{width:160px;max-width:160px;filter:drop-shadow(0 20px 40px rgba(0,0,0,.6));animation:ecWiFloat 6s ease-in-out infinite;position:relative;z-index:1;}
+@keyframes ecWiFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+.ec-wi-center-label{margin-top:16px;text-align:center;font-family:var(--ec-font-display);font-size:14px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);line-height:1.2;position:relative;z-index:1;}
+.ec-wi-center-label span{display:block;font-family:var(--ec-font-mono);font-size:8.5px;letter-spacing:2px;color:rgba(79,195,247,.5);margin-top:3px;}
+
+/* ── Free From strip ── */
+.ec-wi-free-from{margin-top:60px;padding:28px 40px;border:1px solid rgba(255,255,255,.06);border-radius:16px;background:rgba(255,255,255,.02);display:flex;align-items:center;gap:32px;flex-wrap:wrap;}
+.ec-wi-ff-label{font-family:var(--ec-font-mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);white-space:nowrap;flex-shrink:0;}
+.ec-wi-ff-items{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
+.ec-wi-ff-item{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(229,57,53,.07);border:1px solid rgba(229,57,53,.18);border-radius:999px;transition:background .2s;}
+.ec-wi-ff-item:hover{background:rgba(229,57,53,.12);}
+.ec-wi-ff-x{color:#ef5350;font-size:10px;font-weight:700;line-height:1;}
+.ec-wi-ff-name{font-family:var(--ec-font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .ec-wi-lines{display:none;}
+  .ec-wi-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:16px;}
+  .ec-wi-c1{grid-column:1;grid-row:1;}
+  .ec-wi-c2{grid-column:2;grid-row:1;}
+  .ec-wi-c3{grid-column:1;grid-row:3;}
+  .ec-wi-c4{grid-column:2;grid-row:3;}
+  .ec-wi-center-wrap{grid-column:1/3;grid-row:2;padding:20px 0;}
+  .ec-wi-center-ring{display:none;}
+}
+@media(max-width:560px){
+  .ec-wi{padding:80px 0 60px;}
+  .ec-wi-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .ec-wi-card{padding:16px 14px 14px;}
+  .ec-wi-symbol{font-size:40px;}
+  .ec-wi-free-from{padding:20px 24px;gap:16px;flex-direction:column;align-items:flex-start;}
+}
+</style>
+
+<script>
+(function(){
+  var section = document.getElementById('section-{{ section.id }}');
+  if(!section) return;
+  var triggered = false;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !triggered){
+        triggered = true;
+        section.classList.add('lines-visible');
+        obs.disconnect();
+      }
+    });
+  },{threshold:0.3});
+  obs.observe(section);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "What's Inside",
+  "tag": "section",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"What's Inside"},
+    {"type":"text","id":"title","label":"Title","default":"The formula,<br><span class=\"em\">decoded.</span>"},
+    {"type":"textarea","id":"subtitle","label":"Subtitle","default":"We believe in complete transparency. Here's exactly what's in ElectroChew — and what we left out on purpose."},
+    {"type":"image_picker","id":"product_image","label":"Center product image"}
+  ],
+  "blocks":[
+    {
+      "type":"has","name":"Ingredient element",
+      "settings":[
+        {"type":"text","id":"symbol","label":"Element symbol","default":"K"},
+        {"type":"text","id":"name","label":"Element name","default":"Potassium"},
+        {"type":"text","id":"description","label":"Description","default":"Regulates fluid balance and prevents muscle cramps"}
+      ]
+    },
+    {
+      "type":"out","name":"Free-from item",
+      "settings":[
+        {"type":"text","id":"name","label":"Name","default":"Sugar"},
+        {"type":"text","id":"description","label":"Description","default":"Zero grams. No crash."}
+      ]
+    }
+  ],
+  "presets":[{
+    "name":"What's Inside",
+    "blocks":[
+      {"type":"has","settings":{"symbol":"K","name":"Potassium","description":"Regulates fluid balance and prevents muscle cramps"}},
+      {"type":"has","settings":{"symbol":"Mg","name":"Magnesium","description":"Supports muscle recovery and energy production"}},
+      {"type":"has","settings":{"symbol":"Ca","name":"Calcium","description":"Enables muscle contractions and nerve signaling"}},
+      {"type":"has","settings":{"symbol":"GUM","name":"Gum Base","description":"Clean delivery medium — no artificial fillers"}},
+      {"type":"out","settings":{"name":"Sugar","description":"Zero grams. No crash."}},
+      {"type":"out","settings":{"name":"Aspartame","description":"None. Ever."}},
+      {"type":"out","settings":{"name":"Artificial Colors","description":"No dyes, no staining."}},
+      {"type":"out","settings":{"name":"Fillers","description":"No unnecessary padding."}}
+    ]
+  }]
+}
+{% endschema %}

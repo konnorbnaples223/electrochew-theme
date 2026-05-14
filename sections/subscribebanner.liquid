@@ -1,0 +1,63 @@
+<section class="ec-subscribe-banner" style="background:{{ section.settings.bg_color }};">
+  <div class="ec-container">
+    <div class="ec-subscribe-inner">
+      <div>
+        <div style="font-family:var(--ec-font-display);font-size:75px;line-height:1;color:white;letter-spacing:-2px;">
+          {{ section.settings.discount }}
+        </div>
+        <p style="font-size:15px;color:rgba(255,255,255,0.6);margin-top:10px;">{{ section.settings.subtitle }}</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:20px;">
+          {% for block in section.blocks %}
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:rgba(255,255,255,0.7);" {{ block.shopify_attributes }}>
+              <div style="width:5px;height:5px;border-radius:50%;background:var(--ec-accent);flex-shrink:0;"></div>
+              {{ block.settings.text }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <p style="color:rgba(255,255,255,0.5);font-size:12px;font-family:var(--ec-font-mono);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">{{ section.settings.form_label }}</p>
+        {% form 'customer', class: 'ec-subscribe-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" required>
+          <button type="submit">{{ section.settings.button_text }}</button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Subscribe banner",
+  "tag": "section",
+  "settings": [
+    { "type": "html", "id": "discount", "label": "Discount headline", "default": "<span style=\"color:#4fc3f7;\">10%</span> OFF" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Subscribe and save on every order. Free shipping included. Cancel anytime." },
+    { "type": "text", "id": "form_label", "label": "Form label", "default": "Join the community" },
+    { "type": "text", "id": "placeholder", "label": "Email placeholder", "default": "Your email address" },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "JOIN ⚡" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#0a1540" }
+  ],
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Automatic monthly delivery" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Subscribe banner",
+      "blocks": [
+        { "type": "perk", "settings": { "text": "Automatic monthly delivery" } },
+        { "type": "perk", "settings": { "text": "Free shipping on all orders" } },
+        { "type": "perk", "settings": { "text": "Cancel or pause anytime" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

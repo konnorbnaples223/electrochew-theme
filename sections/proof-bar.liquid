@@ -1,0 +1,48 @@
+<div class="ec-proof-bar" id="section-{{ section.id }}">
+  <div class="ec-container">
+    <div class="ec-proof-grid">
+      {% for block in section.blocks %}
+        <div class="ec-proof-item ec-anim ec-d{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="ec-proof-num">{{ block.settings.number }}</div>
+          <div class="ec-proof-label">{{ block.settings.label }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+.ec-proof-bar{background:var(--ec-navy);padding:44px 0;}
+.ec-proof-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.ec-proof-item{text-align:center;padding:0 40px;border-right:1px solid rgba(255,255,255,.08);}
+.ec-proof-item:last-child{border-right:none;}
+.ec-proof-num{font-family:var(--ec-font-display);font-size:54px;line-height:1;color:white;letter-spacing:1px;}
+.ec-proof-num .accent{color:var(--ec-accent);}
+.ec-proof-label{font-family:var(--ec-font-mono);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:8px;}
+@media(max-width:1024px){.ec-proof-grid{grid-template-columns:1fr 1fr;}.ec-proof-item:nth-child(2){border-right:none;}.ec-proof-item:nth-child(3),.ec-proof-item:nth-child(4){border-top:1px solid rgba(255,255,255,.08);}}
+@media(max-width:640px){.ec-proof-grid{grid-template-columns:1fr 1fr;}.ec-proof-item{padding:20px;}.ec-proof-num{font-size:42px;}}
+</style>
+
+{% schema %}
+{
+  "name": "Proof bar",
+  "tag": "section",
+  "blocks":[{
+    "type":"stat","name":"Stat",
+    "settings":[
+      {"type":"text","id":"number","label":"Number (HTML allowed)","default":"5–10"},
+      {"type":"text","id":"label","label":"Label","default":"Minutes to Full Absorption"}
+    ]
+  }],
+  "max_blocks":4,
+  "presets":[{
+    "name":"Proof bar",
+    "blocks":[
+      {"type":"stat","settings":{"number":"5–10","label":"Minutes to Full Absorption"}},
+      {"type":"stat","settings":{"number":"3<span class=\"accent\">×</span>","label":"Electrolytes per Piece"}},
+      {"type":"stat","settings":{"number":"0<span style=\"font-size:32px;color:rgba(255,255,255,.5);\">g sugar</span>","label":"Per Serving, Every Time"}},
+      {"type":"stat","settings":{"number":"100<span class=\"accent\">%</span>","label":"Clean Formula"}}
+    ]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,63 @@
+<section class="ec-section ec-bg-{{ section.settings.bg_style | default: 'lab-light' }}" style="position:relative;overflow:hidden;padding:120px 0;">
+  <div class="ec-inside-bg" aria-hidden="true">
+    <div class="ec-grid-overlay"></div>
+    <div class="ec-mesh-glow ec-mesh-1"></div>
+    <div class="ec-mesh-glow ec-mesh-2"></div>
+  </div>
+
+  <div class="ec-container" style="position:relative;z-index:1;">
+    <div class="ec-about-grid">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <div class="ec-eyebrow">{{ section.settings.eyebrow }}</div>
+        {% endif %}
+        <h2 class="ec-headline">{{ section.settings.title }}</h2>
+        <div style="font-size:17px;color:var(--ec-text2);line-height:1.8;margin-top:24px;">
+          {{ section.settings.body }}
+        </div>
+        {% if section.settings.cta_label != blank %}
+          <div style="margin-top:36px;">
+            <a href="{{ section.settings.cta_url }}" class="ec-btn ec-btn-navy ec-btn-lg">{{ section.settings.cta_label }}</a>
+          </div>
+        {% endif %}
+      </div>
+      {% if section.settings.image %}
+        <div class="ec-about-visual">
+          <img src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.title | strip_html }}" style="width:100%;border-radius:24px;box-shadow:0 24px 64px rgba(10,21,64,0.15);">
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+.ec-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.ec-about-visual { position: relative; }
+@media(max-width: 900px) { .ec-about-grid { grid-template-columns: 1fr; gap: 40px; } }
+</style>
+
+{% schema %}
+{
+  "name": "About story",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Story" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Built for <span class=\"em\">Performers.</span>" },
+    { "type": "richtext", "id": "body", "label": "Body content",
+      "default": "<p>ElectroChew was born from a simple frustration — why do electrolytes have to come in a bottle, a packet, or a pill?</p><p>We worked with chemists at our university to formulate a better solution. By delivering electrolytes directly through the oral mucosa, we created something that works faster than any drink on the market.</p><p>We're two founders from Charleston, SC who quit our jobs and bet everything on chewing gum. We believe in what we built because we use it every single day.</p>"
+    },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "cta_label", "label": "Button text", "default": "Shop ElectroChew" },
+    { "type": "url", "id": "cta_url", "label": "Button link", "default": "/collections/all" },
+    { "type": "select", "id": "bg_style", "label": "Background style",
+      "options": [
+        { "value": "lab-light", "label": "Lab Light" },
+        { "value": "lab-dark", "label": "Lab Dark" },
+        { "value": "minimal", "label": "Minimal" }
+      ],
+      "default": "lab-light"
+    }
+  ],
+  "presets": [{ "name": "About story" }]
+}
+{% endschema %}

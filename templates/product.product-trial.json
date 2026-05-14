@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "product-trial-main",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

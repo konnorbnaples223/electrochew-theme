@@ -1,0 +1,45 @@
+{%- liquid
+  assign show_hero_bg = section.settings.show_hero_bg
+-%}
+
+<section style="padding:160px 0 100px;{% if show_hero_bg %}background:linear-gradient(160deg,var(--ec-off-white) 0%,var(--ec-light) 100%);{% endif %}position:relative;overflow:hidden;">
+  {% if show_hero_bg %}
+    <div style="position:absolute;right:-40px;bottom:-60px;font-family:var(--ec-font-display);font-size:400px;color:rgba(10,21,64,0.04);line-height:1;pointer-events:none;">EC</div>
+  {% endif %}
+  <div class="ec-container" style="position:relative;z-index:1;{% if section.settings.center %}text-align:center;{% endif %}">
+    {% if section.settings.eyebrow != blank %}
+      <div class="ec-eyebrow {% if section.settings.center %}ec-eyebrow-center{% endif %}">{{ section.settings.eyebrow }}</div>
+    {% endif %}
+    {% if section.settings.title != blank %}
+      <h1 class="ec-headline" {% if section.settings.center %}style="text-align:center;"{% endif %}>{{ section.settings.title }}</h1>
+    {% else %}
+      <h1 class="ec-headline" {% if section.settings.center %}style="text-align:center;"{% endif %}>{{ page.title }}</h1>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+      <p class="ec-subtext" style="margin:16px {% if section.settings.center %}auto 0{% else %}0 0{% endif %};{% if section.settings.center %}text-align:center;{% endif %}">{{ section.settings.subtitle }}</p>
+    {% endif %}
+
+    {% if page.content != blank %}
+      <div style="margin-top:48px;font-size:16px;color:var(--ec-text2);line-height:1.8;max-width:720px;{% if section.settings.center %}margin-left:auto;margin-right:auto;{% endif %}">
+        {{ page.content }}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page hero",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text" },
+    { "type": "text", "id": "title", "label": "Title (leave blank to use page title)" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" },
+    { "type": "checkbox", "id": "center", "label": "Center alignment", "default": false },
+    { "type": "checkbox", "id": "show_hero_bg", "label": "Show background gradient", "default": true }
+  ],
+  "presets": [
+    { "name": "Page hero" }
+  ]
+}
+{% endschema %}

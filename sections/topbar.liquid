@@ -1,0 +1,100 @@
+{% if section.settings.show_announcement %}
+<div class="ec-announcement" id="ec-announcement">
+  {% if section.settings.announcement_url != blank %}
+    <a href="{{ section.settings.announcement_url }}">{{ section.settings.announcement_text }}</a>
+  {% else %}
+    {{ section.settings.announcement_text }}
+  {% endif %}
+</div>
+{% endif %}
+
+<header class="ec-header" id="ec-header">
+  <div class="ec-header-inner">
+    <a href="/" class="ec-logo">
+      {% if section.settings.logo %}
+        <img src="{{ section.settings.logo | img_url: '300x' }}" alt="{{ shop.name }}" style="height:{{ section.settings.logo_height }}px;">
+      {% else %}
+        <img src="{{ 'logo.jpg' | asset_url }}" alt="ElectroChew" style="height:38px;width:auto;" onerror="this.style.display='none'">
+      {% endif %}
+    </a>
+
+    <nav class="ec-nav">
+      {% assign nav_labels = 'Home,Shop,About,Ambassadors,Contact' | split: ',' %}
+      {% assign nav_urls = '/,/collections/all,/pages/about,/pages/ambassador,/pages/contact' | split: ',' %}
+      {% for i in (1..5) %}
+        {% assign label_key = 'nav_' | append: i | append: '_label' %}
+        {% assign url_key = 'nav_' | append: i | append: '_url' %}
+        {% assign label = section.settings[label_key] | default: nav_labels[forloop.index0] %}
+        {% assign url = section.settings[url_key] | default: nav_urls[forloop.index0] %}
+        {% if label != blank %}
+          <a href="{{ url }}" class="ec-nav-link">{{ label }}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+
+    <div class="ec-header-actions">
+      <a href="/account" class="ec-header-icon" aria-label="Account">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <a href="/cart" class="ec-header-icon" aria-label="Cart" style="position:relative;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        {% if cart.item_count > 0 %}<span class="ec-cart-count">{{ cart.item_count }}</span>{% endif %}
+      </a>
+      {% if section.settings.show_header_cta and section.settings.header_cta_label != blank %}
+        <a href="{{ section.settings.header_cta_url | default: '/collections/all' }}" class="ec-header-cta-btn">{{ section.settings.header_cta_label }}</a>
+      {% endif %}
+      <button class="ec-mobile-toggle" id="ec-mobile-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="ec-mobile-nav" id="ec-mobile-nav">
+    {% assign nav_labels_m = 'Home,Shop,About,Ambassadors,Contact' | split: ',' %}
+    {% assign nav_urls_m = '/,/collections/all,/pages/about,/pages/ambassador,/pages/contact' | split: ',' %}
+    {% for i in (1..5) %}
+      {% assign label_key = 'nav_' | append: i | append: '_label' %}
+      {% assign url_key = 'nav_' | append: i | append: '_url' %}
+      {% assign label = section.settings[label_key] | default: nav_labels_m[forloop.index0] %}
+      {% assign url = section.settings[url_key] | default: nav_urls_m[forloop.index0] %}
+      {% if label != blank %}
+        <a href="{{ url }}">{{ label }}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</header>
+
+<style>
+.ec-header-cta-btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--ec-font-mono);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;padding:9px 20px;background:var(--ec-navy);color:white;border-radius:4px;transition:background .2s,transform .15s;white-space:nowrap;}
+.ec-header-cta-btn:hover{background:var(--ec-electric);transform:translateY(-1px);}
+@media(max-width:900px){.ec-header-cta-btn{display:none;}}
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {"type":"header","content":"Logo"},
+    {"type":"image_picker","id":"logo","label":"Logo image"},
+    {"type":"range","id":"logo_height","label":"Logo height (px)","min":24,"max":56,"step":2,"default":38},
+    {"type":"header","content":"Announcement Bar"},
+    {"type":"checkbox","id":"show_announcement","label":"Show announcement bar","default":true},
+    {"type":"text","id":"announcement_text","label":"Announcement text","default":"⚡ Free 6-piece trial — just pay $3 shipping. Claim yours today."},
+    {"type":"text","id":"announcement_url","label":"Announcement link (optional)"},
+    {"type":"header","content":"Header CTA Button"},
+    {"type":"checkbox","id":"show_header_cta","label":"Show CTA button","default":true},
+    {"type":"text","id":"header_cta_label","label":"CTA button label","default":"Try Free ⚡"},
+    {"type":"url","id":"header_cta_url","label":"CTA button URL"},
+    {"type":"header","content":"Navigation Links"},
+    {"type":"text","id":"nav_1_label","label":"Link 1 label","default":"Home"},
+    {"type":"text","id":"nav_1_url","label":"Link 1 URL","default":"/"},
+    {"type":"text","id":"nav_2_label","label":"Link 2 label","default":"Shop"},
+    {"type":"text","id":"nav_2_url","label":"Link 2 URL","default":"/collections/all"},
+    {"type":"text","id":"nav_3_label","label":"Link 3 label","default":"About"},
+    {"type":"text","id":"nav_3_url","label":"Link 3 URL","default":"/pages/about"},
+    {"type":"text","id":"nav_4_label","label":"Link 4 label","default":"Ambassadors"},
+    {"type":"text","id":"nav_4_url","label":"Link 4 URL","default":"/pages/ambassador"},
+    {"type":"text","id":"nav_5_label","label":"Link 5 label","default":"Contact"},
+    {"type":"text","id":"nav_5_url","label":"Link 5 URL","default":"/pages/contact"}
+  ]
+}
+{% endschema %}

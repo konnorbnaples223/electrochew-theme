@@ -1,0 +1,92 @@
+<div style="padding:140px 0 80px;">
+  <div class="ec-container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;" class="product-page-grid">
+
+      <div style="position:sticky;top:100px;">
+        <div style="background:linear-gradient(160deg,var(--ec-off-white),var(--ec-light));border-radius:24px;overflow:hidden;border:1.5px solid rgba(10,21,64,0.06);min-height:420px;display:flex;align-items:center;justify-content:center;padding:40px;position:relative;">
+          <div style="position:absolute;right:-20px;bottom:-20px;font-family:var(--ec-font-display);font-size:160px;color:rgba(10,21,64,0.04);line-height:1;pointer-events:none;">EC</div>
+          {% if product.featured_image %}
+            <img src="{{ product.featured_image | img_url: '800x800' }}" alt="{{ product.title | escape }}" style="max-height:360px;object-fit:contain;filter:drop-shadow(0 16px 40px rgba(10,21,64,0.15));position:relative;z-index:1;">
+          {% else %}
+            <img src="{{ 'product-front.jpg' | asset_url }}" alt="{{ product.title | escape }}" style="max-height:360px;object-fit:contain;position:relative;z-index:1;">
+          {% endif %}
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+          <span style="color:#fbbf24;font-size:14px;letter-spacing:2px;">★★★★★</span>
+          <span style="font-size:13px;color:var(--ec-text3);">4.9 · 124 reviews</span>
+        </div>
+
+        <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,137,123,0.08);border:1px solid rgba(0,137,123,0.2);border-radius:999px;padding:5px 12px;font-family:var(--ec-font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ec-success);margin-bottom:14px;">
+          Free Trial — Just Pay Shipping
+        </div>
+
+        <h1 style="font-family:var(--ec-font-display);font-size:40px;line-height:0.95;letter-spacing:0.5px;color:var(--ec-navy);margin-bottom:14px;">{{ product.title }}</h1>
+
+        <div style="font-size:16px;color:var(--ec-text2);line-height:1.7;margin-bottom:28px;">
+          {{ product.description }}
+        </div>
+
+        <div style="margin-bottom:28px;">
+          <div style="font-family:var(--ec-font-display);font-size:48px;color:var(--ec-success);line-height:1;">FREE</div>
+          <div style="font-size:14px;color:var(--ec-text3);margin-top:6px;">You only pay $3.00 shipping · No subscription required</div>
+        </div>
+
+        <form action="/cart/add" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="ec-btn ec-btn-navy ec-btn-lg ec-btn-full">
+            Claim Free Trial →
+          </button>
+        </form>
+
+        <div style="margin-top:20px;padding:20px;background:rgba(0,137,123,0.04);border:1px solid rgba(0,137,123,0.12);border-radius:14px;">
+          <div style="font-family:var(--ec-font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ec-success);margin-bottom:14px;">What you get</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ec-text2);">
+              <div class="ec-trial-check">✓</div>6 pieces — Tropical Berry flavor
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ec-text2);">
+              <div class="ec-trial-check">✓</div>No subscription required
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ec-text2);">
+              <div class="ec-trial-check">✓</div>Ships in 2–4 days
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ec-text2);">
+              <div class="ec-trial-check">✓</div>One per customer
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;padding-top:20px;border-top:1px solid rgba(10,21,64,0.06);">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ec-text3);">🔒 Secure checkout</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ec-text3);">🚚 Ships in 2–4 days</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ec-text3);">🇺🇸 Made in USA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ec-trial-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(0,137,123,0.1);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--ec-success);
+    font-size: 10px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  @media(max-width:1024px) { .product-page-grid { grid-template-columns: 1fr !important; } }
+</style>
+
+{% schema %}
+{
+  "name": "Product trial main",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

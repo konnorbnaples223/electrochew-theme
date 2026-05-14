@@ -1,0 +1,73 @@
+<section class="ec-section ec-section-alt" id="section-{{ section.id }}">
+  <div class="ec-container">
+    <div class="ec-hiw-header ec-anim">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="ec-eyebrow ec-eyebrow-center">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+      <h2 class="ec-headline" style="text-align:center;">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="ec-subtext" style="text-align:center;margin:16px auto 0;max-width:520px;">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="ec-hiw-grid" style="position:relative;">
+      <div class="ec-hiw-connector" aria-hidden="true"></div>
+      {% for block in section.blocks %}
+        <div class="ec-hiw-step ec-anim ec-d{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="ec-hiw-bg-num">{{ block.settings.number }}</div>
+          <div class="ec-hiw-icon">{{ block.settings.icon }}</div>
+          <div class="ec-hiw-title">{{ block.settings.title }}</div>
+          <p class="ec-hiw-desc">{{ block.settings.description }}</p>
+          {%- if block.settings.tag != blank -%}
+            <span class="ec-hiw-tag">{{ block.settings.tag }}</span>
+          {%- endif -%}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.ec-hiw-header{max-width:600px;margin:0 auto 80px;text-align:center;}
+.ec-hiw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
+.ec-hiw-connector{position:absolute;top:52px;left:calc(33.333% + 16px);right:calc(33.333% + 16px);height:1.5px;background:linear-gradient(to right,transparent,var(--ec-accent),transparent);pointer-events:none;}
+.ec-hiw-step{position:relative;text-align:center;}
+.ec-hiw-bg-num{font-family:var(--ec-font-display);font-size:100px;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(21,101,192,.12);margin-bottom:-20px;position:relative;z-index:0;user-select:none;}
+.ec-hiw-icon{width:72px;height:72px;border-radius:50%;background:white;border:2px solid var(--ec-border2);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 28px;position:relative;z-index:1;box-shadow:0 8px 32px rgba(10,21,64,.08);transition:border-color .25s,box-shadow .25s;}
+.ec-hiw-step:hover .ec-hiw-icon{border-color:var(--ec-electric);box-shadow:0 12px 40px rgba(21,101,192,.15);}
+.ec-hiw-title{font-family:var(--ec-font-display);font-size:40px;letter-spacing:2px;color:var(--ec-navy);margin-bottom:14px;text-transform:uppercase;}
+.ec-hiw-desc{font-size:15px;color:var(--ec-text2);line-height:1.72;max-width:280px;margin:0 auto;}
+.ec-hiw-tag{display:inline-block;margin-top:18px;padding:5px 14px;background:rgba(21,101,192,.07);border:1px solid rgba(21,101,192,.15);border-radius:999px;font-family:var(--ec-font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ec-electric);}
+@media(max-width:1024px){.ec-hiw-grid{grid-template-columns:1fr;gap:48px;}.ec-hiw-connector{display:none;}}
+</style>
+
+{% schema %}
+{
+  "name": "How it works",
+  "tag": "section",
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"How It Works"},
+    {"type":"text","id":"title","label":"Title","default":"Three steps.<br><span class=\"em\">Zero excuses.</span>"},
+    {"type":"text","id":"subtitle","label":"Subtitle","default":"You already know how to chew gum. That's step one."}
+  ],
+  "blocks":[{
+    "type":"step","name":"Step",
+    "settings":[
+      {"type":"text","id":"number","label":"Number","default":"01"},
+      {"type":"text","id":"icon","label":"Icon (emoji)","default":"🧃"},
+      {"type":"text","id":"title","label":"Title","default":"Open"},
+      {"type":"textarea","id":"description","label":"Description","default":"Pull out a piece. No shaker bottle. No measuring. No mixing. No waiting."},
+      {"type":"text","id":"tag","label":"Tag badge","default":"Anywhere. Anytime."}
+    ]
+  }],
+  "max_blocks":3,
+  "presets":[{
+    "name":"How it works",
+    "blocks":[
+      {"type":"step","settings":{"number":"01","icon":"🧃","title":"Open","description":"Pull out a piece. No shaker bottle. No measuring. No mixing. No waiting for water to kick in.","tag":"Anywhere. Anytime."}},
+      {"type":"step","settings":{"number":"02","icon":"⚡","title":"Chew","description":"Your oral mucosa absorbs electrolytes directly into your bloodstream — bypassing digestion for real-time delivery.","tag":"5–10 minute absorption"}},
+      {"type":"step","settings":{"number":"03","icon":"🏆","title":"Perform","description":"Train. Compete. Work. Live. ElectroChew works while you do. Your performance, elevated — every single rep.","tag":"Sustained energy. No crash."}}
+    ]
+  }]
+}
+{% endschema %}

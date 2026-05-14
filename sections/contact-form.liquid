@@ -1,0 +1,111 @@
+<section class="ec-section ec-bg-{{ section.settings.bg_style | default: 'lab-light' }}" style="position:relative;overflow:hidden;padding:120px 0;">
+  <div class="ec-inside-bg" aria-hidden="true">
+    <div class="ec-grid-overlay"></div>
+    <div class="ec-mesh-glow ec-mesh-1"></div>
+    <div class="ec-mesh-glow ec-mesh-2"></div>
+  </div>
+
+  <div class="ec-container" style="position:relative;z-index:1;">
+    <div class="ec-contact-grid">
+      <div>
+        {% if section.settings.eyebrow != blank %}
+          <div class="ec-eyebrow">{{ section.settings.eyebrow }}</div>
+        {% endif %}
+        <h2 class="ec-headline">{{ section.settings.title }}</h2>
+        <p class="ec-subtext" style="margin-top:16px;">{{ section.settings.subtitle }}</p>
+
+        <div style="margin-top:36px;">
+          {% for block in section.blocks %}
+            <div class="ec-contact-detail" {{ block.shopify_attributes }}>
+              <div class="ec-contact-detail-icon">{{ block.settings.icon }}</div>
+              <div>
+                <strong>{{ block.settings.label }}</strong>
+                <span>{{ block.settings.value }}</span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="ec-contact-form-card">
+        <h3 style="font-family:var(--ec-font-display);font-size:32px;letter-spacing:0.5px;margin-bottom:20px;color:var(--ec-navy);">{{ section.settings.form_title }}</h3>
+
+        {% form 'contact' %}
+          <div class="ec-amb-field">
+            <input type="text" name="contact[name]" placeholder="Your name" required>
+          </div>
+          <div class="ec-amb-field">
+            <input type="email" name="contact[email]" placeholder="Email address" required>
+          </div>
+          <div class="ec-amb-field">
+            <select name="contact[subject]" style="width:100%;padding:13px 16px;background:var(--ec-off-white);border:1.5px solid rgba(10,21,64,0.08);border-radius:10px;color:var(--ec-navy);font-family:var(--ec-font-body);font-size:14px;outline:none;cursor:pointer;">
+              <option>General inquiry</option>
+              <option>Order support</option>
+              <option>Partnership / press</option>
+              <option>Wholesale / retail</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="ec-amb-field">
+            <textarea name="contact[body]" placeholder="How can we help?" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="ec-btn ec-btn-navy ec-btn-full ec-btn-lg">Send Message ⚡</button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.ec-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.ec-contact-detail { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(10,21,64,0.06); }
+.ec-contact-detail:last-child { border: none; }
+.ec-contact-detail-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(21,101,192,0.10); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.ec-contact-detail strong { font-size: 12px; font-family: var(--ec-font-mono); letter-spacing: 1.5px; color: var(--ec-navy); display: block; text-transform: uppercase; }
+.ec-contact-detail span { font-size: 14px; color: var(--ec-text2); }
+.ec-contact-form-card { background: white; border: 1px solid rgba(10,21,64,0.08); border-radius: 24px; padding: 36px; box-shadow: 0 24px 64px rgba(10,21,64,0.08); }
+@media(max-width: 900px) { .ec-contact-grid { grid-template-columns: 1fr; } }
+</style>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Get in Touch" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Let's <span class=\"em\">Talk</span>" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Have a question, partnership idea, or just want to reach out? We respond personally." },
+    { "type": "text", "id": "form_title", "label": "Form title", "default": "Send a message" },
+    { "type": "select", "id": "bg_style", "label": "Background style",
+      "options": [
+        { "value": "lab-light", "label": "Lab Light" },
+        { "value": "minimal", "label": "Minimal" }
+      ],
+      "default": "lab-light"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "detail",
+      "name": "Contact detail",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "📍" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Location" },
+        { "type": "text", "id": "value", "label": "Value", "default": "Charleston, South Carolina" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Contact form",
+      "blocks": [
+        { "type": "detail", "settings": { "icon": "📍", "label": "Location", "value": "Charleston, South Carolina" } },
+        { "type": "detail", "settings": { "icon": "📧", "label": "Email", "value": "hello@electrochew.com" } },
+        { "type": "detail", "settings": { "icon": "📱", "label": "Social", "value": "@electrochew" } },
+        { "type": "detail", "settings": { "icon": "⚡", "label": "Response time", "value": "Within 24–48 hours" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

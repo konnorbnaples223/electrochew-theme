@@ -1,0 +1,610 @@
+{%- comment -%}
+  Cart section — full cart page with line items, quantity controls, and checkout.
+  Uses Shopify's standard /cart and /cart/change AJAX endpoints, no extra JS libs.
+{%- endcomment -%}
+
+<section class="ec-cart-section">
+  <div class="ec-container">
+
+    <header class="ec-cart-header">
+      <div class="ec-eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1 class="ec-headline" style="text-align:left;">{{ section.settings.title }}</h1>
+      {%- if cart.item_count > 0 -%}
+        <p class="ec-subtext" style="margin-top:8px;">
+          {{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %} in your cart
+        </p>
+      {%- endif -%}
+    </header>
+
+    {%- if cart.item_count == 0 -%}
+
+      {%- comment -%} ───── Empty cart state ───── {%- endcomment -%}
+      <div class="ec-cart-empty">
+        <div class="ec-cart-empty-icon" aria-hidden="true">
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </div>
+        <h2 class="ec-cart-empty-title">{{ section.settings.empty_title }}</h2>
+        <p class="ec-cart-empty-msg">{{ section.settings.empty_message }}</p>
+        <a href="{{ section.settings.empty_cta_url | default: '/collections/all' }}" class="ec-btn ec-btn-navy ec-btn-lg">
+          {{ section.settings.empty_cta_label }}
+        </a>
+      </div>
+
+    {%- else -%}
+
+      {%- comment -%} ───── Cart with items ───── {%- endcomment -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate class="ec-cart-form" id="ec-cart-form">
+
+        <div class="ec-cart-grid">
+
+          {%- comment -%} ─ Line items column ─ {%- endcomment -%}
+          <div class="ec-cart-items">
+
+            <div class="ec-cart-items-head">
+              <span>Product</span>
+              <span class="ec-cart-col-qty">Quantity</span>
+              <span class="ec-cart-col-total">Total</span>
+            </div>
+
+            {%- for item in cart.items -%}
+              <div class="ec-cart-item" data-line="{{ forloop.index }}" data-key="{{ item.key }}">
+                <div class="ec-cart-item-product">
+                  {%- if item.image -%}
+                    <a href="{{ item.url }}" class="ec-cart-item-thumb">
+                      <img src="{{ item.image | img_url: '160x' }}" alt="{{ item.title | escape }}">
+                    </a>
+                  {%- endif -%}
+                  <div class="ec-cart-item-info">
+                    <a href="{{ item.url }}" class="ec-cart-item-name">{{ item.product.title }}</a>
+                    {%- unless item.variant.title contains 'Default' -%}
+                      <div class="ec-cart-item-variant">{{ item.variant.title }}</div>
+                    {%- endunless -%}
+                    {%- if item.selling_plan_allocation -%}
+                      <div class="ec-cart-item-subscription">
+                        <span class="ec-cart-sub-tag">⚡ Subscription</span>
+                        {{ item.selling_plan_allocation.selling_plan.name }}
+                      </div>
+                    {%- endif -%}
+                    <div class="ec-cart-item-price">{{ item.final_price | money }}</div>
+                    <button type="button" class="ec-cart-item-remove" data-cart-remove="{{ item.key }}">
+                      Remove
+                    </button>
+                  </div>
+                </div>
+
+                <div class="ec-cart-item-qty">
+                  <div class="ec-qty-control">
+                    <button type="button" class="ec-qty-btn" data-cart-decr="{{ item.key }}" aria-label="Decrease quantity">−</button>
+                    <input
+                      type="number"
+                      name="updates[{{ item.key }}]"
+                      value="{{ item.quantity }}"
+                      min="0"
+                      class="ec-qty-input"
+                      data-cart-qty="{{ item.key }}"
+                      aria-label="Quantity">
+                    <button type="button" class="ec-qty-btn" data-cart-incr="{{ item.key }}" aria-label="Increase quantity">+</button>
+                  </div>
+                </div>
+
+                <div class="ec-cart-item-total">
+                  {{ item.final_line_price | money }}
+                </div>
+              </div>
+            {%- endfor -%}
+
+          </div>
+
+          {%- comment -%} ─ Summary column ─ {%- endcomment -%}
+          <aside class="ec-cart-summary">
+            <h2 class="ec-cart-summary-title">Order summary</h2>
+
+            <div class="ec-cart-summary-row">
+              <span>Subtotal</span>
+              <strong id="ec-cart-subtotal">{{ cart.items_subtotal_price | money }}</strong>
+            </div>
+
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              {%- for discount in cart.cart_level_discount_applications -%}
+                <div class="ec-cart-summary-row ec-cart-discount">
+                  <span>{{ discount.title }}</span>
+                  <strong>−{{ discount.total_allocated_amount | money }}</strong>
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+
+            <div class="ec-cart-summary-row ec-cart-shipping-row">
+              <span>Shipping</span>
+              <strong>{{ section.settings.shipping_note }}</strong>
+            </div>
+
+            <div class="ec-cart-summary-divider"></div>
+
+            <div class="ec-cart-summary-row ec-cart-total">
+              <span>Total</span>
+              <strong id="ec-cart-total">{{ cart.total_price | money }}</strong>
+            </div>
+
+            <label for="cart-note" class="ec-cart-note-label">Order note</label>
+            <textarea name="note" id="cart-note" class="ec-cart-note" placeholder="Special instructions for your order">{{ cart.note }}</textarea>
+
+            <button type="submit" name="checkout" class="ec-btn ec-btn-navy ec-btn-lg ec-cart-checkout-btn">
+              {{ section.settings.checkout_label }}
+            </button>
+
+            <a href="{{ section.settings.continue_url | default: '/collections/all' }}" class="ec-cart-continue">
+              ← {{ section.settings.continue_label }}
+            </a>
+
+            <div class="ec-cart-trust">
+              {%- if section.settings.trust_1 != blank -%}
+                <div class="ec-cart-trust-item">
+                  <span class="ec-cart-trust-check">✓</span> {{ section.settings.trust_1 }}
+                </div>
+              {%- endif -%}
+              {%- if section.settings.trust_2 != blank -%}
+                <div class="ec-cart-trust-item">
+                  <span class="ec-cart-trust-check">✓</span> {{ section.settings.trust_2 }}
+                </div>
+              {%- endif -%}
+              {%- if section.settings.trust_3 != blank -%}
+                <div class="ec-cart-trust-item">
+                  <span class="ec-cart-trust-check">✓</span> {{ section.settings.trust_3 }}
+                </div>
+              {%- endif -%}
+            </div>
+          </aside>
+
+        </div>
+      </form>
+
+    {%- endif -%}
+
+  </div>
+</section>
+
+<style>
+  .ec-cart-section {
+    padding: calc(var(--ec-header-h, 72px) + 60px) 0 100px;
+    background: linear-gradient(160deg, var(--ec-off-white) 0%, var(--ec-light) 100%);
+    min-height: 80vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .ec-cart-section::before {
+    content: 'CART';
+    position: absolute;
+    right: -40px; bottom: -60px;
+    font-family: var(--ec-font-display);
+    font-size: 320px;
+    color: rgba(10, 21, 64, 0.035);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .ec-cart-header {
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── Empty state ─── */
+  .ec-cart-empty {
+    background: white;
+    border-radius: var(--ec-radius-lg);
+    padding: 80px 40px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(10,21,64,0.05);
+    border: 1px solid var(--ec-border, #e5e7eb);
+    position: relative;
+    z-index: 1;
+  }
+  .ec-cart-empty-icon {
+    color: var(--ec-text3);
+    margin-bottom: 24px;
+    display: inline-flex;
+  }
+  .ec-cart-empty-title {
+    font-family: var(--ec-font-display);
+    font-size: 36px;
+    color: var(--ec-navy);
+    margin: 0 0 12px;
+    letter-spacing: 0.5px;
+  }
+  .ec-cart-empty-msg {
+    color: var(--ec-text2);
+    margin: 0 0 32px;
+    font-size: 16px;
+  }
+
+  /* ─── Cart grid ─── */
+  .ec-cart-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 40px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Items column */
+  .ec-cart-items {
+    background: white;
+    border-radius: var(--ec-radius-lg);
+    box-shadow: 0 8px 32px rgba(10,21,64,0.05);
+    overflow: hidden;
+    border: 1px solid var(--ec-border, #e5e7eb);
+  }
+  .ec-cart-items-head {
+    display: grid;
+    grid-template-columns: 1fr 140px 100px;
+    gap: 20px;
+    padding: 18px 28px;
+    background: var(--ec-off-white);
+    font-family: var(--ec-font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ec-text3);
+    border-bottom: 1px solid var(--ec-border, #e5e7eb);
+  }
+  .ec-cart-col-qty { text-align: center; }
+  .ec-cart-col-total { text-align: right; }
+
+  .ec-cart-item {
+    display: grid;
+    grid-template-columns: 1fr 140px 100px;
+    gap: 20px;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--ec-border, #e5e7eb);
+    align-items: center;
+  }
+  .ec-cart-item:last-child { border-bottom: 0; }
+
+  .ec-cart-item-product {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .ec-cart-item-thumb {
+    width: 88px; height: 88px;
+    border-radius: var(--ec-radius);
+    overflow: hidden;
+    background: var(--ec-light);
+    flex-shrink: 0;
+    display: block;
+  }
+  .ec-cart-item-thumb img {
+    width: 100%; height: 100%; object-fit: contain;
+  }
+  .ec-cart-item-info { flex: 1; min-width: 0; }
+  .ec-cart-item-name {
+    font-family: var(--ec-font-display);
+    font-size: 22px;
+    color: var(--ec-navy);
+    text-decoration: none;
+    line-height: 1.2;
+    letter-spacing: 0.3px;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .ec-cart-item-name:hover { color: var(--ec-electric); }
+  .ec-cart-item-variant {
+    font-family: var(--ec-font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--ec-text3);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .ec-cart-item-subscription {
+    font-size: 12px;
+    color: var(--ec-text2);
+    margin-bottom: 6px;
+  }
+  .ec-cart-sub-tag {
+    background: rgba(21,101,192,0.1);
+    color: var(--ec-electric);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .ec-cart-item-price {
+    font-size: 14px;
+    color: var(--ec-text2);
+    margin-bottom: 8px;
+  }
+  .ec-cart-item-remove {
+    background: transparent;
+    border: 0;
+    color: var(--ec-text3);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-family: inherit;
+  }
+  .ec-cart-item-remove:hover { color: #dc2626; }
+
+  /* Quantity control */
+  .ec-cart-item-qty { display: flex; justify-content: center; }
+  .ec-qty-control {
+    display: inline-flex;
+    align-items: stretch;
+    border: 1.5px solid var(--ec-border, #e5e7eb);
+    border-radius: var(--ec-radius);
+    overflow: hidden;
+    background: white;
+  }
+  .ec-qty-btn {
+    width: 36px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--ec-navy);
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  .ec-qty-btn:hover { background: var(--ec-off-white); }
+  .ec-qty-input {
+    width: 48px;
+    text-align: center;
+    border: 0;
+    border-left: 1.5px solid var(--ec-border, #e5e7eb);
+    border-right: 1.5px solid var(--ec-border, #e5e7eb);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ec-navy);
+    background: transparent;
+    -moz-appearance: textfield;
+    font-family: inherit;
+  }
+  .ec-qty-input::-webkit-outer-spin-button,
+  .ec-qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .ec-cart-item-total {
+    text-align: right;
+    font-family: var(--ec-font-display);
+    font-size: 22px;
+    color: var(--ec-navy);
+    line-height: 1;
+  }
+
+  /* Summary column */
+  .ec-cart-summary {
+    background: white;
+    border-radius: var(--ec-radius-lg);
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(10,21,64,0.05);
+    border: 1px solid var(--ec-border, #e5e7eb);
+    position: sticky;
+    top: 100px;
+  }
+  .ec-cart-summary-title {
+    font-family: var(--ec-font-display);
+    font-size: 24px;
+    color: var(--ec-navy);
+    margin: 0 0 24px;
+    letter-spacing: 0.3px;
+  }
+  .ec-cart-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    font-size: 15px;
+    color: var(--ec-text2);
+  }
+  .ec-cart-summary-row strong {
+    color: var(--ec-navy);
+    font-weight: 600;
+  }
+  .ec-cart-discount strong { color: #059669; }
+  .ec-cart-shipping-row strong {
+    font-size: 13px;
+    color: var(--ec-text3);
+    font-weight: 500;
+  }
+  .ec-cart-summary-divider {
+    height: 1px;
+    background: var(--ec-border, #e5e7eb);
+    margin: 18px 0;
+  }
+  .ec-cart-total {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+  .ec-cart-total strong {
+    font-family: var(--ec-font-display);
+    font-size: 30px;
+    color: var(--ec-navy);
+    line-height: 1;
+  }
+
+  .ec-cart-note-label {
+    display: block;
+    font-family: var(--ec-font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ec-text3);
+    margin-bottom: 8px;
+  }
+  .ec-cart-note {
+    width: 100%;
+    min-height: 70px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--ec-border, #e5e7eb);
+    border-radius: var(--ec-radius);
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    background: var(--ec-off-white);
+    color: var(--ec-navy);
+  }
+  .ec-cart-note:focus {
+    outline: none;
+    border-color: var(--ec-electric);
+    background: white;
+  }
+
+  .ec-cart-checkout-btn {
+    width: 100%;
+    margin-bottom: 14px;
+  }
+
+  .ec-cart-continue {
+    display: block;
+    text-align: center;
+    color: var(--ec-text2);
+    font-size: 14px;
+    text-decoration: none;
+    margin-bottom: 24px;
+  }
+  .ec-cart-continue:hover { color: var(--ec-electric); }
+
+  .ec-cart-trust {
+    border-top: 1px solid var(--ec-border, #e5e7eb);
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ec-cart-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ec-text2);
+  }
+  .ec-cart-trust-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(21,101,192,0.1);
+    color: var(--ec-electric);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Mobile */
+  @media (max-width: 880px) {
+    .ec-cart-grid {
+      grid-template-columns: 1fr;
+    }
+    .ec-cart-summary {
+      position: static;
+    }
+    .ec-cart-items-head {
+      grid-template-columns: 1fr;
+    }
+    .ec-cart-items-head span:not(:first-child) { display: none; }
+    .ec-cart-item {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 20px;
+    }
+    .ec-cart-item-total {
+      text-align: left;
+      font-size: 20px;
+    }
+    .ec-cart-item-thumb {
+      width: 72px; height: 72px;
+    }
+    .ec-cart-item-name { font-size: 18px; }
+  }
+</style>
+
+<script>
+  (function () {
+    var form = document.getElementById('ec-cart-form');
+    if (!form) return;
+
+    function changeLine(key, qty) {
+      return fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: key, quantity: qty })
+      }).then(function (r) { return r.json(); });
+    }
+
+    function refreshUI() {
+      // Easiest reliable refresh — reload to reflect server state.
+      window.location.reload();
+    }
+
+    form.addEventListener('click', function (e) {
+      var t = e.target;
+      var key;
+      if ((key = t.getAttribute('data-cart-incr'))) {
+        e.preventDefault();
+        var input = form.querySelector('[data-cart-qty="' + key + '"]');
+        var newQty = parseInt(input.value, 10) + 1;
+        input.value = newQty;
+        changeLine(key, newQty).then(refreshUI);
+      } else if ((key = t.getAttribute('data-cart-decr'))) {
+        e.preventDefault();
+        var input2 = form.querySelector('[data-cart-qty="' + key + '"]');
+        var newQty2 = Math.max(0, parseInt(input2.value, 10) - 1);
+        input2.value = newQty2;
+        changeLine(key, newQty2).then(refreshUI);
+      } else if ((key = t.getAttribute('data-cart-remove'))) {
+        e.preventDefault();
+        changeLine(key, 0).then(refreshUI);
+      }
+    });
+
+    /* Update on direct quantity-input edit (debounced) */
+    form.addEventListener('change', function (e) {
+      var t = e.target;
+      var key = t.getAttribute('data-cart-qty');
+      if (!key) return;
+      var qty = Math.max(0, parseInt(t.value, 10) || 0);
+      changeLine(key, qty).then(refreshUI);
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": [
+    { "type": "header", "content": "Page heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your Order" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Cart" },
+    { "type": "header", "content": "Empty state" },
+    { "type": "text", "id": "empty_title", "label": "Empty title", "default": "Your cart is empty" },
+    { "type": "textarea", "id": "empty_message", "label": "Empty message", "default": "Looks like you haven't added anything yet. Start with a free trial or grab a pack." },
+    { "type": "text", "id": "empty_cta_label", "label": "Empty CTA label", "default": "Shop ElectroChew" },
+    { "type": "url", "id": "empty_cta_url", "label": "Empty CTA URL" },
+    { "type": "header", "content": "Order summary" },
+    { "type": "text", "id": "shipping_note", "label": "Shipping note", "default": "Calculated at checkout" },
+    { "type": "text", "id": "checkout_label", "label": "Checkout button", "default": "Checkout ⚡" },
+    { "type": "text", "id": "continue_label", "label": "Continue link", "default": "Continue shopping" },
+    { "type": "url", "id": "continue_url", "label": "Continue URL" },
+    { "type": "header", "content": "Trust badges" },
+    { "type": "text", "id": "trust_1", "label": "Badge 1", "default": "Secure checkout" },
+    { "type": "text", "id": "trust_2", "label": "Badge 2", "default": "Free shipping on subscriptions" },
+    { "type": "text", "id": "trust_3", "label": "Badge 3", "default": "Cancel or pause anytime" }
+  ],
+  "presets": [
+    { "name": "Cart" }
+  ]
+}
+{% endschema %}

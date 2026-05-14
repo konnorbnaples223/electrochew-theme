@@ -1,0 +1,66 @@
+{%- comment -%}
+  What's Inside section — minimal version: just displays the
+  "WHY ELECTRO CHEW?" graphic full-width.
+{%- endcomment -%}
+
+<section class="ec-inside-image-section" id="section-{{ section.id }}">
+  <div class="ec-inside-image-wrap">
+    {%- if section.settings.image != blank -%}
+      <img
+        src="{{ section.settings.image | img_url: '2400x' }}"
+        srcset="{{ section.settings.image | img_url: '1200x' }} 1200w, {{ section.settings.image | img_url: '1800x' }} 1800w, {{ section.settings.image | img_url: '2400x' }} 2400w"
+        sizes="100vw"
+        alt="{{ section.settings.alt_text }}"
+        class="ec-inside-image"
+        loading="lazy">
+    {%- else -%}
+      <img
+        src="{{ 'why-electro-chew.jpg' | asset_url }}"
+        alt="{{ section.settings.alt_text }}"
+        class="ec-inside-image"
+        loading="lazy">
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .ec-inside-image-section {
+    width: 100%;
+    background: #0a1540;
+    margin: 0;
+    padding: 0;
+  }
+  .ec-inside-image-wrap {
+    width: 100%;
+    line-height: 0;
+  }
+  .ec-inside-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "What's inside",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Why ElectroChew graphic",
+      "info": "Full-width image. Falls back to assets/why-electro-chew.jpg if blank."
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Image alt text",
+      "default": "Why ElectroChew — absorbed through the oral mucosa, works in 5–10 minutes, no digestion required."
+    }
+  ],
+  "presets": [
+    { "name": "What's inside" }
+  ]
+}
+{% endschema %}

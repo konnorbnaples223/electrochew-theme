@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Our Story",
+        "title": "Built for <span class=\"em\">Performers.</span>",
+        "subtitle": "Two founders. One mission. Real time electrolyte hydration that fits in your pocket.",
+        "center": true,
+        "show_hero_bg": true
+      }
+    },
+    "story": {
+      "type": "about-story",
+      "settings": {
+        "eyebrow": "Our Story",
+        "title": "Built for <span class=\"em\">Performers.</span>",
+        "body": "<p>ElectroChew started with a bad case of food poisoning.</p><p>Our co-founder Cary was so sick he couldn't keep anything down \u2014 no water, no gels, no powders. The doctor told him to get electrolytes into him. His body wouldn't let him.</p><p>Looking for anything that might help, Cary stumbled on a thread about chewing gum easing nausea. That's when it clicked: <em>the electrolytes need to be in the gum.</em></p><p>He called Konnor \u2014 his co-founder and a health science major \u2014 the same day. They brought the idea to a chemist at their university and built a formula that absorbs through the oral mucosa, working faster than any drink on the market.</p>",
+        "cta_label": "Shop ElectroChew",
+        "cta_url": "/collections/all",
+        "bg_style": "lab-light"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "story"
+  ]
+}

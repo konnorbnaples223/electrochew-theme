@@ -1,0 +1,134 @@
+<section class="ec-section" style="background:{{ section.settings.bg_color }};" id="section-{{ section.id }}">
+  <div class="ec-container">
+    <div style="text-align:center;margin-bottom:64px;">
+      {% if section.settings.eyebrow != blank %}
+        <div class="ec-eyebrow ec-eyebrow-center">{{ section.settings.eyebrow }}</div>
+      {% endif %}
+      <h2 class="ec-headline" style="text-align:center;">{{ section.settings.title }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="ec-subtext" style="margin:12px auto 0;text-align:center;">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    <div class="ec-products-grid">
+      {% for block in section.blocks %}
+        {%- assign prod = all_products[block.settings.product] -%}
+        <div class="ec-product-card {% if block.settings.featured %}ec-card-featured{% endif %}" {{ block.shopify_attributes }}>
+          {% if block.settings.flag_text != blank %}
+            <div class="ec-product-flag ec-flag-{{ block.settings.flag_color }}">{{ block.settings.flag_text }}</div>
+          {% endif %}
+          <div class="ec-product-img-area">
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.name }}">
+            {% elsif prod.featured_image %}
+              <img src="{{ prod.featured_image | img_url: '600x' }}" alt="{{ prod.title }}">
+            {% else %}
+              <img src="{{ 'product-front.jpg' | asset_url }}" alt="{{ block.settings.name }}">
+            {% endif %}
+          </div>
+          <div class="ec-product-body">
+            <div class="ec-product-name">{{ block.settings.name }}</div>
+            <div class="ec-product-sku">{{ block.settings.subtitle }}</div>
+            <div class="ec-product-desc">{{ block.settings.description }}</div>
+            <div class="ec-product-price {% if block.settings.is_free %}ec-product-price-free{% endif %}">{{ block.settings.price }}</div>
+            <div class="ec-product-per">{{ block.settings.price_detail }}</div>
+            <div class="ec-product-perks">
+              {% if block.settings.perk_1 != blank %}<div class="ec-product-perk"><div class="ec-perk-check">✓</div>{{ block.settings.perk_1 }}</div>{% endif %}
+              {% if block.settings.perk_2 != blank %}<div class="ec-product-perk"><div class="ec-perk-check">✓</div>{{ block.settings.perk_2 }}</div>{% endif %}
+              {% if block.settings.perk_3 != blank %}<div class="ec-product-perk"><div class="ec-perk-check">✓</div>{{ block.settings.perk_3 }}</div>{% endif %}
+            </div>
+            {%- assign btn_handle = block.settings.button_link | split: '/products/' | last -%}
+            {%- assign btn_prod = prod | default: all_products[btn_handle] -%}
+            {%- assign selling_plan = btn_prod.selling_plan_groups.first.selling_plans.first -%}
+            {% if selling_plan %}
+              <form action="/cart/add" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{ btn_prod.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="selling_plan" value="{{ selling_plan.id }}">
+                <button type="submit" class="ec-btn ec-btn-{{ block.settings.button_style }} ec-btn-full">
+                  {{ block.settings.button_text }}
+                </button>
+              </form>
+            {% elsif block.settings.is_free %}
+              <form action="/cart/add" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{ btn_prod.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="ec-btn ec-btn-{{ block.settings.button_style }} ec-btn-full">
+                  {{ block.settings.button_text }}
+                </button>
+              </form>
+            {% else %}
+              <a href="{% if btn_prod %}{{ btn_prod.url }}{% else %}{{ block.settings.button_link }}{% endif %}" class="ec-btn ec-btn-{{ block.settings.button_style }} ec-btn-full">
+                {{ block.settings.button_text }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Products",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Choose Your Pack" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Start <span class=\"em\">Today</span>" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Try it free. Love it. Subscribe and never run out." },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product (link to Shopify product)" },
+        { "type": "image_picker", "id": "image", "label": "Custom image (optional)" },
+        { "type": "text", "id": "name", "label": "Display name", "default": "30 Piece Pack" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "30 PIECES · TROPICAL BERRY" },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "text", "id": "price", "label": "Price", "default": "$19.99" },
+        { "type": "text", "id": "price_detail", "label": "Price detail" },
+        { "type": "checkbox", "id": "is_free", "label": "Style as free", "default": false },
+        { "type": "text", "id": "flag_text", "label": "Flag text", "default": "Most Popular" },
+        { "type": "select", "id": "flag_color", "label": "Flag color",
+          "options": [
+            { "value": "green", "label": "Green" },
+            { "value": "blue", "label": "Electric blue" },
+            { "value": "navy", "label": "Navy" },
+            { "value": "gold", "label": "Gold" }
+          ],
+          "default": "blue"
+        },
+        { "type": "checkbox", "id": "featured", "label": "Featured card style", "default": false },
+        { "type": "text", "id": "perk_1", "label": "Perk 1" },
+        { "type": "text", "id": "perk_2", "label": "Perk 2" },
+        { "type": "text", "id": "perk_3", "label": "Perk 3" },
+        { "type": "text", "id": "button_text", "label": "Button text", "default": "Shop Now ⚡" },
+        { "type": "url", "id": "button_link", "label": "Button link" },
+        { "type": "select", "id": "button_style", "label": "Button style",
+          "options": [
+            { "value": "navy", "label": "Navy filled" },
+            { "value": "outline", "label": "Outline" },
+            { "value": "electric", "label": "Electric" }
+          ],
+          "default": "navy"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Products",
+      "blocks": [
+        { "type": "product", "settings": { "name": "Trial Pack", "subtitle": "6 PIECES · TROPICAL BERRY", "description": "Experience ElectroChew before you commit. Six pieces delivered to your door — on us.", "price": "FREE", "is_free": true, "price_detail": "You only pay $3.00 shipping", "flag_text": "Free Trial — Just Pay Shipping", "flag_color": "green", "perk_1": "6 pieces to try", "perk_2": "No subscription required", "perk_3": "Ships in 2–4 days", "button_text": "Claim Free Trial →", "button_link": "/products/electrochew-free-trial-6-pck", "button_style": "outline" } },
+        { "type": "product", "settings": { "name": "30 Piece Pack", "subtitle": "30 PIECES · TROPICAL BERRY", "description": "Your monthly performance fuel. Subscribe and save 10%.", "price": "$19.99", "price_detail": "$0.67/piece · Subscribe from $17.99", "flag_text": "⚡ Most Popular", "flag_color": "blue", "featured": true, "perk_1": "30 pieces — 1 month supply", "perk_2": "Subscribe & save 10%", "perk_3": "Free shipping on subscriptions", "button_text": "Shop 30 Pack ⚡", "button_link": "/products/electrochew-30-piece-pack", "button_style": "navy" } },
+        { "type": "product", "settings": { "name": "Athlete Pack", "subtitle": "60 PIECES · TROPICAL BERRY", "description": "Two months of peak performance at the best price per piece.", "price": "$36.00", "price_detail": "$0.60/piece · Subscribe from $32.40", "flag_text": "Best Value", "flag_color": "navy", "perk_1": "60 pieces — 2 month supply", "perk_2": "Best price per piece", "perk_3": "Subscribe & save 10%", "button_text": "Shop Athlete Pack", "button_link": "/products/electrochew-athlete-pack-60-pieces", "button_style": "navy" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

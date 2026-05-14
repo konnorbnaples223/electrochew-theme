@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "cart": {
+      "type": "cart",
+      "settings": {
+        "eyebrow": "Your Order",
+        "title": "Cart",
+        "empty_title": "Your cart is empty",
+        "empty_message": "Looks like you haven't added anything yet. Start with a free trial or grab a pack.",
+        "empty_cta_label": "Shop ElectroChew",
+        "empty_cta_url": "/collections/all",
+        "shipping_note": "Calculated at checkout",
+        "checkout_label": "Checkout ⚡",
+        "continue_label": "Continue shopping",
+        "continue_url": "/collections/all",
+        "trust_1": "Secure checkout",
+        "trust_2": "Free shipping on subscriptions",
+        "trust_3": "Cancel or pause anytime"
+      }
+    }
+  },
+  "order": ["cart"]
+}
