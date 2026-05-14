@@ -1,8 +1,9 @@
 {%- comment -%}Visual Feature — full-bleed or split image + text section{%- endcomment -%}
 {%- assign layout = section.settings.layout | default: 'split-left' -%}
 
+{%- assign vf_scheme = section.settings.text_color_scheme | default: 'dark' -%}
 <section
-  class="ec-vf ec-vf-{{ layout }}"
+  class="ec-vf ec-vf-{{ layout }} ec-vf-text-{{ vf_scheme }}"
   id="section-{{ section.id }}"
   {% if section.settings.min_height != blank %}style="--ec-vf-height:{{ section.settings.min_height }}px;"{% endif %}>
 
@@ -188,7 +189,6 @@
 {
   "name": "Visual feature",
   "tag": "section",
-  "class": "ec-vf-section {% if section.settings.text_color_scheme == 'dark' %}ec-vf-text-dark{% else %}ec-vf-text-light{% endif %}",
   "settings": [
     {
       "type": "header",
