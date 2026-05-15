@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "science": {
+      "type": "science-content",
+      "settings": {}
+    }
+  },
+  "order": ["science"]
+}
