@@ -12,8 +12,8 @@
     {%- if section.settings.image != blank -%}
       <img
         class="ec-vf-img"
-        src="{{ section.settings.image | img_url: '2000x' }}"
-        srcset="{{ section.settings.image | img_url: '900x' }} 900w, {{ section.settings.image | img_url: '1400x' }} 1400w, {{ section.settings.image | img_url: '2000x' }} 2000w"
+        src="{{ section.settings.image | image_url: width: 2000 }}"
+        srcset="{{ section.settings.image | image_url: width: 900 }} 900w, {{ section.settings.image | image_url: width: 1400 }} 1400w, {{ section.settings.image | image_url: width: 2000 }} 2000w"
         sizes="{% if layout == 'full-bleed' %}100vw{% else %}50vw{% endif %}"
         alt="{{ section.settings.image_alt | default: 'ElectroChew' }}"
         loading="lazy">

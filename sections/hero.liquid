@@ -3,7 +3,7 @@
 <section class="ec-hv2">
   <div class="ec-hv2-bg">
     {%- if section.settings.bg_image != blank -%}
-      <img src="{{ section.settings.bg_image | img_url: '2400x' }}" srcset="{{ section.settings.bg_image | img_url: '1200x' }} 1200w, {{ section.settings.bg_image | img_url: '2400x' }} 2400w" sizes="100vw" alt="{{ section.settings.bg_alt | default: 'ElectroChew' }}" class="ec-hv2-img" fetchpriority="high">
+      <img src="{{ section.settings.bg_image | image_url: width: 2400 }}" srcset="{{ section.settings.bg_image | image_url: width: 1200 }} 1200w, {{ section.settings.bg_image | image_url: width: 2400 }} 2400w" sizes="100vw" alt="{{ section.settings.bg_alt | default: 'ElectroChew' }}" class="ec-hv2-img" fetchpriority="high">
     {%- else -%}
       <img src="{{ 'hero-bg.jpg' | asset_url }}" alt="ElectroChew" class="ec-hv2-img" fetchpriority="high">
     {%- endif -%}
@@ -70,7 +70,7 @@
       <div class="ec-hv2-ring"></div>
       <div class="ec-hv2-ring2"></div>
       {%- if section.settings.product_image != blank -%}
-        <img class="ec-hv2-product" src="{{ section.settings.product_image | img_url: '700x' }}" alt="{{ section.settings.product_image_alt | default: 'ElectroChew' }}">
+        <img class="ec-hv2-product" src="{{ section.settings.product_image | image_url: width: 700 }}" alt="{{ section.settings.product_image_alt | default: 'ElectroChew' }}">
       {%- else -%}
         <img class="ec-hv2-product" src="{{ 'product-front.jpg' | asset_url }}" alt="ElectroChew Electrolyte Gum">
       {%- endif -%}
