@@ -95,7 +95,7 @@
       "settings": {
         "layout": "split-right",
         "text_color_scheme": "dark",
-        "min_height": "560",
+        "min_height": 560,
         "eyebrow": "Backed by Science",
         "title": "Oral absorption. Not gut absorption.",
         "body": "Traditional sports drinks hit your stomach first - then wait 30-60 minutes. ElectroChew absorbs directly through the mucous membranes in your mouth, bypassing the digestive system entirely. Electrolytes reach your bloodstream in 5-10 minutes. The science is called buccal and sublingual absorption - and it changes everything.",
@@ -140,7 +140,7 @@
       "settings": {
         "layout": "split-left",
         "text_color_scheme": "dark",
-        "min_height": "560",
+        "min_height": 560,
         "eyebrow": "Built for Real Life",
         "title": "Goes where your water bottle can't.",
         "body": "Pocket. Gym bag. Jersey pocket. Backpack. Wherever you are, ElectroChew is with you. No mixing, no shaking, no spilling, no refrigeration. A full serving of electrolytes in a piece of gum you can pop anytime - before a workout, mid-race, on the flight, or in the middle of a long meeting.",
