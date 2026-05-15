@@ -1,33 +1,17 @@
-{%- comment -%}Step Panels — white hover-reveal triptych{%- endcomment -%}
+{%- comment -%}Step Panels — white triptych, big word + hover reveal{%- endcomment -%}
 
 <section class="ec-sp" id="section-{{ section.id }}">
   <div class="ec-sp-grid">
     {%- for block in section.blocks -%}
-      <div class="ec-sp-panel ec-sp-p{{ forloop.index }}" {{ block.shopify_attributes }}>
-
-        {%- comment -%} Subtle bg accent that bleeds in on hover {%- endcomment -%}
-        <div class="ec-sp-fill" aria-hidden="true"></div>
-
-        <div class="ec-sp-content">
-
-          {%- if block.settings.step_num != blank -%}
-            <div class="ec-sp-step">{{ block.settings.step_num }}</div>
-          {%- endif -%}
-
+      <div class="ec-sp-panel" {{ block.shopify_attributes }}>
+        <div class="ec-sp-inner">
           <div class="ec-sp-word">{{ block.settings.word }}</div>
-
           <div class="ec-sp-reveal">
-            <div class="ec-sp-divider" aria-hidden="true"></div>
-            {%- if block.settings.eyebrow != blank -%}
-              <div class="ec-sp-eyebrow">{{ block.settings.eyebrow }}</div>
-            {%- endif -%}
+            <div class="ec-sp-line" aria-hidden="true"></div>
             <p class="ec-sp-desc">{{ block.settings.description }}</p>
           </div>
-
         </div>
-
-        <div class="ec-sp-accent-line" aria-hidden="true"></div>
-
+        <div class="ec-sp-bottom-bar" aria-hidden="true"></div>
       </div>
     {%- endfor -%}
   </div>
@@ -36,132 +20,101 @@
 <style>
 /* ── Section ── */
 .ec-sp{background:#ffffff;overflow:hidden;}
-.ec-sp-grid{display:grid;grid-template-columns:repeat(3,1fr);min-height:500px;}
+.ec-sp-grid{display:grid;grid-template-columns:repeat(3,1fr);min-height:480px;}
 
 /* ── Panel ── */
 .ec-sp-panel{
   position:relative;
   display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  padding:56px 48px 52px;
-  border-right:1px solid rgba(10,21,64,.06);
-  cursor:default;
+  align-items:flex-end;
+  padding:0 48px 56px;
+  border-right:1px solid rgba(10,21,64,.07);
   overflow:hidden;
-  transition:background .4s;
+  cursor:default;
+  background:white;
+  transition:background .35s;
 }
 .ec-sp-panel:last-child{border-right:none;}
+.ec-sp-panel:hover{background:#f8f9ff;}
 
-/* Hover background flush */
-.ec-sp-fill{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg,rgba(10,21,64,.02) 0%,rgba(10,21,64,.05) 100%);
-  opacity:0;
-  transition:opacity .4s;
-  pointer-events:none;
-}
-.ec-sp-panel:hover .ec-sp-fill{opacity:1;}
+/* ── Content ── */
+.ec-sp-inner{width:100%;}
 
-/* ── Content wrapper ── */
-.ec-sp-content{position:relative;z-index:1;}
-
-/* Step number */
-.ec-sp-step{
-  font-family:var(--ec-font-mono);
-  font-size:10px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:rgba(10,21,64,.25);
-  margin-bottom:16px;
-  transition:color .3s;
-}
-.ec-sp-panel:hover .ec-sp-step{color:var(--ec-electric);}
-
-/* The big word */
+/* The word */
 .ec-sp-word{
   font-family:var(--ec-font-display);
-  font-size:clamp(64px,7vw,96px);
-  line-height:.9;
+  font-size:clamp(72px,8vw,108px);
+  line-height:.88;
   letter-spacing:2px;
   text-transform:uppercase;
   color:var(--ec-navy);
-  transform:translateY(0);
-  transition:transform .45s cubic-bezier(0.22,1,0.36,1), color .3s;
+  display:block;
+  transition:transform .5s cubic-bezier(0.22,1,0.36,1), color .3s;
   will-change:transform;
 }
 .ec-sp-panel:hover .ec-sp-word{
-  transform:translateY(-12px);
-  color:var(--ec-electric);
+  transform:translateY(-16px);
+  color:#1565c0;
 }
 
-/* Reveal block */
+/* Reveal block — hidden until hover */
 .ec-sp-reveal{
+  overflow:hidden;
   max-height:0;
   opacity:0;
-  overflow:hidden;
-  transition:max-height .55s cubic-bezier(0.22,1,0.36,1), opacity .35s ease .1s;
+  transition:max-height .55s cubic-bezier(0.22,1,0.36,1), opacity .4s ease .08s;
 }
 .ec-sp-panel:hover .ec-sp-reveal{
-  max-height:220px;
+  max-height:180px;
   opacity:1;
 }
 
-/* Divider line that draws in */
-.ec-sp-divider{
-  height:1.5px;
-  background:var(--ec-electric);
-  margin:18px 0 14px;
+/* Divider that draws in on hover */
+.ec-sp-line{
   width:0;
-  transition:width .5s cubic-bezier(0.22,1,0.36,1) .1s;
+  height:2px;
+  background:#1565c0;
+  margin:16px 0 14px;
+  transition:width .5s cubic-bezier(0.22,1,0.36,1) .08s;
 }
-.ec-sp-panel:hover .ec-sp-divider{width:40px;}
+.ec-sp-panel:hover .ec-sp-line{width:44px;}
 
-/* Eyebrow inside reveal */
-.ec-sp-eyebrow{
-  font-family:var(--ec-font-mono);
-  font-size:9px;
-  letter-spacing:2.5px;
-  text-transform:uppercase;
-  color:var(--ec-electric);
-  margin-bottom:8px;
-}
-
-/* Description text */
+/* Description */
 .ec-sp-desc{
   font-size:14.5px;
-  line-height:1.72;
+  line-height:1.7;
   color:rgba(10,21,64,.55);
-  max-width:300px;
   margin:0;
+  max-width:300px;
 }
 
-/* Bottom accent line */
-.ec-sp-accent-line{
+/* Bottom accent bar */
+.ec-sp-bottom-bar{
   position:absolute;
   bottom:0;left:0;right:0;
   height:3px;
-  background:linear-gradient(90deg,var(--ec-electric),var(--ec-accent));
+  background:linear-gradient(90deg,#1565c0,#4fc3f7);
   transform:scaleX(0);
   transform-origin:left;
   transition:transform .55s cubic-bezier(0.22,1,0.36,1);
 }
-.ec-sp-panel:hover .ec-sp-accent-line{transform:scaleX(1);}
+.ec-sp-panel:hover .ec-sp-bottom-bar{transform:scaleX(1);}
 
 /* ── Responsive ── */
-@media(max-width:1100px){
-  .ec-sp-panel{padding:44px 36px 40px;}
-  .ec-sp-word{font-size:clamp(56px,6vw,80px);}
-}
-@media(max-width:768px){
-  .ec-sp-grid{grid-template-columns:1fr;min-height:auto;}
-  .ec-sp-panel{border-right:none;border-bottom:1px solid rgba(10,21,64,.06);padding:40px 28px 36px;}
+@media(max-width:900px){
+  .ec-sp-grid{grid-template-columns:1fr;}
+  .ec-sp-panel{
+    border-right:none;
+    border-bottom:1px solid rgba(10,21,64,.07);
+    padding:48px 32px;
+    align-items:flex-start;
+    min-height:auto;
+  }
   .ec-sp-panel:last-child{border-bottom:none;}
-  /* Always show reveal on mobile — no hover */
-  .ec-sp-reveal{max-height:220px;opacity:1;}
+  /* Always show content on mobile */
+  .ec-sp-reveal{max-height:180px;opacity:1;}
+  .ec-sp-line{width:44px;}
   .ec-sp-word{transform:translateY(-8px);}
-  .ec-sp-divider{width:40px;}
-  .ec-sp-step{color:var(--ec-electric);}
 }
 </style>
 
@@ -172,19 +125,17 @@
   "blocks":[{
     "type":"panel","name":"Panel",
     "settings":[
-      {"type":"text","id":"step_num","label":"Step label (e.g. 01)","default":"01"},
-      {"type":"text","id":"word","label":"Big word","default":"Open"},
-      {"type":"text","id":"eyebrow","label":"Reveal eyebrow","default":"Step one"},
-      {"type":"textarea","id":"description","label":"Reveal description","default":"Pull out a piece. No shaker bottle, no measuring, no mixing. Ready wherever you are."}
+      {"type":"text","id":"word","label":"Word","default":"Open"},
+      {"type":"textarea","id":"description","label":"Description on hover","default":"Pull out a piece. No shaker bottle, no measuring, no mixing. Ready wherever you are."}
     ]
   }],
   "max_blocks":3,
   "presets":[{
     "name":"Step Panels",
     "blocks":[
-      {"type":"panel","settings":{"step_num":"01","word":"Open","eyebrow":"Step one","description":"Pull out a piece. No shaker bottle, no measuring, no mixing. Ready wherever you are."}},
-      {"type":"panel","settings":{"step_num":"02","word":"Chew","eyebrow":"Step two","description":"Electrolytes absorb through the oral mucosa directly into your bloodstream - bypassing your digestive system entirely."}},
-      {"type":"panel","settings":{"step_num":"03","word":"Electrolytes","eyebrow":"Step three","description":"Potassium, Magnesium, and Calcium hit your bloodstream in 5-10 minutes. No crash, no stomach upset, no waiting."}}
+      {"type":"panel","settings":{"word":"Open","description":"Pull out a piece. No shaker bottle, no measuring, no mixing. Ready wherever you are."}},
+      {"type":"panel","settings":{"word":"Chew","description":"Electrolytes absorb through your oral mucosa directly into your bloodstream - bypassing digestion entirely."}},
+      {"type":"panel","settings":{"word":"Electrolytes","description":"Potassium, Magnesium, and Calcium reach your bloodstream in 5-10 minutes. No crash, no stomach upset."}}
     ]
   }]
 }
