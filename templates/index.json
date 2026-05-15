@@ -5,7 +5,7 @@
       "settings": {
         "badge_text": "Electrolyte Chewing Gum - Now Available",
         "eyebrow": "The Smarter Way to Hydrate",
-        "headline": "Feel It Instantly.",
+        "headline": "For all the moments inbetween.",
         "subhead": "Electrolytes absorbed directly through your cheek - not your gut. No bottle. No mixing. No waiting. Just chew, and perform.",
         "email_placeholder": "yourname@email.com",
         "button_label": "Get Early Access",
@@ -70,6 +70,16 @@
         "title": "Your body needs more than water.",
         "subtitle": "Sweat strips you of three essential electrolytes. Most products replace them too slowly, too messily, or not at all. ElectroChew is different."
       }
+    },
+    "step_panels": {
+      "type": "step-panels",
+      "blocks": {
+        "p1": {"type": "panel", "settings": {"step_num": "01", "word": "Open", "eyebrow": "Step one", "description": "Pull out a piece. No shaker bottle, no measuring, no mixing. Ready wherever you are."}},
+        "p2": {"type": "panel", "settings": {"step_num": "02", "word": "Chew", "eyebrow": "Step two", "description": "Electrolytes absorb through the oral mucosa directly into your bloodstream - bypassing your digestive system entirely."}},
+        "p3": {"type": "panel", "settings": {"step_num": "03", "word": "Electrolytes", "eyebrow": "Step three", "description": "Potassium, Magnesium, and Calcium hit your bloodstream in 5-10 minutes. No crash, no stomach upset, no waiting."}}
+      },
+      "block_order": ["p1","p2","p3"],
+      "settings": {}
     },
     "proof_bar": {
       "type": "proof-bar",
@@ -210,5 +220,5 @@
       }
     }
   },
-  "order": ["hero","ticker","benefits","proof_bar","vf_science","how_it_works","vf_portability","clean_formula","reviews","early_access"]
+  "order": ["hero","ticker","benefits","step_panels","proof_bar","vf_science","how_it_works","vf_portability","clean_formula","reviews","early_access"]
 }
