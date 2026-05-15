@@ -1,45 +1,138 @@
-<section class="ec-section ec-section-alt" id="section-{{ section.id }}">
+{%- comment -%}How It Works — dark, SVG icons, animated step connector{%- endcomment -%}
+{%- assign sec_id = section.id -%}
+
+<section class="ec-hiw" id="section-{{ sec_id }}">
+
+  <div class="ec-hiw-grid-bg" aria-hidden="true"></div>
+
   <div class="ec-container">
+
     <div class="ec-hiw-header ec-anim">
       {%- if section.settings.eyebrow != blank -%}
-        <div class="ec-eyebrow ec-eyebrow-center">{{ section.settings.eyebrow }}</div>
+        <div class="ec-eyebrow ec-eyebrow-center ec-hiw-eyebrow">{{ section.settings.eyebrow }}</div>
       {%- endif -%}
-      <h2 class="ec-headline" style="text-align:center;">{{ section.settings.title }}</h2>
+      <h2 class="ec-hiw-title">{{ section.settings.title | default: 'Three steps. Zero excuses.' }}</h2>
       {%- if section.settings.subtitle != blank -%}
-        <p class="ec-subtext" style="text-align:center;margin:16px auto 0;max-width:520px;">{{ section.settings.subtitle }}</p>
+        <p class="ec-hiw-subtitle">{{ section.settings.subtitle }}</p>
       {%- endif -%}
     </div>
 
-    <div class="ec-hiw-grid" style="position:relative;">
-      <div class="ec-hiw-connector" aria-hidden="true"></div>
-      {% for block in section.blocks %}
+    <div class="ec-hiw-steps" id="ec-hiw-steps-{{ sec_id }}">
+
+      {%- comment -%} Animated connector line ─ rendered once, spans full width {%- endcomment -%}
+      <div class="ec-hiw-connector-track" aria-hidden="true">
+        <div class="ec-hiw-connector-fill" id="ec-hiw-fill-{{ sec_id }}"></div>
+      </div>
+
+      {%- for block in section.blocks -%}
         <div class="ec-hiw-step ec-anim ec-d{{ forloop.index }}" {{ block.shopify_attributes }}>
-          <div class="ec-hiw-bg-num">{{ block.settings.number }}</div>
-          <div class="ec-hiw-icon">{{ block.settings.icon }}</div>
-          <div class="ec-hiw-title">{{ block.settings.title }}</div>
-          <p class="ec-hiw-desc">{{ block.settings.description }}</p>
+
+          <div class="ec-hiw-step-num" aria-hidden="true">{{ block.settings.number | default: '0' | append: forloop.index }}</div>
+
+          <div class="ec-hiw-icon-ring">
+            {%- assign icon_type = block.settings.icon | default: 'box' -%}
+            {%- if icon_type == 'box' or icon_type == 'open' -%}
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            {%- elsif icon_type == 'bolt' or icon_type == 'chew' -%}
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            {%- elsif icon_type == 'trophy' or icon_type == 'perform' -%}
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="8 6 2 6 2 12"/><path d="M2 12c0 4.42 3.58 8 8 8h4c4.42 0 8-3.58 8-8V6H8"/><path d="M12 20v-8"/><line x1="8" y1="20" x2="16" y2="20"/></svg>
+            {%- elsif icon_type == 'arrow' -%}
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            {%- elsif icon_type == 'timer' -%}
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {%- else -%}
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {%- endif -%}
+          </div>
+
+          <div class="ec-hiw-step-title">{{ block.settings.title }}</div>
+          <p class="ec-hiw-step-desc">{{ block.settings.description }}</p>
+
           {%- if block.settings.tag != blank -%}
-            <span class="ec-hiw-tag">{{ block.settings.tag }}</span>
+            <span class="ec-hiw-step-tag">{{ block.settings.tag }}</span>
           {%- endif -%}
+
         </div>
-      {% endfor %}
+      {%- endfor -%}
     </div>
+
   </div>
 </section>
 
 <style>
-.ec-hiw-header{max-width:600px;margin:0 auto 80px;text-align:center;}
-.ec-hiw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
-.ec-hiw-connector{position:absolute;top:52px;left:calc(33.333% + 16px);right:calc(33.333% + 16px);height:1.5px;background:linear-gradient(to right,transparent,var(--ec-accent),transparent);pointer-events:none;}
-.ec-hiw-step{position:relative;text-align:center;}
-.ec-hiw-bg-num{font-family:var(--ec-font-display);font-size:100px;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(21,101,192,.12);margin-bottom:-20px;position:relative;z-index:0;user-select:none;}
-.ec-hiw-icon{width:72px;height:72px;border-radius:50%;background:white;border:2px solid var(--ec-border2);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 28px;position:relative;z-index:1;box-shadow:0 8px 32px rgba(10,21,64,.08);transition:border-color .25s,box-shadow .25s;}
-.ec-hiw-step:hover .ec-hiw-icon{border-color:var(--ec-electric);box-shadow:0 12px 40px rgba(21,101,192,.15);}
-.ec-hiw-title{font-family:var(--ec-font-display);font-size:40px;letter-spacing:2px;color:var(--ec-navy);margin-bottom:14px;text-transform:uppercase;}
-.ec-hiw-desc{font-size:15px;color:var(--ec-text2);line-height:1.72;max-width:280px;margin:0 auto;}
-.ec-hiw-tag{display:inline-block;margin-top:18px;padding:5px 14px;background:rgba(21,101,192,.07);border:1px solid rgba(21,101,192,.15);border-radius:999px;font-family:var(--ec-font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ec-electric);}
-@media(max-width:1024px){.ec-hiw-grid{grid-template-columns:1fr;gap:48px;}.ec-hiw-connector{display:none;}}
+/* ── Section ── */
+.ec-hiw{position:relative;background:#070d28;padding:100px 0;overflow:hidden;color:white;}
+
+/* Subtle grid background */
+.ec-hiw-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(79,195,247,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(79,195,247,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 80%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 80%);pointer-events:none;}
+
+/* ── Header ── */
+.ec-hiw-header{max-width:620px;margin:0 auto 88px;text-align:center;position:relative;z-index:1;}
+.ec-hiw-eyebrow{color:var(--ec-accent)!important;}
+.ec-hiw-title{font-family:var(--ec-font-display);font-size:clamp(44px,5.5vw,76px);line-height:.92;letter-spacing:1px;color:white;text-transform:uppercase;margin:18px 0 20px;}
+.ec-hiw-title .em{color:var(--ec-accent);}
+.ec-hiw-subtitle{font-size:16px;color:rgba(255,255,255,.48);line-height:1.65;max-width:480px;margin:0 auto;}
+
+/* ── Steps row ── */
+.ec-hiw-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;z-index:1;}
+
+/* Animated connector track behind steps */
+.ec-hiw-connector-track{position:absolute;top:68px;left:calc(16.666% + 36px);right:calc(16.666% + 36px);height:1px;background:rgba(79,195,247,.1);pointer-events:none;}
+.ec-hiw-connector-fill{position:absolute;top:0;left:0;height:1px;width:0;background:linear-gradient(90deg,rgba(79,195,247,.6),rgba(33,150,243,.6));transition:width 1.6s cubic-bezier(0.22,1,0.36,1);box-shadow:0 0 8px rgba(79,195,247,.4);}
+.ec-hiw.steps-connected .ec-hiw-connector-fill{width:100%;}
+
+/* ── Individual step ── */
+.ec-hiw-step{position:relative;text-align:center;padding:0 32px 0;}
+
+/* Ghost step number behind icon */
+.ec-hiw-step-num{font-family:var(--ec-font-display);font-size:120px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(79,195,247,.06);margin-bottom:-28px;position:relative;z-index:0;user-select:none;transition:-webkit-text-stroke-color .3s;}
+.ec-hiw-step:hover .ec-hiw-step-num{-webkit-text-stroke-color:rgba(79,195,247,.14);}
+
+/* Icon ring */
+.ec-hiw-icon-ring{width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.03);border:1.5px solid rgba(79,195,247,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;position:relative;z-index:1;color:var(--ec-accent);transition:border-color .3s,background .3s,box-shadow .3s,transform .3s;}
+.ec-hiw-step:hover .ec-hiw-icon-ring{border-color:rgba(79,195,247,.6);background:rgba(79,195,247,.07);box-shadow:0 0 30px rgba(79,195,247,.2),0 8px 24px rgba(0,0,0,.3);transform:translateY(-4px);}
+
+/* Text */
+.ec-hiw-step-title{font-family:var(--ec-font-display);font-size:38px;letter-spacing:2px;color:white;margin-bottom:14px;text-transform:uppercase;position:relative;z-index:1;transition:color .2s;}
+.ec-hiw-step:hover .ec-hiw-step-title{color:var(--ec-accent);}
+.ec-hiw-step-desc{font-size:14.5px;color:rgba(255,255,255,.5);line-height:1.72;max-width:260px;margin:0 auto;position:relative;z-index:1;transition:color .3s;}
+.ec-hiw-step:hover .ec-hiw-step-desc{color:rgba(255,255,255,.72);}
+
+/* Tag badge */
+.ec-hiw-step-tag{display:inline-block;margin-top:20px;padding:6px 14px;background:rgba(79,195,247,.07);border:1px solid rgba(79,195,247,.18);border-radius:999px;font-family:var(--ec-font-mono);font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(79,195,247,.7);position:relative;z-index:1;transition:background .2s,border-color .2s;}
+.ec-hiw-step:hover .ec-hiw-step-tag{background:rgba(79,195,247,.12);border-color:rgba(79,195,247,.4);}
+
+/* ── Responsive ── */
+@media(max-width:1024px){
+  .ec-hiw-steps{grid-template-columns:1fr;gap:52px;}
+  .ec-hiw-connector-track{display:none;}
+  .ec-hiw-step{padding:0;}
+}
+@media(max-width:640px){
+  .ec-hiw{padding:72px 0;}
+  .ec-hiw-step-num{font-size:90px;margin-bottom:-20px;}
+  .ec-hiw-step-title{font-size:30px;}
+}
 </style>
+
+<script>
+(function(){
+  var section = document.getElementById('section-{{ sec_id }}');
+  if(!section) return;
+  var triggered = false;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !triggered){
+        triggered = true;
+        section.classList.add('steps-connected');
+        obs.disconnect();
+      }
+    });
+  },{threshold:0.4});
+  obs.observe(section);
+})();
+</script>
 
 {% schema %}
 {
@@ -47,16 +140,16 @@
   "tag": "section",
   "settings": [
     {"type":"text","id":"eyebrow","label":"Eyebrow","default":"How It Works"},
-    {"type":"text","id":"title","label":"Title","default":"Three steps.<br><span class=\"em\">Zero excuses.</span>"},
+    {"type":"text","id":"title","label":"Title","default":"Three steps. Zero excuses."},
     {"type":"text","id":"subtitle","label":"Subtitle","default":"You already know how to chew gum. That's step one."}
   ],
   "blocks":[{
     "type":"step","name":"Step",
     "settings":[
-      {"type":"text","id":"number","label":"Number","default":"01"},
-      {"type":"text","id":"icon","label":"Icon (emoji)","default":"🧃"},
+      {"type":"text","id":"number","label":"Step number","default":"01"},
+      {"type":"select","id":"icon","label":"Icon","options":[{"value":"open","label":"Package (Open)"},{"value":"chew","label":"Bolt (Chew)"},{"value":"perform","label":"Trophy (Perform)"},{"value":"arrow","label":"Arrow up"},{"value":"timer","label":"Timer"}],"default":"open"},
       {"type":"text","id":"title","label":"Title","default":"Open"},
-      {"type":"textarea","id":"description","label":"Description","default":"Pull out a piece. No shaker bottle. No measuring. No mixing. No waiting."},
+      {"type":"textarea","id":"description","label":"Description","default":"Pull out a piece. No shaker bottle. No measuring. No mixing. No waiting for water to kick in."},
       {"type":"text","id":"tag","label":"Tag badge","default":"Anywhere. Anytime."}
     ]
   }],
@@ -64,9 +157,9 @@
   "presets":[{
     "name":"How it works",
     "blocks":[
-      {"type":"step","settings":{"number":"01","icon":"🧃","title":"Open","description":"Pull out a piece. No shaker bottle. No measuring. No mixing. No waiting for water to kick in.","tag":"Anywhere. Anytime."}},
-      {"type":"step","settings":{"number":"02","icon":"⚡","title":"Chew","description":"Your oral mucosa absorbs electrolytes directly into your bloodstream — bypassing digestion for real-time delivery.","tag":"5–10 minute absorption"}},
-      {"type":"step","settings":{"number":"03","icon":"🏆","title":"Perform","description":"Train. Compete. Work. Live. ElectroChew works while you do. Your performance, elevated — every single rep.","tag":"Sustained energy. No crash."}}
+      {"type":"step","settings":{"number":"01","icon":"open","title":"Open","description":"Pull out a piece. No shaker bottle. No measuring. No mixing. No waiting for water to kick in.","tag":"Anywhere. Anytime."}},
+      {"type":"step","settings":{"number":"02","icon":"chew","title":"Chew","description":"Your oral mucosa absorbs electrolytes directly into your bloodstream - bypassing digestion for real-time delivery.","tag":"5-10 minute absorption"}},
+      {"type":"step","settings":{"number":"03","icon":"perform","title":"Perform","description":"Train. Compete. Work. Live. ElectroChew works while you do. Your performance, elevated - every single rep.","tag":"Sustained energy. No crash."}}
     ]
   }]
 }

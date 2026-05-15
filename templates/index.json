@@ -1,5 +1,28 @@
 {
   "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "badge_text": "Electrolyte Chewing Gum - Now Available",
+        "eyebrow": "The Smarter Way to Hydrate",
+        "headline": "Feel It Instantly.",
+        "subhead": "Electrolytes absorbed directly through your cheek - not your gut. No bottle. No mixing. No waiting. Just chew, and perform.",
+        "email_placeholder": "yourname@email.com",
+        "button_label": "Get Early Access",
+        "fineprint": "No spam. Launch updates only. Unsubscribe anytime.",
+        "signup_tag": "early-access,homepage-hero,launch-list",
+        "success_title": "You're on the list.",
+        "success_message": "We'll send you a heads-up the moment we launch. Thanks for being early.",
+        "stat_1_num": "5-10",
+        "stat_1_label": "Minutes to absorb",
+        "stat_2_num": "3",
+        "stat_2_label": "Key electrolytes",
+        "stat_3_num": "0g",
+        "stat_3_label": "Sugar per piece",
+        "stat_4_num": "100%",
+        "stat_4_label": "Clean label formula"
+      }
+    },
     "ticker": {
       "type": "ticker",
       "blocks": {
@@ -21,14 +44,14 @@
       "blocks": {
         "b1": {"type": "benefit", "settings": {
           "title": "Faster Absorption",
-          "description": "Oral mucosa absorbs electrolytes directly into your bloodstream — bypassing digestion entirely. Works in 5–10 minutes, not 30–60 like drinks.",
+          "description": "Oral mucosa absorbs electrolytes directly into your bloodstream - bypassing digestion entirely. Works in 5-10 minutes, not 30-60 like drinks.",
           "science_tag": "Backed by oral pharmacokinetics",
           "icon": "lightning",
           "icon_color": "electric"
         }},
         "b2": {"type": "benefit", "settings": {
           "title": "Zero Junk",
-          "description": "No sugar. No aspartame. No artificial colors. No fillers. Three electrolytes in the ratios your body actually needs — nothing your body doesn't.",
+          "description": "No sugar. No aspartame. No artificial colors. No fillers. Three electrolytes in the ratios your body actually needs - nothing your body doesn't.",
           "science_tag": "Clean label certified",
           "icon": "check",
           "icon_color": "teal"
@@ -51,13 +74,32 @@
     "proof_bar": {
       "type": "proof-bar",
       "blocks": {
-        "s1": {"type": "stat", "settings": {"number": "5-10", "label": "Minutes to Full Absorption"}},
-        "s2": {"type": "stat", "settings": {"number": "3x", "label": "Electrolytes per Piece"}},
-        "s3": {"type": "stat", "settings": {"number": "0g sugar", "label": "Per Serving, Every Time"}},
-        "s4": {"type": "stat", "settings": {"number": "100%", "label": "Clean Formula"}}
+        "s1": {"type": "stat", "settings": {"number": "5-10", "label": "Minutes to Full Absorption", "counter_target": "", "counter_suffix": ""}},
+        "s2": {"type": "stat", "settings": {"number": "3x", "label": "Electrolytes per Piece", "counter_target": "3", "counter_suffix": "x"}},
+        "s3": {"type": "stat", "settings": {"number": "0g", "label": "Sugar Per Serving", "counter_target": "0", "counter_suffix": "g"}},
+        "s4": {"type": "stat", "settings": {"number": "100%", "label": "Clean Formula", "counter_target": "100", "counter_suffix": "%"}}
       },
       "block_order": ["s1","s2","s3","s4"],
       "settings": {}
+    },
+    "vf_science": {
+      "type": "visual-feature",
+      "settings": {
+        "layout": "split-right",
+        "text_color_scheme": "dark",
+        "min_height": "560",
+        "eyebrow": "Backed by Science",
+        "title": "Oral absorption. Not gut absorption.",
+        "body": "Traditional sports drinks hit your stomach first - then wait 30-60 minutes. ElectroChew absorbs directly through the mucous membranes in your mouth, bypassing the digestive system entirely. Electrolytes reach your bloodstream in 5-10 minutes. The science is called buccal and sublingual absorption - and it changes everything.",
+        "cta_label": "Get Early Access",
+        "cta_url": "#early_access",
+        "stat_1_num": "5x",
+        "stat_1_label": "Faster than drinks",
+        "stat_2_num": "0",
+        "stat_2_label": "Stomach needed",
+        "stat_3_num": "",
+        "stat_3_label": ""
+      }
     },
     "how_it_works": {
       "type": "how-it-works",
@@ -69,12 +111,12 @@
         }},
         "step2": {"type": "step", "settings": {
           "number": "02", "icon": "chew", "title": "Chew",
-          "description": "Your oral mucosa absorbs electrolytes directly into your bloodstream — bypassing digestion for real-time delivery.",
+          "description": "Your oral mucosa absorbs electrolytes directly into your bloodstream - bypassing digestion for real-time delivery.",
           "tag": "5-10 minute absorption"
         }},
         "step3": {"type": "step", "settings": {
           "number": "03", "icon": "perform", "title": "Perform",
-          "description": "Train. Compete. Work. Live. ElectroChew works while you do. Your performance, elevated — every single rep.",
+          "description": "Train. Compete. Work. Live. ElectroChew works while you do. Your performance, elevated - every single rep.",
           "tag": "Sustained energy. No crash."
         }}
       },
@@ -83,6 +125,44 @@
         "eyebrow": "How It Works",
         "title": "Three steps. Zero excuses.",
         "subtitle": "You already know how to chew gum. That's step one."
+      }
+    },
+    "vf_portability": {
+      "type": "visual-feature",
+      "settings": {
+        "layout": "split-left",
+        "text_color_scheme": "dark",
+        "min_height": "560",
+        "eyebrow": "Built for Real Life",
+        "title": "Goes where your water bottle can't.",
+        "body": "Pocket. Gym bag. Jersey pocket. Backpack. Wherever you are, ElectroChew is with you. No mixing, no shaking, no spilling, no refrigeration. A full serving of electrolytes in a piece of gum you can pop anytime - before a workout, mid-race, on the flight, or in the middle of a long meeting.",
+        "cta_label": "Get Early Access",
+        "cta_url": "#early_access",
+        "stat_1_num": "0",
+        "stat_1_label": "Equipment needed",
+        "stat_2_num": "",
+        "stat_2_label": "",
+        "stat_3_num": "",
+        "stat_3_label": ""
+      }
+    },
+    "clean_formula": {
+      "type": "clean-formula",
+      "blocks": {
+        "h1": {"type": "has", "settings": {"symbol": "K", "name": "Potassium", "description": "Regulates fluid balance and prevents muscle cramps"}},
+        "h2": {"type": "has", "settings": {"symbol": "Mg", "name": "Magnesium", "description": "Supports muscle recovery and energy production"}},
+        "h3": {"type": "has", "settings": {"symbol": "Ca", "name": "Calcium", "description": "Enables muscle contractions and nerve signaling"}},
+        "h4": {"type": "has", "settings": {"symbol": "GUM", "name": "Natural Gum Base", "description": "Clean delivery medium. No artificial fillers."}},
+        "o1": {"type": "out", "settings": {"name": "Sugar", "description": "Zero grams. No crash. No calories from sweeteners."}},
+        "o2": {"type": "out", "settings": {"name": "Aspartame", "description": "None of the artificial sweeteners linked to gut disruption."}},
+        "o3": {"type": "out", "settings": {"name": "Artificial Colors", "description": "No dyes, no staining, no synthetic colorants."}},
+        "o4": {"type": "out", "settings": {"name": "Fillers", "description": "No cheap filler ingredients to pad out the formula."}}
+      },
+      "block_order": ["h1","h2","h3","h4","o1","o2","o3","o4"],
+      "settings": {
+        "eyebrow": "What's Inside",
+        "title": "The formula, decoded.",
+        "subtitle": "We believe in complete transparency. Here's exactly what's in ElectroChew - and what we left out on purpose."
       }
     },
     "reviews": {
@@ -98,7 +178,7 @@
         }},
         "r3": {"type": "review", "settings": {
           "quote": "As a cyclist, convenience is everything. The fact that I can replenish electrolytes mid-ride without stopping is huge. Won't go back to liquid electrolytes ever again.",
-          "name": "Chris L.", "role": "Cyclist · 200mi/week"
+          "name": "Chris L.", "role": "Cyclist - 200mi/week"
         }}
       },
       "block_order": ["r1","r2","r3"],
@@ -114,7 +194,7 @@
         "bg_style": "navy",
         "pill_text": "Pre-Launch - Limited Spots",
         "headline": "Be First. Perform First.",
-        "subhead": "Drop your email and we'll send you a heads-up the moment we launch.",
+        "subhead": "Drop your email and we'll send you a heads-up the moment we launch - plus first access to our free trial offer before it sells out.",
         "show_countdown": false,
         "launch_date": "2026-08-15T09:00:00-04:00",
         "email_placeholder": "yourname@email.com",
@@ -130,5 +210,5 @@
       }
     }
   },
-  "order": ["ticker","benefits","proof_bar","how_it_works","reviews","early_access"]
+  "order": ["hero","ticker","benefits","proof_bar","vf_science","how_it_works","vf_portability","clean_formula","reviews","early_access"]
 }

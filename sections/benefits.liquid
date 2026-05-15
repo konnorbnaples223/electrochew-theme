@@ -1,58 +1,126 @@
-<section class="ec-section" id="section-{{ section.id }}">
+{%- comment -%}Benefits — dark immersive 3-card grid{%- endcomment -%}
+
+<section class="ec-ben" id="section-{{ section.id }}">
+
+  <div class="ec-ben-dots" aria-hidden="true"></div>
+  <div class="ec-ben-ambient" aria-hidden="true"></div>
+
   <div class="ec-container">
+
     <div class="ec-ben-header ec-anim">
-      <div class="ec-eyebrow ec-eyebrow-center">{{ section.settings.eyebrow }}</div>
-      <h2 class="ec-headline" style="text-align:center;">{{ section.settings.title }}</h2>
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="ec-eyebrow ec-eyebrow-center ec-ben-eyebrow">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+      <h2 class="ec-ben-title">{{ section.settings.title | default: 'Your body needs more than water.' }}</h2>
       {%- if section.settings.subtitle != blank -%}
-        <p class="ec-subtext" style="text-align:center;margin:16px auto 0;max-width:580px;">{{ section.settings.subtitle }}</p>
+        <p class="ec-ben-subtitle">{{ section.settings.subtitle }}</p>
       {%- endif -%}
     </div>
 
     <div class="ec-ben-grid">
-      {% for block in section.blocks %}
+      {%- for block in section.blocks -%}
         <div class="ec-ben-card ec-anim ec-d{{ forloop.index }}" {{ block.shopify_attributes }}>
-          <div class="ec-ben-num">0{{ forloop.index }}</div>
-          <div class="ec-ben-icon ec-ben-icon-{{ block.settings.icon_color }}">
-            {% if block.settings.icon == 'lightning' %}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            {% elsif block.settings.icon == 'check' %}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22C6.48 22 2 17.52 2 12S6.48 2 12 2s10 4.48 10 10-4.48 10-10 10z"/><path d="M8 12l3 3 5-5"/></svg>
-            {% elsif block.settings.icon == 'pocket' %}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 3h16a1 1 0 0 1 1 1v7a8 8 0 0 1-8 8 8 8 0 0 1-8-8V4a1 1 0 0 1 1-1z"/><polyline points="8 10 12 14 16 10"/></svg>
-            {% else %}
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            {% endif %}
+
+          <div class="ec-ben-card-glow" aria-hidden="true"></div>
+          <div class="ec-ben-num-bg" aria-hidden="true">0{{ forloop.index }}</div>
+
+          <div class="ec-ben-icon-wrap ec-ben-icon-{{ block.settings.icon_color }}">
+            {%- if block.settings.icon == 'lightning' -%}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            {%- elsif block.settings.icon == 'check' -%}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+            {%- elsif block.settings.icon == 'pocket' -%}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h16a1 1 0 0 1 1 1v7a8 8 0 0 1-8 8 8 8 0 0 1-8-8V4a1 1 0 0 1 1-1z"/><polyline points="8 10 12 14 16 10"/></svg>
+            {%- elsif block.settings.icon == 'target' -%}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            {%- elsif block.settings.icon == 'zap' -%}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            {%- else -%}
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            {%- endif -%}
           </div>
-          <div class="ec-ben-title">{{ block.settings.title }}</div>
-          <p class="ec-ben-desc">{{ block.settings.description }}</p>
+
+          <div class="ec-ben-card-title">{{ block.settings.title }}</div>
+          <p class="ec-ben-card-desc">{{ block.settings.description }}</p>
+
           {%- if block.settings.science_tag != blank -%}
-            <div class="ec-ben-tag">
-              <svg width="7" height="7" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+            <div class="ec-ben-science">
+              <svg width="5" height="5" viewBox="0 0 6 6" fill="currentColor" aria-hidden="true"><circle cx="3" cy="3" r="3"/></svg>
               {{ block.settings.science_tag }}
             </div>
           {%- endif -%}
+
+          <div class="ec-ben-bottom-line" aria-hidden="true"></div>
         </div>
-      {% endfor %}
+      {%- endfor -%}
     </div>
+
   </div>
 </section>
 
 <style>
-.ec-ben-header{max-width:680px;margin:0 auto 72px;text-align:center;}
-.ec-ben-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border:2px solid var(--ec-border2);border-radius:var(--ec-radius-xl);overflow:hidden;}
-.ec-ben-card{background:white;padding:52px 44px;position:relative;transition:background .25s var(--ec-ease);}
-.ec-ben-card:hover{background:var(--ec-off-white);}
-.ec-ben-card+.ec-ben-card{border-left:2px solid var(--ec-border2);}
-.ec-ben-num{font-family:var(--ec-font-display);font-size:80px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(21,101,192,.1);position:absolute;top:32px;right:32px;pointer-events:none;user-select:none;}
-.ec-ben-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:28px;}
-.ec-ben-icon-electric{background:rgba(21,101,192,.08);color:var(--ec-electric);}
-.ec-ben-icon-teal{background:rgba(0,137,123,.08);color:var(--ec-success);}
-.ec-ben-icon-navy{background:rgba(26,35,126,.07);color:var(--ec-navy);}
-.ec-ben-title{font-family:var(--ec-font-display);font-size:30px;letter-spacing:1px;color:var(--ec-navy);margin-bottom:14px;text-transform:uppercase;line-height:1;}
-.ec-ben-desc{font-size:15px;line-height:1.72;color:var(--ec-text2);}
-.ec-ben-tag{margin-top:20px;display:inline-flex;align-items:center;gap:7px;font-family:var(--ec-font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ec-electric);}
-@media(max-width:1024px){.ec-ben-grid{grid-template-columns:1fr;}.ec-ben-card+.ec-ben-card{border-left:none;border-top:2px solid var(--ec-border2);}}
-@media(max-width:768px){.ec-ben-card{padding:36px 28px;}}
+/* ── Section ── */
+.ec-ben{position:relative;background:#050b1f;padding:100px 0;overflow:hidden;color:white;}
+
+/* Dot grid texture */
+.ec-ben-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(79,195,247,.07) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+
+/* Center ambient glow */
+.ec-ben-ambient{position:absolute;top:60%;left:50%;transform:translate(-50%,-50%);width:900px;height:500px;background:radial-gradient(ellipse,rgba(21,101,192,.14) 0%,transparent 65%);filter:blur(60px);pointer-events:none;z-index:0;}
+
+/* ── Header ── */
+.ec-ben-header{max-width:640px;margin:0 auto 80px;text-align:center;position:relative;z-index:1;}
+.ec-ben-eyebrow{color:var(--ec-accent)!important;}
+.ec-ben-title{font-family:var(--ec-font-display);font-size:clamp(44px,5.5vw,76px);line-height:.92;letter-spacing:1px;color:white;text-transform:uppercase;margin:18px 0 20px;}
+.ec-ben-title .em{color:var(--ec-accent);}
+.ec-ben-subtitle{font-size:16px;color:rgba(255,255,255,.5);line-height:1.65;max-width:520px;margin:0 auto;}
+
+/* ── Card grid ── */
+.ec-ben-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(255,255,255,.07);border-radius:24px;overflow:hidden;position:relative;z-index:1;}
+
+.ec-ben-card{position:relative;padding:52px 40px 48px;border-right:1px solid rgba(255,255,255,.07);transition:background .35s;overflow:hidden;isolation:isolate;cursor:default;}
+.ec-ben-card:last-child{border-right:none;}
+.ec-ben-card:hover{background:rgba(79,195,247,.025);}
+
+/* Hover glow behind card */
+.ec-ben-card-glow{position:absolute;inset:-60%;background:radial-gradient(circle at 50% 50%,rgba(79,195,247,.07) 0%,transparent 55%);opacity:0;transition:opacity .45s;pointer-events:none;}
+.ec-ben-card:hover .ec-ben-card-glow{opacity:1;}
+
+/* Ghost number */
+.ec-ben-num-bg{position:absolute;top:12px;right:16px;font-family:var(--ec-font-display);font-size:130px;line-height:1;color:transparent;-webkit-text-stroke:1.5px rgba(79,195,247,.05);pointer-events:none;user-select:none;transition:-webkit-text-stroke-color .35s;}
+.ec-ben-card:hover .ec-ben-num-bg{-webkit-text-stroke-color:rgba(79,195,247,.11);}
+
+/* Icon */
+.ec-ben-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:28px;position:relative;z-index:1;transition:transform .25s;}
+.ec-ben-card:hover .ec-ben-icon-wrap{transform:scale(1.08);}
+.ec-ben-icon-electric{background:rgba(33,150,243,.12);color:#2196f3;border:1px solid rgba(33,150,243,.2);}
+.ec-ben-icon-teal{background:rgba(0,188,212,.1);color:#00bcd4;border:1px solid rgba(0,188,212,.2);}
+.ec-ben-icon-navy{background:rgba(79,195,247,.08);color:var(--ec-accent);border:1px solid rgba(79,195,247,.18);}
+
+/* Text */
+.ec-ben-card-title{font-family:var(--ec-font-display);font-size:32px;letter-spacing:1.5px;color:white;margin-bottom:16px;text-transform:uppercase;line-height:1;position:relative;z-index:1;}
+.ec-ben-card-desc{font-size:15px;line-height:1.72;color:rgba(255,255,255,.52);position:relative;z-index:1;}
+.ec-ben-card:hover .ec-ben-card-desc{color:rgba(255,255,255,.7);}
+
+/* Science tag */
+.ec-ben-science{margin-top:24px;display:inline-flex;align-items:center;gap:7px;font-family:var(--ec-font-mono);font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(79,195,247,.55);position:relative;z-index:1;transition:color .3s;}
+.ec-ben-card:hover .ec-ben-science{color:rgba(79,195,247,.9);}
+
+/* Bottom accent line */
+.ec-ben-bottom-line{position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(79,195,247,.5),transparent);transform:scaleX(0);transition:transform .5s cubic-bezier(0.22,1,0.36,1);}
+.ec-ben-card:hover .ec-ben-bottom-line{transform:scaleX(1);}
+
+/* ── Responsive ── */
+@media(max-width:1024px){
+  .ec-ben-grid{grid-template-columns:1fr;}
+  .ec-ben-card{border-right:none;border-bottom:1px solid rgba(255,255,255,.07);}
+  .ec-ben-card:last-child{border-bottom:none;}
+}
+@media(max-width:640px){
+  .ec-ben{padding:72px 0;}
+  .ec-ben-card{padding:36px 28px 32px;}
+  .ec-ben-card-title{font-size:26px;}
+}
 </style>
 
 {% schema %}
@@ -61,7 +129,7 @@
   "tag": "section",
   "settings": [
     {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Why It Works"},
-    {"type":"text","id":"title","label":"Title","default":"Your body needs more<br><span class=\"em\">than water.</span>"},
+    {"type":"text","id":"title","label":"Title","default":"Your body needs more than water."},
     {"type":"textarea","id":"subtitle","label":"Subtitle","default":"Sweat strips you of three essential electrolytes. Most products replace them too slowly, too messily, or not at all. ElectroChew is different."}
   ],
   "blocks":[
@@ -69,10 +137,10 @@
       "type":"benefit","name":"Benefit card",
       "settings":[
         {"type":"text","id":"title","label":"Title","default":"Faster Absorption"},
-        {"type":"textarea","id":"description","label":"Description","default":"Oral mucosa absorbs electrolytes directly into your bloodstream — bypassing digestion entirely. Works in 5–10 minutes, not 30–60 like drinks."},
+        {"type":"textarea","id":"description","label":"Description","default":"Oral mucosa absorbs electrolytes directly into your bloodstream - bypassing digestion entirely. Works in 5-10 minutes, not 30-60 like drinks."},
         {"type":"text","id":"science_tag","label":"Science tag","default":"Backed by oral pharmacokinetics"},
-        {"type":"select","id":"icon","label":"Icon","options":[{"value":"lightning","label":"Lightning bolt"},{"value":"check","label":"Checkmark"},{"value":"pocket","label":"Pocket"},{"value":"clock","label":"Clock"}],"default":"lightning"},
-        {"type":"select","id":"icon_color","label":"Icon color","options":[{"value":"electric","label":"Electric blue"},{"value":"teal","label":"Teal"},{"value":"navy","label":"Navy"}],"default":"electric"}
+        {"type":"select","id":"icon","label":"Icon","options":[{"value":"lightning","label":"Lightning bolt"},{"value":"check","label":"Checkmark circle"},{"value":"pocket","label":"Pocket"},{"value":"target","label":"Target"},{"value":"zap","label":"Clock"}],"default":"lightning"},
+        {"type":"select","id":"icon_color","label":"Icon color","options":[{"value":"electric","label":"Electric blue"},{"value":"teal","label":"Cyan"},{"value":"navy","label":"Light blue"}],"default":"electric"}
       ]
     }
   ],
@@ -80,8 +148,8 @@
   "presets":[{
     "name":"Benefits",
     "blocks":[
-      {"type":"benefit","settings":{"title":"Faster Absorption","description":"Oral mucosa absorbs electrolytes directly into your bloodstream — bypassing digestion entirely. Works in 5–10 minutes, not 30–60 like drinks.","science_tag":"Backed by oral pharmacokinetics","icon":"lightning","icon_color":"electric"}},
-      {"type":"benefit","settings":{"title":"Zero Junk","description":"No sugar. No aspartame. No artificial colors. No fillers. Three electrolytes in the ratios your body actually needs — nothing your body doesn't.","science_tag":"Clean label certified","icon":"check","icon_color":"teal"}},
+      {"type":"benefit","settings":{"title":"Faster Absorption","description":"Oral mucosa absorbs electrolytes directly into your bloodstream - bypassing digestion entirely. Works in 5-10 minutes, not 30-60 like drinks.","science_tag":"Backed by oral pharmacokinetics","icon":"lightning","icon_color":"electric"}},
+      {"type":"benefit","settings":{"title":"Zero Junk","description":"No sugar. No aspartame. No artificial colors. No fillers. Three electrolytes in the ratios your body actually needs - nothing your body doesn't.","science_tag":"Clean label certified","icon":"check","icon_color":"teal"}},
       {"type":"benefit","settings":{"title":"Always On You","description":"Goes where bottles can't. In your pocket, your bag, your gym kit. No mixing, no shaking, no spills. Hydrate mid-run, mid-meeting, mid-anything.","science_tag":"Performance without the prep","icon":"pocket","icon_color":"navy"}}
     ]
   }]

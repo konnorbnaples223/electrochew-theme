@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── Smooth section fade-up (stagger) ── */
   initSectionReveal();
 
+  /* ── Proof bar: count-up animation ── */
+  initCounters();
+
 });
 
 /* ────────────────────────────────────────────────────────────── */
@@ -150,7 +153,6 @@ function initScrollParallax() {
 /* Stagger reveal for sections as they enter viewport            */
 /* ────────────────────────────────────────────────────────────── */
 function initSectionReveal() {
-  /* Additional stagger classes beyond ec-anim */
   var staggerItems = document.querySelectorAll('.ec-ben-card, .ec-hiw-step, .ec-vf-text-inner > *');
   if (!staggerItems.length) return;
 
@@ -168,5 +170,49 @@ function initSectionReveal() {
       el.classList.add('ec-anim');
       obs.observe(el);
     }
+  });
+}
+
+/* ────────────────────────────────────────────────────────────── */
+/* Proof bar count-up animation                                  */
+/* ────────────────────────────────────────────────────────────── */
+function initCounters() {
+  var counters = document.querySelectorAll('[data-counter-num]');
+  if (!counters.length) return;
+
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function animateCounter(el) {
+    var target = parseFloat(el.getAttribute('data-counter-num'));
+    var suffix = el.getAttribute('data-counter-suffix') || '';
+    if (!target && target !== 0) return;
+
+    var isInteger = (target === Math.floor(target));
+    var duration = 1400;
+    var start = null;
+
+    function step(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = easeOut(progress);
+      var current = target * eased;
+      el.textContent = (isInteger ? Math.round(current) : current.toFixed(1)) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        animateCounter(e.target);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(function (el) {
+    if (el.getAttribute('data-counter-num')) obs.observe(el);
   });
 }
