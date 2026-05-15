@@ -51,43 +51,68 @@
         <p class="ec-hv3-sub hv3-a hv3-a4">{{ section.settings.subhead }}</p>
       {%- endif -%}
 
-      <div class="ec-hv3-form-wrap hv3-a hv3-a5">
-        {% form 'customer', class: 'ec-hv3-form' %}
-          <input type="hidden" name="contact[tags]" value="{{ section.settings.signup_tag | default: 'early-access,homepage-hero,launch-list' }}">
-          <input type="hidden" name="contact[accepts_marketing]" value="true">
+      <div class="ec-hv3-cta-wrap hv3-a hv3-a5">
 
-          {%- if form.posted_successfully? -%}
-            <div class="ec-hv3-success" role="status">
-              <div class="ec-hv3-success-check" aria-hidden="true">✓</div>
-              <div>
-                <strong>{{ section.settings.success_title | default: "You're on the list." }}</strong>
-                <p>{{ section.settings.success_message | default: "We'll send you a heads-up the moment we launch. Thanks for being early." }}</p>
+        {%- if section.settings.cta_mode == 'form' -%}
+
+          {%- comment -%} ── Email capture form ── {%- endcomment -%}
+          {% form 'customer', class: 'ec-hv3-form' %}
+            <input type="hidden" name="contact[tags]" value="{{ section.settings.signup_tag | default: 'early-access,homepage-hero,launch-list' }}">
+            <input type="hidden" name="contact[accepts_marketing]" value="true">
+            {%- if form.posted_successfully? -%}
+              <div class="ec-hv3-success" role="status">
+                <div class="ec-hv3-success-check" aria-hidden="true">✓</div>
+                <div>
+                  <strong>{{ section.settings.success_title | default: "You're on the list." }}</strong>
+                  <p>{{ section.settings.success_message | default: "We'll send you a heads-up the moment we launch. Thanks for being early." }}</p>
+                </div>
               </div>
-            </div>
-          {%- else -%}
-            {%- if form.errors -%}
-              <div class="ec-hv3-error" role="alert">{{ form.errors | default_errors }}</div>
+            {%- else -%}
+              {%- if form.errors -%}
+                <div class="ec-hv3-error" role="alert">{{ form.errors | default_errors }}</div>
+              {%- endif -%}
+              <label for="ec-hv3-e-{{ sec_id }}" class="ec-sr-only">Email address</label>
+              <div class="ec-hv3-row" id="ec-hv3-row-{{ sec_id }}">
+                <input
+                  type="email"
+                  id="ec-hv3-e-{{ sec_id }}"
+                  name="contact[email]"
+                  placeholder="{{ section.settings.email_placeholder | default: 'yourname@email.com' }}"
+                  required
+                  autocomplete="email"
+                  inputmode="email">
+                <button type="submit">
+                  <span>{{ section.settings.button_label | default: 'Get Early Access' }}</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+              {%- if section.settings.fineprint != blank -%}
+                <p class="ec-hv3-fineprint">{{ section.settings.fineprint }}</p>
+              {%- endif -%}
             {%- endif -%}
-            <label for="ec-hv3-e-{{ sec_id }}" class="ec-sr-only">Email address</label>
-            <div class="ec-hv3-row" id="ec-hv3-row-{{ sec_id }}">
-              <input
-                type="email"
-                id="ec-hv3-e-{{ sec_id }}"
-                name="contact[email]"
-                placeholder="{{ section.settings.email_placeholder | default: 'yourname@email.com' }}"
-                required
-                autocomplete="email"
-                inputmode="email">
-              <button type="submit">
-                <span>{{ section.settings.button_label | default: 'Get Early Access' }}</span>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </button>
-            </div>
-            {%- if section.settings.fineprint != blank -%}
-              <p class="ec-hv3-fineprint">{{ section.settings.fineprint }}</p>
+          {% endform %}
+
+        {%- else -%}
+
+          {%- comment -%} ── Button CTAs ── {%- endcomment -%}
+          <div class="ec-hv3-btns">
+            <a href="{{ section.settings.btn_primary_url | default: '#early_access' }}" class="ec-hv3-btn-primary">
+              {{ section.settings.btn_primary_label | default: 'Try for Free' }}
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            {%- if section.settings.btn_secondary_label != blank -%}
+              <a href="{{ section.settings.btn_secondary_url | default: '/pages/science' }}" class="ec-hv3-btn-secondary">
+                {{ section.settings.btn_secondary_label }}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+              </a>
             {%- endif -%}
+          </div>
+          {%- if section.settings.fineprint != blank -%}
+            <p class="ec-hv3-fineprint">{{ section.settings.fineprint }}</p>
           {%- endif -%}
-        {% endform %}
+
+        {%- endif -%}
+
       </div>
 
       <div class="ec-hv3-stats hv3-a hv3-a6">
@@ -184,6 +209,14 @@
 /* Subhead */
 .ec-hv3-sub{font-size:17.5px;line-height:1.65;color:rgba(255,255,255,.68);max-width:500px;margin-bottom:40px;}
 
+/* ── Button CTAs ── */
+.ec-hv3-btns{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.ec-hv3-btn-primary{display:inline-flex;align-items:center;gap:10px;padding:18px 36px;background:white;color:var(--ec-navy);border-radius:10px;font-family:var(--ec-font-mono);font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;transition:background .2s,transform .15s,box-shadow .2s;box-shadow:0 8px 32px rgba(255,255,255,.12);}
+.ec-hv3-btn-primary:hover{background:rgba(255,255,255,.92);transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,255,255,.18);}
+.ec-hv3-btn-primary:active{transform:translateY(0);}
+.ec-hv3-btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:18px 28px;background:transparent;color:rgba(255,255,255,.75);border:1.5px solid rgba(255,255,255,.22);border-radius:10px;font-family:var(--ec-font-mono);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:border-color .2s,color .2s,background .2s;}
+.ec-hv3-btn-secondary:hover{border-color:rgba(255,255,255,.5);color:white;background:rgba(255,255,255,.06);}
+
 /* ── Email form ── */
 .ec-hv3-form{width:100%;}
 .ec-hv3-row{display:flex;align-items:stretch;border-radius:14px;overflow:hidden;border:1.5px solid rgba(79,195,247,.3);background:rgba(255,255,255,.04);backdrop-filter:blur(12px);transition:border-color .2s,box-shadow .2s;max-width:520px;}
@@ -277,10 +310,17 @@
     {"type":"text","id":"eyebrow","label":"Eyebrow","default":"The Smarter Way to Hydrate"},
     {"type":"text","id":"headline","label":"Headline","default":"For all the moments inbetween."},
     {"type":"textarea","id":"subhead","label":"Subhead","default":"Electrolytes absorbed directly through your cheek - not your gut. No bottle. No mixing. No waiting. Just chew, and perform."},
-    {"type":"header","content":"Email form"},
+    {"type":"header","content":"CTA style"},
+    {"type":"select","id":"cta_mode","label":"CTA type","options":[{"value":"buttons","label":"Two buttons (primary + secondary)"},{"value":"form","label":"Email capture form"}],"default":"buttons"},
+    {"type":"header","content":"Buttons (when CTA type = buttons)"},
+    {"type":"text","id":"btn_primary_label","label":"Primary button label","default":"Try for Free"},
+    {"type":"url","id":"btn_primary_url","label":"Primary button URL"},
+    {"type":"text","id":"btn_secondary_label","label":"Secondary button label","default":"See the Science"},
+    {"type":"url","id":"btn_secondary_url","label":"Secondary button URL"},
+    {"type":"text","id":"fineprint","label":"Fine print (shown below either CTA)","default":""},
+    {"type":"header","content":"Email form (when CTA type = form)"},
     {"type":"text","id":"email_placeholder","label":"Input placeholder","default":"yourname@email.com"},
     {"type":"text","id":"button_label","label":"Submit button text","default":"Get Early Access"},
-    {"type":"text","id":"fineprint","label":"Fine print below form","default":"No spam. Launch updates only. Unsubscribe anytime."},
     {"type":"text","id":"signup_tag","label":"Customer tag(s)","info":"Comma-separated tags applied in Shopify.","default":"early-access,homepage-hero,launch-list"},
     {"type":"header","content":"Success state"},
     {"type":"text","id":"success_title","label":"Success title","default":"You're on the list."},
