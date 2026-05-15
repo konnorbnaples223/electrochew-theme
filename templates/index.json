@@ -83,19 +83,6 @@
       "block_order": ["s1","s2","s3","s4"],
       "settings": {}
     },
-    "visual_feature_1": {
-      "type": "visual-feature",
-      "settings": {
-        "layout": "split-right",
-        "text_color_scheme": "dark",
-        "min_height": 600,
-        "eyebrow": "Built For Performance",
-        "title": "Go further.<br><span class=\"em\">Chew smarter.</span>",
-        "body": "<p>ElectroChew goes where bottles can't. In your pocket, your bag, your gym kit. No mixing, no shaking, no spills — just pure performance, on demand.</p>",
-        "cta_label": "Shop Now",
-        "cta_url": "/collections"
-      }
-    },
     "how_it_works": {
       "type": "how-it-works",
       "blocks": {
@@ -120,21 +107,6 @@
         "eyebrow": "How It Works",
         "title": "Three steps.<br><span class=\"em\">Zero excuses.</span>",
         "subtitle": "You already know how to chew gum. That's step one."
-      }
-    },
-    "visual_feature_2": {
-      "type": "visual-feature",
-      "settings": {
-        "layout": "split-left",
-        "text_color_scheme": "light",
-        "min_height": 580,
-        "eyebrow": "The Science",
-        "title": "Absorbed in<br><span class=\"em\">minutes.</span>",
-        "body": "<p>Oral mucosa absorption bypasses digestion entirely, delivering electrolytes directly into your bloodstream 3–6× faster than any drink or capsule.</p>",
-        "stat_1_num": "5–10",
-        "stat_1_label": "Minutes to peak absorption",
-        "stat_2_num": "3×",
-        "stat_2_label": "Faster than liquids"
       }
     },
     "products": {
@@ -273,5 +245,5 @@
       }
     }
   },
-  "order": ["hero","ticker","benefits","proof_bar","visual_feature_1","how_it_works","visual_feature_2","products","ingredients","clean_formula","reviews","early_access"]
+  "order": ["hero","ticker","benefits","proof_bar","how_it_works","products","ingredients","clean_formula","reviews","early_access"]
 }
