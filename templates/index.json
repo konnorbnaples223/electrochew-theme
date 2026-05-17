@@ -37,38 +37,6 @@
       "block_order": ["t1","t2","t3","t4","t5","t6","t7","t8","t9"],
       "settings": {"bg_color": "#0a1540", "text_color": "#ffffff"}
     },
-    "benefits": {
-      "type": "benefits",
-      "blocks": {
-        "b1": {"type": "benefit", "settings": {
-          "title": "Faster Absorption",
-          "description": "Oral mucosa absorbs electrolytes directly into your bloodstream - bypassing digestion entirely. Works in 5-10 minutes, not 30-60 like drinks.",
-          "science_tag": "Backed by oral pharmacokinetics",
-          "icon": "lightning",
-          "icon_color": "electric"
-        }},
-        "b2": {"type": "benefit", "settings": {
-          "title": "Zero Junk",
-          "description": "No sugar. No aspartame. No artificial colors. No fillers. Three electrolytes in the ratios your body actually needs - nothing your body doesn't.",
-          "science_tag": "Clean label certified",
-          "icon": "check",
-          "icon_color": "teal"
-        }},
-        "b3": {"type": "benefit", "settings": {
-          "title": "Always On You",
-          "description": "Goes where bottles can't. In your pocket, your bag, your gym kit. No mixing, no shaking, no spills. Hydrate mid-run, mid-meeting, mid-anything.",
-          "science_tag": "Performance without the prep",
-          "icon": "pocket",
-          "icon_color": "navy"
-        }}
-      },
-      "block_order": ["b1","b2","b3"],
-      "settings": {
-        "eyebrow": "Why It Works",
-        "title": "Your body needs more than water.",
-        "subtitle": "Sweat strips you of three essential electrolytes. Most products replace them too slowly, too messily, or not at all. ElectroChew is different."
-      }
-    },
     "step_panels": {
       "type": "step-panels",
       "blocks": {
@@ -107,32 +75,6 @@
         "stat_2_label": "Stomach needed",
         "stat_3_num": "",
         "stat_3_label": ""
-      }
-    },
-    "how_it_works": {
-      "type": "how-it-works",
-      "blocks": {
-        "step1": {"type": "step", "settings": {
-          "number": "01", "icon": "open", "title": "Open",
-          "description": "Pull out a piece. No shaker bottle. No measuring. No mixing. No waiting for water to kick in.",
-          "tag": "Anywhere. Anytime."
-        }},
-        "step2": {"type": "step", "settings": {
-          "number": "02", "icon": "chew", "title": "Chew",
-          "description": "Your oral mucosa absorbs electrolytes directly into your bloodstream - bypassing digestion for real-time delivery.",
-          "tag": "5-10 minute absorption"
-        }},
-        "step3": {"type": "step", "settings": {
-          "number": "03", "icon": "perform", "title": "Perform",
-          "description": "Train. Compete. Work. Live. ElectroChew works while you do. Your performance, elevated - every single rep.",
-          "tag": "Sustained energy. No crash."
-        }}
-      },
-      "block_order": ["step1","step2","step3"],
-      "settings": {
-        "eyebrow": "How It Works",
-        "title": "Three steps. Zero excuses.",
-        "subtitle": "You already know how to chew gum. That's step one."
       }
     },
     "vf_portability": {
@@ -218,5 +160,5 @@
       }
     }
   },
-  "order": ["hero","ticker","benefits","step_panels","proof_bar","vf_science","how_it_works","vf_portability","clean_formula","reviews","early_access"]
+  "order": ["hero","ticker","step_panels","proof_bar","vf_science","vf_portability","clean_formula","reviews","early_access"]
 }
