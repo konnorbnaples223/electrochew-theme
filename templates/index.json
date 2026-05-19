@@ -138,27 +138,6 @@
         "bg_color": "#0a1540"
       }
     },
-    "early_access": {
-      "type": "early-access",
-      "settings": {
-        "bg_style": "navy",
-        "pill_text": "Pre-Launch - Limited Spots",
-        "headline": "Be First. Perform First.",
-        "subhead": "Drop your email and we'll send you a heads-up the moment we launch - plus first access to our free trial offer before it sells out.",
-        "show_countdown": false,
-        "launch_date": "2026-08-15T09:00:00-04:00",
-        "email_placeholder": "yourname@email.com",
-        "button_label": "Notify Me",
-        "fineprint": "No spam, ever. Launch updates only. Unsubscribe anytime.",
-        "signup_tag": "early-access,launch-list,homepage",
-        "accepts_marketing": true,
-        "success_title": "You're on the list.",
-        "success_message": "We'll send you a heads-up the moment we launch. Thanks for being early.",
-        "trust_1": "No spam, ever",
-        "trust_2": "Launch updates only",
-        "trust_3": "Unsubscribe anytime"
-      }
-    }
   },
-  "order": ["hero","ticker","step_panels","proof_bar","vf_science","vf_portability","clean_formula","reviews","early_access"]
+  "order": ["hero","ticker","step_panels","proof_bar","vf_science","vf_portability","clean_formula","reviews"]
 }
