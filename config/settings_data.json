@@ -1,1 +1,71 @@
-{"current":{"color_navy":"#0a1540","color_electric":"#1565c0","color_accent":"#4fc3f7","sections":{"topbar":{"type":"topbar","settings":{"logo_height":26,"show_announcement":false,"announcement_text":"","announcement_url":"","nav_1_label":"Home","nav_1_url":"\/","nav_2_label":"Shop","nav_2_url":"\/collections\/all","nav_3_label":"About","nav_3_url":"\/pages\/about","nav_4_label":"Ambassadors","nav_4_url":"\/pages\/ambassador","nav_5_label":"Contact","nav_5_url":"\/pages\/contact"}},"subscribebanner":{"type":"subscribebanner","settings":{"discount":"<span style=\"color:#4fc3f7;\">10%<\/span> OFF","subtitle":"Subscribe and save on every order. Free shipping included. Cancel anytime.","form_label":"Join the community","placeholder":"Your email address","button_text":"JOIN","bg_color":"#0a1540"}},"sitefoot":{"type":"sitefoot","settings":{"tagline":"Electrolyte gum that works in real time. No water required.","instagram_url":"","tiktok_url":"","youtube_url":"","copyright":"© 2026 ElectroChew — Per Os Biosciences LLC · Charleston, SC","location":"Formulated in the USA 🇺🇸","bg_color":"#05091a"}}},"content_for_index":[]}}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "current": {
+    "color_navy": "#0a1540",
+    "color_electric": "#1565c0",
+    "color_accent": "#4fc3f7",
+    "sections": {
+      "topbar": {
+        "type": "topbar",
+        "settings": {
+          "logo_height": 26,
+          "show_announcement": false,
+          "announcement_text": "",
+          "announcement_url": "",
+          "show_header_cta": true,
+          "header_cta_label": "Try Free ⚡",
+          "header_cta_url": "",
+          "nav_1_label": "Home",
+          "nav_1_url": "/",
+          "nav_2_label": "Shop",
+          "nav_2_url": "/collections/all",
+          "nav_3_label": "About",
+          "nav_3_url": "/pages/about",
+          "nav_4_label": "Ambassadors",
+          "nav_4_url": "/pages/ambassador",
+          "nav_5_label": "Contact",
+          "nav_5_url": "/pages/contact"
+        }
+      },
+      "subscribebanner": {
+        "type": "subscribebanner",
+        "settings": {
+          "discount": "<span style=\"color:#4fc3f7;\">10%</span> OFF",
+          "subtitle": "Subscribe and save on every order. Free shipping included. Cancel anytime.",
+          "form_label": "Join the community",
+          "placeholder": "Your email address",
+          "button_text": "JOIN",
+          "bg_color": "#0a1540"
+        }
+      },
+      "sitefoot": {
+        "type": "sitefoot",
+        "settings": {
+          "tagline": "Electrolyte gum that works in real time. No water required.",
+          "instagram_url": "",
+          "tiktok_url": "",
+          "youtube_url": "",
+          "copyright": "© 2026 ElectroChew — Per Os Biosciences LLC · Charleston, SC",
+          "location": "Formulated in the USA 🇺🇸",
+          "bg_color": "#05091a"
+        }
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "1232542678405107163": {
+        "type": "shopify://apps/instafeed/blocks/head-block/c447db20-095d-4a10-9725-b5977662c9d5",
+        "disabled": false,
+        "settings": {}
+      }
+    }
+  }
+}
