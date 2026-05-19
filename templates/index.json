@@ -213,6 +213,7 @@
         "layout": "split-left",
         "text_color_scheme": "dark",
         "min_height": 600,
+        "image": "shopify://shop_images/how-it-works-1.png",
         "image_alt": "",
         "eyebrow": "Built for Real Life",
         "title": "Goes where your water bottle can't.",
