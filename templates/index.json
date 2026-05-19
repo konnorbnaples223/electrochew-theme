@@ -12,6 +12,8 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "bg_alt": "ElectroChew Electrolyte Chewing Gum",
+        "product_image_alt": "ElectroChew Electrolyte Gum",
         "badge_text": "Electrolyte Chewing Gum - Now Available",
         "eyebrow": "The Smarter Way to Hydrate",
         "headline": "For all the moments inbetween.",
@@ -33,38 +35,155 @@
     "ticker": {
       "type": "ticker",
       "blocks": {
-        "t1": {"type": "item", "settings": {"text": "Potassium"}},
-        "t2": {"type": "item", "settings": {"text": "Magnesium"}},
-        "t3": {"type": "item", "settings": {"text": "Calcium"}},
-        "t4": {"type": "item", "settings": {"text": "Zero Sugar"}},
-        "t5": {"type": "item", "settings": {"text": "No Aspartame"}},
-        "t6": {"type": "item", "settings": {"text": "No Artificial Colors"}},
-        "t7": {"type": "item", "settings": {"text": "Oral Mucosa Absorption"}},
-        "t8": {"type": "item", "settings": {"text": "Works in Minutes"}},
-        "t9": {"type": "item", "settings": {"text": "No Water Needed"}}
+        "t1": {
+          "type": "item",
+          "settings": {
+            "text": "Potassium"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "text": "Magnesium"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "text": "Calcium"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "text": "Zero Sugar"
+          }
+        },
+        "t5": {
+          "type": "item",
+          "settings": {
+            "text": "No Aspartame"
+          }
+        },
+        "t6": {
+          "type": "item",
+          "settings": {
+            "text": "No Artificial Colors"
+          }
+        },
+        "t7": {
+          "type": "item",
+          "settings": {
+            "text": "Oral Mucosa Absorption"
+          }
+        },
+        "t8": {
+          "type": "item",
+          "settings": {
+            "text": "Works in Minutes"
+          }
+        },
+        "t9": {
+          "type": "item",
+          "settings": {
+            "text": "No Water Needed"
+          }
+        }
       },
-      "block_order": ["t1","t2","t3","t4","t5","t6","t7","t8","t9"],
-      "settings": {"bg_color": "#0a1540", "text_color": "#ffffff"}
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "t9"
+      ],
+      "settings": {
+        "bg_color": "#0a1540",
+        "text_color": "#ffffff"
+      }
     },
     "step_panels": {
       "type": "step-panels",
       "blocks": {
-        "p1": {"type": "panel", "settings": {"word": "Open", "description": "Pull out a piece. No shaker bottle, no measuring, no mixing. Ready wherever you are."}},
-        "p2": {"type": "panel", "settings": {"word": "Chew", "description": "Electrolytes absorb through your oral mucosa directly into your bloodstream - bypassing digestion entirely."}},
-        "p3": {"type": "panel", "settings": {"word": "Electrolytes", "description": "Potassium, Magnesium, and Calcium reach your bloodstream in 5-10 minutes. No crash, no stomach upset."}}
+        "p1": {
+          "type": "panel",
+          "settings": {
+            "word": "Open",
+            "description": "Pull out a piece. No shaker bottle, no measuring, no mixing. Ready wherever you are."
+          }
+        },
+        "p2": {
+          "type": "panel",
+          "settings": {
+            "word": "Chew",
+            "description": "Electrolytes absorb through your oral mucosa directly into your bloodstream - bypassing digestion entirely."
+          }
+        },
+        "p3": {
+          "type": "panel",
+          "settings": {
+            "word": "Electrolytes",
+            "description": "Potassium, Magnesium, and Calcium reach your bloodstream in 5-10 minutes. No crash, no stomach upset."
+          }
+        }
       },
-      "block_order": ["p1","p2","p3"],
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
       "settings": {}
     },
     "proof_bar": {
       "type": "proof-bar",
       "blocks": {
-        "s1": {"type": "stat", "settings": {"number": "5-10", "label": "Minutes to Full Absorption", "counter_target": "", "counter_suffix": ""}},
-        "s2": {"type": "stat", "settings": {"number": "3x", "label": "Electrolytes per Piece", "counter_target": "3", "counter_suffix": "x"}},
-        "s3": {"type": "stat", "settings": {"number": "0g", "label": "Sugar Per Serving", "counter_target": "0", "counter_suffix": "g"}},
-        "s4": {"type": "stat", "settings": {"number": "100%", "label": "Clean Formula", "counter_target": "100", "counter_suffix": "%"}}
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "5-10",
+            "label": "Minutes to Full Absorption",
+            "counter_target": "",
+            "counter_suffix": ""
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "3x",
+            "label": "Electrolytes per Piece",
+            "counter_target": "3",
+            "counter_suffix": "x"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "0g",
+            "label": "Sugar Per Serving",
+            "counter_target": "0",
+            "counter_suffix": "g"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "number": "100%",
+            "label": "Clean Formula",
+            "counter_target": "100",
+            "counter_suffix": "%"
+          }
+        }
       },
-      "block_order": ["s1","s2","s3","s4"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
       "settings": {}
     },
     "vf_science": {
@@ -73,6 +192,7 @@
         "layout": "split-right",
         "text_color_scheme": "dark",
         "min_height": 600,
+        "image_alt": "",
         "eyebrow": "Backed by Science",
         "title": "Oral absorption. Not gut absorption.",
         "body": "<p>Traditional sports drinks hit your stomach first - then wait 30-60 minutes. ElectroChew absorbs directly through the mucous membranes in your mouth, bypassing the digestive system entirely. Electrolytes reach your bloodstream in 5-10 minutes. The science is called buccal and sublingual absorption - and it changes everything.</p>",
@@ -92,6 +212,7 @@
         "layout": "split-left",
         "text_color_scheme": "dark",
         "min_height": 600,
+        "image_alt": "",
         "eyebrow": "Built for Real Life",
         "title": "Goes where your water bottle can't.",
         "body": "<p>Pocket. Gym bag. Jersey pocket. Backpack. Wherever you are, ElectroChew is with you. No mixing, no shaking, no spilling, no refrigeration. A full serving of electrolytes in a piece of gum you can pop anytime - before a workout, mid-race, on the flight, or in the middle of a long meeting.</p>",
@@ -108,16 +229,77 @@
     "clean_formula": {
       "type": "clean-formula",
       "blocks": {
-        "h1": {"type": "has", "settings": {"symbol": "K", "name": "Potassium", "description": "Regulates fluid balance and prevents muscle cramps"}},
-        "h2": {"type": "has", "settings": {"symbol": "Mg", "name": "Magnesium", "description": "Supports muscle recovery and energy production"}},
-        "h3": {"type": "has", "settings": {"symbol": "Ca", "name": "Calcium", "description": "Enables muscle contractions and nerve signaling"}},
-        "h4": {"type": "has", "settings": {"symbol": "GUM", "name": "Natural Gum Base", "description": "Clean delivery medium. No artificial fillers."}},
-        "o1": {"type": "out", "settings": {"name": "Sugar", "description": "Zero grams. No crash. No calories from sweeteners."}},
-        "o2": {"type": "out", "settings": {"name": "Aspartame", "description": "None of the artificial sweeteners linked to gut disruption."}},
-        "o3": {"type": "out", "settings": {"name": "Artificial Colors", "description": "No dyes, no staining, no synthetic colorants."}},
-        "o4": {"type": "out", "settings": {"name": "Fillers", "description": "No cheap filler ingredients to pad out the formula."}}
+        "h1": {
+          "type": "has",
+          "settings": {
+            "symbol": "K",
+            "name": "Potassium",
+            "description": "Regulates fluid balance and prevents muscle cramps"
+          }
+        },
+        "h2": {
+          "type": "has",
+          "settings": {
+            "symbol": "Mg",
+            "name": "Magnesium",
+            "description": "Supports muscle recovery and energy production"
+          }
+        },
+        "h3": {
+          "type": "has",
+          "settings": {
+            "symbol": "Ca",
+            "name": "Calcium",
+            "description": "Enables muscle contractions and nerve signaling"
+          }
+        },
+        "h4": {
+          "type": "has",
+          "settings": {
+            "symbol": "GUM",
+            "name": "Natural Gum Base",
+            "description": "Clean delivery medium. No artificial fillers."
+          }
+        },
+        "o1": {
+          "type": "out",
+          "settings": {
+            "name": "Sugar",
+            "description": "Zero grams. No crash. No calories from sweeteners."
+          }
+        },
+        "o2": {
+          "type": "out",
+          "settings": {
+            "name": "Aspartame",
+            "description": "None of the artificial sweeteners linked to gut disruption."
+          }
+        },
+        "o3": {
+          "type": "out",
+          "settings": {
+            "name": "Artificial Colors",
+            "description": "No dyes, no staining, no synthetic colorants."
+          }
+        },
+        "o4": {
+          "type": "out",
+          "settings": {
+            "name": "Fillers",
+            "description": "No cheap filler ingredients to pad out the formula."
+          }
+        }
       },
-      "block_order": ["h1","h2","h3","h4","o1","o2","o3","o4"],
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "o1",
+        "o2",
+        "o3",
+        "o4"
+      ],
       "settings": {
         "eyebrow": "What's Inside",
         "title": "The formula, decoded.",
@@ -127,26 +309,79 @@
     "reviews": {
       "type": "reviews",
       "blocks": {
-        "r1": {"type": "review", "settings": {
-          "quote": "ElectroChew fits perfectly into my daily routine. I pop one before a long run and I feel the difference by mile two. Game changer for anyone serious about hydration.",
-          "name": "Alex M.", "role": "CrossFit Athlete"
-        }},
-        "r2": {"type": "review", "settings": {
-          "quote": "I used to lug a giant water bottle with electrolyte powder to every training session. Now I just throw a few pieces in my pocket. Simple, clean, and it actually works.",
-          "name": "Jordan R.", "role": "Marathon Runner"
-        }},
-        "r3": {"type": "review", "settings": {
-          "quote": "As a cyclist, convenience is everything. The fact that I can replenish electrolytes mid-ride without stopping is huge. Won't go back to liquid electrolytes ever again.",
-          "name": "Chris L.", "role": "Cyclist - 200mi/week"
-        }}
+        "r1": {
+          "type": "review",
+          "settings": {
+            "quote": "ElectroChew fits perfectly into my daily routine. I pop one before a long run and I feel the difference by mile two. Game changer for anyone serious about hydration.",
+            "name": "Alex M.",
+            "role": "CrossFit Athlete"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "quote": "I used to lug a giant water bottle with electrolyte powder to every training session. Now I just throw a few pieces in my pocket. Simple, clean, and it actually works.",
+            "name": "Jordan R.",
+            "role": "Marathon Runner"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "quote": "As a cyclist, convenience is everything. The fact that I can replenish electrolytes mid-ride without stopping is huge. Won't go back to liquid electrolytes ever again.",
+            "name": "Chris L.",
+            "role": "Cyclist - 200mi/week"
+          }
+        }
       },
-      "block_order": ["r1","r2","r3"],
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
       "settings": {
         "eyebrow": "Real Results",
         "title": "What athletes are saying.",
         "bg_color": "#0a1540"
       }
     },
+    "177915688491d3c2f3": {
+      "type": "apps",
+      "blocks": {
+        "instafeed_app_block_h3PrrY": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_h3PrrY"
+      ],
+      "settings": {}
+    }
   },
-  "order": ["hero","ticker","step_panels","proof_bar","vf_science","vf_portability","clean_formula","reviews"]
+  "order": [
+    "hero",
+    "ticker",
+    "step_panels",
+    "proof_bar",
+    "vf_science",
+    "vf_portability",
+    "clean_formula",
+    "reviews",
+    "177915688491d3c2f3"
+  ]
 }
