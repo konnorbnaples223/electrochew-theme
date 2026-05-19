@@ -127,7 +127,7 @@
         "p3": {
           "type": "panel",
           "settings": {
-            "word": "Electrolytes",
+            "word": "perform",
             "description": "Potassium, Magnesium, and Calcium reach your bloodstream in 5-10 minutes. No crash, no stomach upset."
           }
         }
@@ -343,6 +343,7 @@
         "r2",
         "r3"
       ],
+      "disabled": true,
       "settings": {
         "eyebrow": "Real Results",
         "title": "What athletes are saying.",
