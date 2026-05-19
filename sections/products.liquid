@@ -1,6 +1,12 @@
-<section class="ec-section" style="background:{{ section.settings.bg_color }};" id="section-{{ section.id }}">
+{%- assign dark = section.settings.dark_mode -%}
+
+<section
+  class="ec-section ec-products-section{% if dark %} ec-products-dark{% endif %}"
+  style="background:{% if dark %}#0a1540{% else %}{{ section.settings.bg_color }}{% endif %};"
+  id="section-{{ section.id }}">
+
   <div class="ec-container">
-    <div style="text-align:center;margin-bottom:64px;">
+    <div class="ec-products-header">
       {% if section.settings.eyebrow != blank %}
         <div class="ec-eyebrow ec-eyebrow-center">{{ section.settings.eyebrow }}</div>
       {% endif %}
@@ -13,10 +19,12 @@
     <div class="ec-products-grid">
       {% for block in section.blocks %}
         {%- assign prod = all_products[block.settings.product] -%}
-        <div class="ec-product-card {% if block.settings.featured %}ec-card-featured{% endif %}" {{ block.shopify_attributes }}>
+        <div class="ec-card ec-product-card{% if block.settings.featured %} ec-card-featured{% endif %}" {{ block.shopify_attributes }}>
+
           {% if block.settings.flag_text != blank %}
             <div class="ec-product-flag ec-flag-{{ block.settings.flag_color }}">{{ block.settings.flag_text }}</div>
           {% endif %}
+
           <div class="ec-product-img-area">
             {% if block.settings.image %}
               <img src="{{ block.settings.image | img_url: '600x' }}" alt="{{ block.settings.name }}">
@@ -26,10 +34,11 @@
               <img src="{{ 'product-front.jpg' | asset_url }}" alt="{{ block.settings.name }}">
             {% endif %}
           </div>
+
           <div class="ec-product-body">
             <div class="ec-product-name">{{ block.settings.name }}</div>
             <div class="ec-product-sku">{{ block.settings.subtitle }}</div>
-            <div class="ec-product-desc">{{ block.settings.description }}</div>
+            <p class="ec-product-desc">{{ block.settings.description }}</p>
             <div class="ec-product-price {% if block.settings.is_free %}ec-product-price-free{% endif %}">{{ block.settings.price }}</div>
             <div class="ec-product-per">{{ block.settings.price_detail }}</div>
             <div class="ec-product-perks">
@@ -37,37 +46,52 @@
               {% if block.settings.perk_2 != blank %}<div class="ec-product-perk"><div class="ec-perk-check">✓</div>{{ block.settings.perk_2 }}</div>{% endif %}
               {% if block.settings.perk_3 != blank %}<div class="ec-product-perk"><div class="ec-perk-check">✓</div>{{ block.settings.perk_3 }}</div>{% endif %}
             </div>
-            {%- assign btn_handle = block.settings.button_link | split: '/products/' | last -%}
-            {%- assign btn_prod = prod | default: all_products[btn_handle] -%}
-            {%- assign selling_plan = btn_prod.selling_plan_groups.first.selling_plans.first -%}
-            {% if selling_plan %}
-              <form action="/cart/add" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="{{ btn_prod.selected_or_first_available_variant.id }}">
-                <input type="hidden" name="quantity" value="1">
-                <input type="hidden" name="selling_plan" value="{{ selling_plan.id }}">
-                <button type="submit" class="ec-btn ec-btn-{{ block.settings.button_style }} ec-btn-full">
-                  {{ block.settings.button_text }}
-                </button>
-              </form>
-            {% elsif block.settings.is_free %}
-              <form action="/cart/add" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="{{ btn_prod.selected_or_first_available_variant.id }}">
-                <input type="hidden" name="quantity" value="1">
-                <button type="submit" class="ec-btn ec-btn-{{ block.settings.button_style }} ec-btn-full">
-                  {{ block.settings.button_text }}
-                </button>
-              </form>
-            {% else %}
-              <a href="{% if btn_prod %}{{ btn_prod.url }}{% else %}{{ block.settings.button_link }}{% endif %}" class="ec-btn ec-btn-{{ block.settings.button_style }} ec-btn-full">
-                {{ block.settings.button_text }}
-              </a>
-            {% endif %}
+            <a href="{% if prod %}{{ prod.url }}{% else %}{{ block.settings.button_link }}{% endif %}"
+               class="ec-btn ec-btn-{{ block.settings.button_style }} ec-btn-full">
+              {{ block.settings.button_text }}
+            </a>
           </div>
+
         </div>
       {% endfor %}
     </div>
   </div>
 </section>
+
+<style>
+/* ── Products section header ── */
+.ec-products-header{text-align:center;margin-bottom:56px;}
+.ec-products-dark .ec-headline{color:white;}
+.ec-products-dark .ec-subtext{color:rgba(255,255,255,.68);}
+.ec-products-dark .ec-eyebrow{color:var(--ec-accent);}
+.ec-products-dark .ec-eyebrow::before{background:var(--ec-accent);}
+
+/* ── Dark mode cards — white panels on navy ── */
+.ec-products-dark .ec-card{
+  background:white;
+  border:1.5px solid rgba(255,255,255,.12);
+  box-shadow:0 8px 40px rgba(0,0,0,.3);
+}
+.ec-products-dark .ec-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+  border-color:rgba(255,255,255,.2);
+}
+.ec-products-dark .ec-card-featured{
+  border-color:var(--ec-accent);
+  box-shadow:0 0 0 1px var(--ec-accent),0 16px 56px rgba(79,195,247,.25);
+}
+.ec-products-dark .ec-card-featured:hover{
+  box-shadow:0 0 0 1px var(--ec-accent),0 24px 72px rgba(79,195,247,.35);
+}
+
+/* ── Compact image area ── */
+.ec-product-img-area{height:200px;}
+
+/* ── Compact body type ── */
+.ec-product-name{font-size:26px;}
+.ec-product-price{font-size:28px;}
+</style>
 
 {% schema %}
 {
@@ -75,9 +99,10 @@
   "tag": "section",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Choose Your Pack" },
-    { "type": "text", "id": "title", "label": "Title", "default": "Start <span class=\"em\">Today</span>" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Start Today" },
     { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Try it free. Love it. Subscribe and never run out." },
-    { "type": "color", "id": "bg_color", "label": "Background", "default": "#ffffff" }
+    { "type": "checkbox", "id": "dark_mode", "label": "Dark navy background", "default": false },
+    { "type": "color", "id": "bg_color", "label": "Background (when not dark)", "default": "#ffffff" }
   ],
   "blocks": [
     {
@@ -106,7 +131,7 @@
         { "type": "text", "id": "perk_1", "label": "Perk 1" },
         { "type": "text", "id": "perk_2", "label": "Perk 2" },
         { "type": "text", "id": "perk_3", "label": "Perk 3" },
-        { "type": "text", "id": "button_text", "label": "Button text", "default": "Shop Now ⚡" },
+        { "type": "text", "id": "button_text", "label": "Button text", "default": "Shop Now" },
         { "type": "url", "id": "button_link", "label": "Button link" },
         { "type": "select", "id": "button_style", "label": "Button style",
           "options": [
@@ -124,8 +149,8 @@
     {
       "name": "Products",
       "blocks": [
-        { "type": "product", "settings": { "name": "Trial Pack", "subtitle": "6 PIECES · TROPICAL BERRY", "description": "Experience ElectroChew before you commit. Six pieces delivered to your door — on us.", "price": "FREE", "is_free": true, "price_detail": "You only pay $3.00 shipping", "flag_text": "Free Trial — Just Pay Shipping", "flag_color": "green", "perk_1": "6 pieces to try", "perk_2": "No subscription required", "perk_3": "Ships in 2–4 days", "button_text": "Claim Free Trial →", "button_link": "/products/electrochew-free-trial-6-pck", "button_style": "outline" } },
-        { "type": "product", "settings": { "name": "30 Piece Pack", "subtitle": "30 PIECES · TROPICAL BERRY", "description": "Your monthly performance fuel. Subscribe and save 10%.", "price": "$19.99", "price_detail": "$0.67/piece · Subscribe from $17.99", "flag_text": "⚡ Most Popular", "flag_color": "blue", "featured": true, "perk_1": "30 pieces — 1 month supply", "perk_2": "Subscribe & save 10%", "perk_3": "Free shipping on subscriptions", "button_text": "Shop 30 Pack ⚡", "button_link": "/products/electrochew-30-piece-pack", "button_style": "navy" } },
+        { "type": "product", "settings": { "name": "Trial Pack", "subtitle": "6 PIECES · TROPICAL BERRY", "description": "Experience ElectroChew before you commit. Six pieces delivered to your door — on us.", "price": "FREE", "is_free": true, "price_detail": "You only pay $3.00 shipping", "flag_text": "Free Trial — Just Pay Shipping", "flag_color": "green", "perk_1": "6 pieces to try", "perk_2": "No subscription required", "perk_3": "Ships in 2–4 days", "button_text": "Claim Free Trial", "button_link": "/products/electrochew-free-trial-6-pck", "button_style": "outline" } },
+        { "type": "product", "settings": { "name": "30 Piece Pack", "subtitle": "30 PIECES · TROPICAL BERRY", "description": "Your monthly performance fuel. Subscribe and save 10%.", "price": "$19.99", "price_detail": "$0.67/piece · Subscribe from $17.99", "flag_text": "Most Popular", "flag_color": "blue", "featured": true, "perk_1": "30 pieces — 1 month supply", "perk_2": "Subscribe & save 10%", "perk_3": "Free shipping on subscriptions", "button_text": "Shop 30 Pack", "button_link": "/products/electrochew-30-piece-pack", "button_style": "navy" } },
         { "type": "product", "settings": { "name": "Athlete Pack", "subtitle": "60 PIECES · TROPICAL BERRY", "description": "Two months of peak performance at the best price per piece.", "price": "$36.00", "price_detail": "$0.60/piece · Subscribe from $32.40", "flag_text": "Best Value", "flag_color": "navy", "perk_1": "60 pieces — 2 month supply", "perk_2": "Best price per piece", "perk_3": "Subscribe & save 10%", "button_text": "Shop Athlete Pack", "button_link": "/products/electrochew-athlete-pack-60-pieces", "button_style": "navy" } }
       ]
     }

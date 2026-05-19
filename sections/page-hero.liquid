@@ -1,42 +1,137 @@
 {%- liquid
-  assign show_hero_bg = section.settings.show_hero_bg
+  assign dark = false
+  if section.settings.color_scheme == 'dark'
+    assign dark = true
+  endif
 -%}
 
-<section style="padding:160px 0 100px;{% if show_hero_bg %}background:linear-gradient(160deg,var(--ec-off-white) 0%,var(--ec-light) 100%);{% endif %}position:relative;overflow:hidden;">
-  {% if show_hero_bg %}
-    <div style="position:absolute;right:-40px;bottom:-60px;font-family:var(--ec-font-display);font-size:400px;color:rgba(10,21,64,0.04);line-height:1;pointer-events:none;">EC</div>
+<section class="ec-page-hero{% if dark %} ec-page-hero-dark{% endif %}">
+  {% if dark %}
+    <div class="ec-page-hero-grid" aria-hidden="true"></div>
+    <div class="ec-page-hero-glow" aria-hidden="true"></div>
+  {% else %}
+    <div class="ec-page-hero-bg-text" aria-hidden="true">EC</div>
   {% endif %}
-  <div class="ec-container" style="position:relative;z-index:1;{% if section.settings.center %}text-align:center;{% endif %}">
+
+  <div class="ec-container ec-page-hero-inner{% if section.settings.center %} ec-page-hero-center{% endif %}">
     {% if section.settings.eyebrow != blank %}
-      <div class="ec-eyebrow {% if section.settings.center %}ec-eyebrow-center{% endif %}">{{ section.settings.eyebrow }}</div>
+      <div class="ec-page-hero-eyebrow">{{ section.settings.eyebrow }}</div>
     {% endif %}
     {% if section.settings.title != blank %}
-      <h1 class="ec-headline" {% if section.settings.center %}style="text-align:center;"{% endif %}>{{ section.settings.title }}</h1>
+      <h1 class="ec-page-hero-headline">{{ section.settings.title }}</h1>
     {% else %}
-      <h1 class="ec-headline" {% if section.settings.center %}style="text-align:center;"{% endif %}>{{ page.title }}</h1>
+      <h1 class="ec-page-hero-headline">{{ page.title }}</h1>
     {% endif %}
     {% if section.settings.subtitle != blank %}
-      <p class="ec-subtext" style="margin:16px {% if section.settings.center %}auto 0{% else %}0 0{% endif %};{% if section.settings.center %}text-align:center;{% endif %}">{{ section.settings.subtitle }}</p>
+      <p class="ec-page-hero-sub">{{ section.settings.subtitle }}</p>
     {% endif %}
-
     {% if page.content != blank %}
-      <div style="margin-top:48px;font-size:16px;color:var(--ec-text2);line-height:1.8;max-width:720px;{% if section.settings.center %}margin-left:auto;margin-right:auto;{% endif %}">
-        {{ page.content }}
-      </div>
+      <div class="ec-page-hero-content">{{ page.content }}</div>
     {% endif %}
   </div>
 </section>
+
+<style>
+/* ── Page Hero Base ── */
+.ec-page-hero{position:relative;overflow:hidden;padding:140px 0 90px;}
+
+/* Light variant */
+.ec-page-hero:not(.ec-page-hero-dark){
+  background:linear-gradient(160deg,var(--ec-off-white) 0%,var(--ec-light) 100%);
+}
+.ec-page-hero-bg-text{
+  position:absolute;right:-40px;bottom:-60px;
+  font-family:var(--ec-font-display);font-size:400px;
+  color:rgba(10,21,64,.04);line-height:1;pointer-events:none;
+  user-select:none;
+}
+
+/* Dark / navy variant */
+.ec-page-hero-dark{
+  background:linear-gradient(160deg,#06122e 0%,#050b1f 100%);
+  color:white;
+}
+.ec-page-hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(79,195,247,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(79,195,247,.05) 1px,transparent 1px);
+  background-size:70px 70px;
+  mask-image:radial-gradient(ellipse 80% 80% at 30% 50%,black 0%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 30% 50%,black 0%,transparent 75%);
+  pointer-events:none;
+}
+.ec-page-hero-glow{
+  position:absolute;top:50%;left:30%;transform:translate(-50%,-50%);
+  width:800px;height:600px;
+  background:radial-gradient(ellipse,rgba(21,101,192,.25) 0%,transparent 65%);
+  filter:blur(60px);pointer-events:none;
+}
+
+/* Inner layout */
+.ec-page-hero-inner{position:relative;z-index:1;max-width:780px;}
+.ec-page-hero-center{text-align:center;margin-left:auto;margin-right:auto;}
+
+/* Eyebrow */
+.ec-page-hero-eyebrow{
+  font-family:var(--ec-font-mono);font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.ec-page-hero:not(.ec-page-hero-dark) .ec-page-hero-eyebrow{color:var(--ec-electric);}
+.ec-page-hero-dark .ec-page-hero-eyebrow{color:var(--ec-accent);}
+.ec-page-hero-eyebrow::before{content:'';display:block;width:24px;height:1.5px;}
+.ec-page-hero:not(.ec-page-hero-dark) .ec-page-hero-eyebrow::before{background:var(--ec-electric);}
+.ec-page-hero-dark .ec-page-hero-eyebrow::before{background:var(--ec-accent);}
+.ec-page-hero-center .ec-page-hero-eyebrow{justify-content:center;}
+.ec-page-hero-center .ec-page-hero-eyebrow::before{display:none;}
+
+/* Headline */
+.ec-page-hero-headline{
+  font-family:var(--ec-font-display);
+  font-size:clamp(44px,6vw,80px);
+  line-height:.95;letter-spacing:1px;
+  text-transform:uppercase;margin:0 0 20px;
+}
+.ec-page-hero:not(.ec-page-hero-dark) .ec-page-hero-headline{color:var(--ec-navy);}
+.ec-page-hero-dark .ec-page-hero-headline{color:white;}
+
+/* Subhead */
+.ec-page-hero-sub{
+  font-size:16px;line-height:1.7;margin:0;max-width:560px;
+}
+.ec-page-hero:not(.ec-page-hero-dark) .ec-page-hero-sub{color:var(--ec-text2);}
+.ec-page-hero-dark .ec-page-hero-sub{color:rgba(255,255,255,.68);}
+.ec-page-hero-center .ec-page-hero-sub{margin-left:auto;margin-right:auto;}
+
+/* Page content */
+.ec-page-hero-content{margin-top:32px;font-size:16px;line-height:1.8;max-width:720px;}
+.ec-page-hero-dark .ec-page-hero-content{color:rgba(255,255,255,.72);}
+
+@media(max-width:640px){
+  .ec-page-hero{padding:110px 0 64px;}
+  .ec-page-hero-headline{font-size:clamp(36px,10vw,56px);}
+}
+</style>
 
 {% schema %}
 {
   "name": "Page hero",
   "tag": "section",
   "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "options": [
+        { "value": "light", "label": "Light" },
+        { "value": "dark", "label": "Dark navy" }
+      ],
+      "default": "light"
+    },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow text" },
     { "type": "text", "id": "title", "label": "Title (leave blank to use page title)" },
     { "type": "textarea", "id": "subtitle", "label": "Subtitle" },
     { "type": "checkbox", "id": "center", "label": "Center alignment", "default": false },
-    { "type": "checkbox", "id": "show_hero_bg", "label": "Show background gradient", "default": true }
+    { "type": "checkbox", "id": "show_hero_bg", "label": "Show background (legacy)", "default": true }
   ],
   "presets": [
     { "name": "Page hero" }
