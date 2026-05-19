@@ -304,8 +304,8 @@ input,textarea,select{font-family:var(--ec-font-body);}
 .ec-science-wrap .ec-steps-grid{position:relative;z-index:1;}
 
 /* ── SUBSCRIBE BANNER ── */
-.ec-subscribe-banner{background:var(--ec-navy);padding:80px 0;position:relative;overflow:hidden;}
-.ec-subscribe-banner::before{content:'SUBSCRIBE';position:absolute;left:-20px;top:50%;transform:translateY(-50%);font-family:var(--ec-font-display);font-size:200px;color:rgba(255,255,255,0.025);white-space:nowrap;pointer-events:none;}
+.ec-subscribe-banner{background:var(--ec-navy);padding:40px 0;position:relative;overflow:hidden;}
+.ec-subscribe-banner::before{content:'SUBSCRIBE';position:absolute;left:-20px;top:50%;transform:translateY(-50%);font-family:var(--ec-font-display);font-size:140px;color:rgba(255,255,255,0.025);white-space:nowrap;pointer-events:none;}
 .ec-subscribe-form{display:flex;max-width:480px;}
 .ec-subscribe-form input{
   flex:1;padding:16px 22px;

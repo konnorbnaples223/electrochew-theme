@@ -1,70 +1,163 @@
-<section class="ec-section ec-bg-{{ section.settings.bg_style | default: 'lab-light' }}" style="position:relative;overflow:hidden;padding:120px 0;">
-  <div class="ec-inside-bg" aria-hidden="true">
-    <div class="ec-grid-overlay"></div>
-    <div class="ec-mesh-glow ec-mesh-1"></div>
-    <div class="ec-mesh-glow ec-mesh-2"></div>
+{%- comment -%}Contact Form — dark hero + split layout{%- endcomment -%}
+
+<!-- HERO -->
+<div class="ec-ct-hero">
+  <div class="ec-ct-hero-grid" aria-hidden="true"></div>
+  <div class="ec-ct-hero-glow" aria-hidden="true"></div>
+  <div class="ec-container ec-ct-hero-inner">
+    <div class="ec-ct-eyebrow">Get in Touch</div>
+    <h1 class="ec-ct-headline">We're real people.<br>Talk to us.</h1>
+    <p class="ec-ct-subhead">Questions, partnerships, press, wholesale — whatever's on your mind. We read every message and respond personally.</p>
   </div>
+</div>
 
-  <div class="ec-container" style="position:relative;z-index:1;">
-    <div class="ec-contact-grid">
-      <div>
-        {% if section.settings.eyebrow != blank %}
-          <div class="ec-eyebrow">{{ section.settings.eyebrow }}</div>
-        {% endif %}
-        <h2 class="ec-headline">{{ section.settings.title }}</h2>
-        <p class="ec-subtext" style="margin-top:16px;">{{ section.settings.subtitle }}</p>
+<!-- MAIN CONTENT -->
+<div class="ec-ct-body">
+  <div class="ec-container">
+    <div class="ec-ct-grid">
 
-        <div style="margin-top:36px;">
-          {% for block in section.blocks %}
-            <div class="ec-contact-detail" {{ block.shopify_attributes }}>
-              <div class="ec-contact-detail-icon">{{ block.settings.icon }}</div>
-              <div>
-                <strong>{{ block.settings.label }}</strong>
-                <span>{{ block.settings.value }}</span>
+      <!-- LEFT: Info -->
+      <div class="ec-ct-info">
+
+        <div class="ec-ct-info-block">
+          <div class="ec-ct-info-label">Response time</div>
+          <div class="ec-ct-info-value">Within 24–48 hours</div>
+        </div>
+
+        <div class="ec-ct-details">
+          {%- for block in section.blocks -%}
+            <div class="ec-ct-detail" {{ block.shopify_attributes }}>
+              <div class="ec-ct-detail-icon">{{ block.settings.icon }}</div>
+              <div class="ec-ct-detail-text">
+                <div class="ec-ct-detail-label">{{ block.settings.label }}</div>
+                <div class="ec-ct-detail-value">{{ block.settings.value }}</div>
               </div>
             </div>
-          {% endfor %}
+          {%- endfor -%}
         </div>
+
+        <div class="ec-ct-tagline">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Formulated in Charleston, SC
+        </div>
+
       </div>
 
-      <div class="ec-contact-form-card">
-        <h3 style="font-family:var(--ec-font-display);font-size:32px;letter-spacing:0.5px;margin-bottom:20px;color:var(--ec-navy);">{{ section.settings.form_title }}</h3>
+      <!-- RIGHT: Form -->
+      <div class="ec-ct-form-wrap">
+        <div class="ec-ct-form-header">
+          <h2 class="ec-ct-form-title">{{ section.settings.form_title | default: 'Send a message' }}</h2>
+          <p class="ec-ct-form-sub">We'll get back to you within 48 hours.</p>
+        </div>
 
-        {% form 'contact' %}
-          <div class="ec-amb-field">
-            <input type="text" name="contact[name]" placeholder="Your name" required>
-          </div>
-          <div class="ec-amb-field">
-            <input type="email" name="contact[email]" placeholder="Email address" required>
-          </div>
-          <div class="ec-amb-field">
-            <select name="contact[subject]" style="width:100%;padding:13px 16px;background:var(--ec-off-white);border:1.5px solid rgba(10,21,64,0.08);border-radius:10px;color:var(--ec-navy);font-family:var(--ec-font-body);font-size:14px;outline:none;cursor:pointer;">
-              <option>General inquiry</option>
-              <option>Order support</option>
-              <option>Partnership / press</option>
-              <option>Wholesale / retail</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="ec-amb-field">
-            <textarea name="contact[body]" placeholder="How can we help?" rows="5" required></textarea>
-          </div>
-          <button type="submit" class="ec-btn ec-btn-navy ec-btn-full ec-btn-lg">Send Message ⚡</button>
-        {% endform %}
+        {%- form 'contact' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="ec-ct-success">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <div>
+                <strong>Message sent.</strong>
+                <span>We'll be in touch within 48 hours.</span>
+              </div>
+            </div>
+          {%- else -%}
+            <div class="ec-ct-fields">
+              <div class="ec-ct-field-row">
+                <div class="ec-ct-field">
+                  <label class="ec-ct-label" for="ct-name">Name</label>
+                  <input class="ec-ct-input" type="text" id="ct-name" name="contact[name]" placeholder="Your name" required>
+                </div>
+                <div class="ec-ct-field">
+                  <label class="ec-ct-label" for="ct-email">Email</label>
+                  <input class="ec-ct-input" type="email" id="ct-email" name="contact[email]" placeholder="your@email.com" required>
+                </div>
+              </div>
+              <div class="ec-ct-field">
+                <label class="ec-ct-label" for="ct-subject">What's this about?</label>
+                <select class="ec-ct-input ec-ct-select" id="ct-subject" name="contact[subject]">
+                  <option value="General inquiry">General inquiry</option>
+                  <option value="Order support">Order support</option>
+                  <option value="Partnership / press">Partnership / press</option>
+                  <option value="Wholesale / retail">Wholesale / retail</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="ec-ct-field">
+                <label class="ec-ct-label" for="ct-message">Message</label>
+                <textarea class="ec-ct-input ec-ct-textarea" id="ct-message" name="contact[body]" placeholder="Tell us what's on your mind..." rows="5" required></textarea>
+              </div>
+              <button type="submit" class="ec-ct-submit">
+                Send Message
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
       </div>
+
     </div>
   </div>
-</section>
+</div>
 
 <style>
-.ec-contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-.ec-contact-detail { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(10,21,64,0.06); }
-.ec-contact-detail:last-child { border: none; }
-.ec-contact-detail-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(21,101,192,0.10); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.ec-contact-detail strong { font-size: 12px; font-family: var(--ec-font-mono); letter-spacing: 1.5px; color: var(--ec-navy); display: block; text-transform: uppercase; }
-.ec-contact-detail span { font-size: 14px; color: var(--ec-text2); }
-.ec-contact-form-card { background: white; border: 1px solid rgba(10,21,64,0.08); border-radius: 24px; padding: 36px; box-shadow: 0 24px 64px rgba(10,21,64,0.08); }
-@media(max-width: 900px) { .ec-contact-grid { grid-template-columns: 1fr; } }
+/* ── Hero ── */
+.ec-ct-hero{background:linear-gradient(160deg,#06122e 0%,#050b1f 100%);padding:130px 0 80px;position:relative;overflow:hidden;color:white;}
+.ec-ct-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(79,195,247,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(79,195,247,.05) 1px,transparent 1px);background-size:70px 70px;mask-image:radial-gradient(ellipse 80% 80% at 30% 50%,black 0%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 30% 50%,black 0%,transparent 75%);pointer-events:none;}
+.ec-ct-hero-glow{position:absolute;top:40%;left:25%;transform:translate(-50%,-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(21,101,192,.3) 0%,transparent 65%);filter:blur(60px);pointer-events:none;}
+.ec-ct-hero-inner{position:relative;z-index:1;max-width:700px;}
+.ec-ct-eyebrow{font-family:var(--ec-font-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--ec-accent);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.ec-ct-eyebrow::before{content:'';display:block;width:24px;height:1.5px;background:var(--ec-accent);}
+.ec-ct-headline{font-family:var(--ec-font-display);font-size:clamp(48px,6vw,88px);line-height:.92;letter-spacing:1px;color:white;text-transform:uppercase;margin:0 0 24px;}
+.ec-ct-subhead{font-size:16px;line-height:1.72;color:rgba(255,255,255,.68);max-width:560px;margin:0;}
+
+/* ── Body ── */
+.ec-ct-body{background:#f8f9ff;padding:80px 0 100px;}
+.ec-ct-grid{display:grid;grid-template-columns:340px 1fr;gap:72px;align-items:start;}
+
+/* ── Info panel ── */
+.ec-ct-info{position:sticky;top:100px;}
+.ec-ct-info-block{background:var(--ec-navy);border-radius:18px;padding:28px;margin-bottom:32px;color:white;}
+.ec-ct-info-label{font-family:var(--ec-font-mono);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:8px;}
+.ec-ct-info-value{font-family:var(--ec-font-display);font-size:28px;letter-spacing:1px;color:var(--ec-accent);text-transform:uppercase;line-height:1;}
+.ec-ct-details{display:flex;flex-direction:column;gap:4px;margin-bottom:28px;}
+.ec-ct-detail{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;background:white;border:1.5px solid #e8eaf6;transition:border-color .2s,box-shadow .2s;}
+.ec-ct-detail:hover{border-color:#c5cae9;box-shadow:0 4px 16px rgba(26,35,126,.07);}
+.ec-ct-detail-icon{width:38px;height:38px;border-radius:10px;background:rgba(21,101,192,.08);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.ec-ct-detail-label{font-family:var(--ec-font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(10,21,64,.4);margin-bottom:3px;}
+.ec-ct-detail-value{font-size:14px;color:var(--ec-navy);font-weight:500;}
+.ec-ct-tagline{display:flex;align-items:center;gap:10px;font-family:var(--ec-font-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(10,21,64,.35);}
+.ec-ct-tagline svg{color:var(--ec-accent);flex-shrink:0;}
+
+/* ── Form ── */
+.ec-ct-form-wrap{background:white;border-radius:28px;padding:52px;border:1.5px solid #e8eaf6;box-shadow:0 24px 80px rgba(10,21,64,.07);}
+.ec-ct-form-header{margin-bottom:36px;}
+.ec-ct-form-title{font-family:var(--ec-font-display);font-size:36px;letter-spacing:1px;color:var(--ec-navy);text-transform:uppercase;margin:0 0 8px;line-height:1;}
+.ec-ct-form-sub{font-size:13px;color:rgba(10,21,64,.45);margin:0;font-family:var(--ec-font-mono);letter-spacing:1px;}
+.ec-ct-fields{display:flex;flex-direction:column;gap:20px;}
+.ec-ct-field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.ec-ct-field{display:flex;flex-direction:column;gap:8px;}
+.ec-ct-label{font-family:var(--ec-font-mono);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:rgba(10,21,64,.5);}
+.ec-ct-input{width:100%;padding:14px 18px;background:#f8f9ff;border:1.5px solid #e8eaf6;border-radius:12px;color:var(--ec-navy);font-family:var(--ec-font-body);font-size:14.5px;outline:none;transition:border-color .2s,box-shadow .2s;box-sizing:border-box;}
+.ec-ct-input:focus{border-color:var(--ec-accent);box-shadow:0 0 0 3px rgba(79,195,247,.12);background:white;}
+.ec-ct-input::placeholder{color:rgba(10,21,64,.3);}
+.ec-ct-select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230a1540' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;}
+.ec-ct-textarea{resize:vertical;min-height:140px;line-height:1.6;}
+.ec-ct-submit{display:inline-flex;align-items:center;gap:10px;font-family:var(--ec-font-display);font-size:20px;letter-spacing:2px;text-transform:uppercase;padding:18px 44px;background:var(--ec-navy);color:white;border:none;border-radius:10px;cursor:pointer;transition:all .2s;width:100%;justify-content:center;}
+.ec-ct-submit:hover{background:var(--ec-accent);transform:translateY(-2px);box-shadow:0 12px 36px rgba(79,195,247,.3);}
+.ec-ct-success{display:flex;align-items:flex-start;gap:16px;padding:28px;background:rgba(79,195,247,.06);border:1.5px solid rgba(79,195,247,.25);border-radius:16px;}
+.ec-ct-success svg{color:var(--ec-accent);flex-shrink:0;margin-top:2px;}
+.ec-ct-success strong{display:block;font-family:var(--ec-font-display);font-size:22px;letter-spacing:1px;color:var(--ec-navy);text-transform:uppercase;margin-bottom:4px;}
+.ec-ct-success span{font-size:14px;color:rgba(10,21,64,.6);}
+
+/* ── Responsive ── */
+@media(max-width:1024px){
+  .ec-ct-grid{grid-template-columns:1fr;gap:40px;}
+  .ec-ct-info{position:static;}
+}
+@media(max-width:640px){
+  .ec-ct-field-row{grid-template-columns:1fr;}
+  .ec-ct-form-wrap{padding:32px 24px;}
+  .ec-ct-hero{padding:110px 0 60px;}
+}
 </style>
 
 {% schema %}
@@ -72,17 +165,7 @@
   "name": "Contact form",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Get in Touch" },
-    { "type": "text", "id": "title", "label": "Title", "default": "Let's <span class=\"em\">Talk</span>" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Have a question, partnership idea, or just want to reach out? We respond personally." },
-    { "type": "text", "id": "form_title", "label": "Form title", "default": "Send a message" },
-    { "type": "select", "id": "bg_style", "label": "Background style",
-      "options": [
-        { "value": "lab-light", "label": "Lab Light" },
-        { "value": "minimal", "label": "Minimal" }
-      ],
-      "default": "lab-light"
-    }
+    { "type": "text", "id": "form_title", "label": "Form title", "default": "Send a message" }
   ],
   "blocks": [
     {
@@ -103,7 +186,7 @@
         { "type": "detail", "settings": { "icon": "📍", "label": "Location", "value": "Charleston, South Carolina" } },
         { "type": "detail", "settings": { "icon": "📧", "label": "Email", "value": "hello@electrochew.com" } },
         { "type": "detail", "settings": { "icon": "📱", "label": "Social", "value": "@electrochew" } },
-        { "type": "detail", "settings": { "icon": "⚡", "label": "Response time", "value": "Within 24–48 hours" } }
+        { "type": "detail", "settings": { "icon": "⚡", "label": "Response time", "value": "Within 24-48 hours" } }
       ]
     }
   ]
