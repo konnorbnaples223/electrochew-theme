@@ -119,7 +119,7 @@
         "step_6CtpMJ": {
           "type": "step",
           "settings": {
-            "number": "02",
+            "number": "",
             "icon": "⚡",
             "title": "Chew",
             "description": "Your oral mucosa absorbs electrolytes directly — bypassing digestion for real time delivery.",
@@ -129,7 +129,7 @@
         "step_pTHWYk": {
           "type": "step",
           "settings": {
-            "number": "03",
+            "number": "",
             "icon": "🏆",
             "title": "Perform",
             "description": "Train. Compete. Work. Live. ElectroChew works while you do. Anytime. Anywhere.",
