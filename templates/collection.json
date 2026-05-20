@@ -99,7 +99,7 @@
         "eyebrow": "Choose Your Pack",
         "title": "Start Today",
         "subtitle": "Try it free. Love it. Subscribe and never run out.",
-        "dark_mode": false,
+        "dark_mode": true,
         "bg_color": "#0a1540"
       }
     },
