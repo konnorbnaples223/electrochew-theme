@@ -12,6 +12,7 @@
     "hero": {
       "type": "page-hero",
       "settings": {
+        "color_scheme": "light",
         "eyebrow": "All Products",
         "title": "Shop ElectroChew",
         "subtitle": "Start free. Subscribe. Perform.",
@@ -98,6 +99,7 @@
         "eyebrow": "Choose Your Pack",
         "title": "Start Today",
         "subtitle": "Try it free. Love it. Subscribe and never run out.",
+        "dark_mode": false,
         "bg_color": "#0a1540"
       }
     },
@@ -107,10 +109,11 @@
         "step_fhDDWq": {
           "type": "step",
           "settings": {
-            "number": "01",
+            "number": "",
             "icon": "🧃",
             "title": "Open",
-            "description": "Pull out a piece. No shaker bottle. No measuring. No mixing. No waiting."
+            "description": "Pull out a piece. No shaker bottle. No measuring. No mixing. No waiting.",
+            "tag": "Anywhere. Anytime."
           }
         },
         "step_6CtpMJ": {
@@ -119,7 +122,8 @@
             "number": "02",
             "icon": "⚡",
             "title": "Chew",
-            "description": "Your oral mucosa absorbs electrolytes directly — bypassing digestion for real time delivery."
+            "description": "Your oral mucosa absorbs electrolytes directly — bypassing digestion for real time delivery.",
+            "tag": "Anywhere. Anytime."
           }
         },
         "step_pTHWYk": {
@@ -128,7 +132,8 @@
             "number": "03",
             "icon": "🏆",
             "title": "Perform",
-            "description": "Train. Compete. Work. Live. ElectroChew works while you do. Anytime. Anywhere."
+            "description": "Train. Compete. Work. Live. ElectroChew works while you do. Anytime. Anywhere.",
+            "tag": "Anywhere. Anytime."
           }
         }
       },
