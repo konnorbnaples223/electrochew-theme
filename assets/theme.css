@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
 
 :root {
   --ec-navy:      #1a237e;
@@ -21,7 +21,7 @@
   --ec-border:    rgba(10,21,64,0.08);
   --ec-border2:   rgba(10,21,64,0.14);
   --ec-font-display: 'Bebas Neue', sans-serif;
-  --ec-font-body:    'Times New Roman', Times, serif;
+  --ec-font-body:    'Montserrat', sans-serif;
   --ec-font-mono:    'DM Mono', monospace;
   --ec-max: 1240px;
   --ec-header-h: 80px;
