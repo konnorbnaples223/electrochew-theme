@@ -1,1 +1,79 @@
-{"sections":{"hero":{"type":"page-hero","disabled":true,"settings":{"eyebrow":"Join the Community","title":"Become an Ambassador","subtitle":"We're looking for authentic voices — not follower counts. Grow with us from day one.","center":true,"show_hero_bg":true}},"application":{"type":"ambassador-form","blocks":{"p1":{"type":"perk","settings":{"icon":"","title":"Free Product","description":"Regular shipments of ElectroChew."}},"p2":{"type":"perk","settings":{"icon":"","title":"Commission","description":"Earn on every sale through your code."}},"p3":{"type":"perk","settings":{"icon":"","title":"Exclusive Access","description":"First look at new products and campaigns."}},"p4":{"type":"perk","settings":{"icon":"","title":"Grow Together","description":"Build your brand alongside ours."}}},"block_order":["p1","p2","p3","p4"],"settings":{"eyebrow":"Join the Team","title":"Become an <span class=\"em\">Ambassador<\/span>","subtitle":"We're building this brand with people, not just for them. Authentic voices — not follower counts.","form_title":"Apply Now","form_subtitle":"We review every application personally and respond within 48 hours.","bg_style":"lab-dark"}}},"order":["hero","application"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "disabled": true,
+      "settings": {
+        "eyebrow": "Join the Community",
+        "title": "Become an Ambassador",
+        "subtitle": "We're looking for authentic voices — not follower counts. Grow with us from day one.",
+        "center": true,
+        "show_hero_bg": true
+      }
+    },
+    "application": {
+      "type": "ambassador-form",
+      "blocks": {
+        "p1": {
+          "type": "perk",
+          "settings": {
+            "icon": "",
+            "title": "Free Product",
+            "description": "Regular shipments of ElectroChew."
+          }
+        },
+        "p2": {
+          "type": "perk",
+          "settings": {
+            "icon": "",
+            "title": "Commission",
+            "description": "Earn on every sale through your code."
+          }
+        },
+        "p3": {
+          "type": "perk",
+          "settings": {
+            "icon": "",
+            "title": "Exclusive Access",
+            "description": "First look at new products and campaigns."
+          }
+        },
+        "p4": {
+          "type": "perk",
+          "settings": {
+            "icon": "",
+            "title": "Grow Together",
+            "description": "Build your brand alongside ours."
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "eyebrow": "Join the Team",
+        "title": "Become an <span class=\"em\">Ambassador</span>",
+        "subtitle": "We're building this brand with people, not just for them. Authentic voices — not follower counts.",
+        "form_title": "Apply Now",
+        "form_subtitle": "We review every application personally and respond within 48 hours.",
+        "bg_style": "lab-dark"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "application"
+  ]
+}
